@@ -5,7 +5,7 @@ A production-ready **FP&A portfolio** built as interactive, executive-friendly m
 
 This repo showcases how I think and build as a finance operator: **drivers → models → KPIs → scenarios → decision outputs**.
 
-🔗 **Live site:** [View on GitHub Pages](https://ralphpatrick.github.io/finance-portfolio-projects/)
+🔗 **Live site:** [View on GitHub Pages](https://ralphpatrick.github.io/finance-os/)
 🔗 **LinkedIn:** [ralph-patrick-divina](https://www.linkedin.com/in/ralph-patrick-divina-55534614a/)
 
 ---
@@ -36,7 +36,7 @@ The landing page (`index.html`) opens with a **"What's the problem you're solvin
 ## Modules
 
 ### Core FP&A Simulator — Industry-Adaptive
-**File:** `core-fp_a.html`
+**File:** `corefp-and-a.html`
 
 Flexible planning simulator adaptable across business types — SaaS, ecommerce, services, etc.
 
@@ -161,6 +161,34 @@ Capex decision modeling with financing implications — cash vs. loan vs. lease 
 
 ---
 
+### MDF Governance Tracker
+**File:** `mdf-governance.html`
+
+Tracks MDF claims from commitment to reimbursement — surfaces blocked items, missing proof of performance, and close risk before it becomes a month-end problem.
+
+**When it's useful:**
+- MDF claims are stacking up and nobody knows which ones are actually at risk
+- Finance needs to decide what's accrual-ready vs. what needs escalation
+- You're building accountability across claim owners and ensuring reimbursement packets are complete
+
+> *Real-life scenario: Month-end is approaching and three claims are stuck waiting on proof of performance. This shows exactly who owns what, what's missing, and the fastest path to close.*
+
+---
+
+### Operating Rhythm Layer
+**File:** `operating-rhythm.html`
+
+Cross-regional coordination layer — surfaces the next best action across teams, owners, and timezones, async or live sync.
+
+**When it's useful:**
+- Finance ops spans multiple regions and decisions keep stalling on handoffs
+- You need a single view of what needs to happen now vs. later, and who owns it
+- You're coordinating async reviews with live sync windows across APAC, EMEA, and the Americas
+
+> *Real-life scenario: CFO asks "where are we stuck and who's blocking close?" This shows every open action, owner, and recommended mode — no status meeting required.*
+
+---
+
 ## System View
 
 These aren't isolated spreadsheets — they form a single **Finance Operating System**:
@@ -171,6 +199,8 @@ Core FP&A → Commercial → Unit Economics → Operations Spend
 Indirect Cost & Headcount → Working Capital → Revenue Bridge
      ↓
 Capex & Financing → KPI Tree & Sensitivity → Decision Engine
+     ↓
+MDF Governance → Operating Rhythm Layer → Cross-Regional Coordination
 ```
 
 In practice: a leader asks *"should we hire, cut, raise prices, push a promo, or slow down?"* — this system turns that question into numbers you can trust and a clear recommendation.
