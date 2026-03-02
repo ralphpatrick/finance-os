@@ -1,7 +1,7 @@
 // GA4 tracking + recruiter action events + module engagement time (30/60/120 intent)
 (function () {
   const MEASUREMENT_ID = "G-G86TZJHY3K";
-  const SITE_HOST = "ralphpatrick.github.io";
+  const SITE_HOST = "ralphpatrick.com";
 
   // Only skip if GA is already initialized AND gtag exists
   if (window.__ga4_loaded && typeof window.gtag === "function") return;
