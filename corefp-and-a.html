@@ -1547,6 +1547,33 @@
 .tz-ticker-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .tz-ticker-dot.tk-active{background:#059669}.tz-ticker-dot.tk-ending{background:#d97706}.tz-ticker-dot.tk-offline{background:#cbd5e1}
 @media(max-width:640px){.tz-ticker-inner{padding:0 12px}.tz-ticker-item{padding:0 9px}}
+
+    /* ── Consulting Panel Tables ── */
+    .cp-table th {
+      background: #f8fafc;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #5d6b7a;
+      padding: 8px 12px;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .cp-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      white-space: nowrap;
+    }
+    .cp-table tr:last-child td { border-bottom: none; }
+    .cp-table tr:hover td { background: #f8fafc; }
+    .var-pos { color: #059669; font-weight: 700; }
+    .var-neg { color: #dc2626; font-weight: 700; }
+    .var-neu { color: #64748b; font-weight: 600; }
+    .status-green { background:#d1fae5;color:#065f46;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px; }
+    .status-amber { background:#fef3c7;color:#92400e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px; }
+    .status-red   { background:#fee2e2;color:#991b1b;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px; }
 </style>
 </head>
 <body>
@@ -1651,6 +1678,7 @@
             <button class="sb-acc-tab" data-industry="manufacturing" onclick="switchIndustry('manufacturing')">Manufacturing</button>
             <button class="sb-acc-tab" data-industry="lending" onclick="switchIndustry('lending')">Lending</button>
             <button class="sb-acc-tab" data-industry="realestate" onclick="switchIndustry('realestate')">Real Estate</button>
+            <button class="sb-acc-tab" data-industry="consulting" onclick="switchIndustry('consulting')">Consulting &amp; Services</button>
           </div>
         </div>
       </div>
@@ -1834,6 +1862,36 @@
             </div>
           </div>
 
+          <!-- ✦ CONSULTING PANELS (Budget vs Forecast + Project Finance) -->
+          <div id="consultingPanels" style="display:none;">
+            <div class="card" style="margin-bottom:20px;" id="bvfCard">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+                <div>
+                  <div class="card-title" style="margin-bottom:2px;">📋 Budget vs Forecast Variance</div>
+                  <div style="font-size:12px;color:var(--muted);">Month-by-month revenue recognition vs plan</div>
+                </div>
+                <div id="bvfStatusBadge" style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#d1fae5;color:#065f46;">On Track</div>
+              </div>
+              <div style="overflow-x:auto;">
+                <table id="bvfTable" class="cp-table"></table>
+              </div>
+              <div id="bvfNarrative" style="margin-top:14px;padding:12px 14px;background:rgba(15,118,110,0.05);border-radius:10px;border-left:3px solid var(--accent);font-size:12px;line-height:1.7;color:#374151;"></div>
+            </div>
+            <div class="card" style="margin-bottom:20px;" id="projectFinanceCard">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+                <div>
+                  <div class="card-title" style="margin-bottom:2px;">🗂 Project-Level Finance</div>
+                  <div style="font-size:12px;color:var(--muted);">Revenue recognition, WIP, delivery cost and margin by engagement</div>
+                </div>
+                <div id="projectFinanceAlert" style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#fef3c7;color:#92400e;">Loading...</div>
+              </div>
+              <div style="overflow-x:auto;">
+                <table id="projectTable" class="cp-table"></table>
+              </div>
+              <div id="projectNarrative" style="margin-top:14px;padding:12px 14px;background:rgba(15,118,110,0.05);border-radius:10px;border-left:3px solid var(--accent);font-size:12px;line-height:1.7;color:#374151;"></div>
+            </div>
+          </div>
+
           <!-- ✦ TOP DRIVERS SENSITIVITY (main content) -->
           <div id="mainTopDriversCard" style="margin-bottom:20px;">
             <div class="top-drivers-header">
@@ -2000,6 +2058,30 @@
           { id: 'chart2', title: 'Net Operating Income', metric: 'noiTrend', yLabel: 'NOI ($)' },
           { id: 'chart3', title: 'Free Cash Flow', metric: 'fcf', yLabel: 'FCF ($)' }
         ]
+      },
+
+      consulting: {
+        name: 'Consulting & Services',
+        title: 'Professional Services FP&A Model',
+        drivers: [
+          { id: 'billableHeadcount', label: 'Billable Headcount', min: 20, max: 1000, default: 120, step: 5, format: 'number' },
+          { id: 'utilizationRate', label: 'Utilization %', min: 45, max: 95, default: 74, step: 1, format: 'percent' },
+          { id: 'avgBillRate', label: 'Average Bill Rate', min: 30, max: 250, default: 85, step: 5, format: 'currency' },
+          { id: 'pipelineConversion', label: 'Pipeline Conversion %', min: 10, max: 80, default: 35, step: 1, format: 'percent' },
+          { id: 'deliveryCostRatio', label: 'Delivery Cost %', min: 30, max: 75, default: 52, step: 1, format: 'percent' },
+          { id: 'sgaRatio', label: 'SG&A %', min: 8, max: 35, default: 18, step: 1, format: 'percent' }
+        ],
+        kpis: [
+          { id: 'netRevenue', label: 'Net Revenue', format: 'currency' },
+          { id: 'utilization', label: 'Utilization %', format: 'percent' },
+          { id: 'projectMargin', label: 'Project Margin %', format: 'percent' },
+          { id: 'ebitdaMargin', label: 'EBITDA Margin %', format: 'percent' }
+        ],
+        charts: [
+          { id: 'chart1', title: 'Net Revenue Trend', metric: 'netRevenueTrend', yLabel: 'Revenue ($)' },
+          { id: 'chart2', title: 'Utilization Trend', metric: 'utilizationTrend', yLabel: 'Utilization %' },
+          { id: 'chart3', title: 'EBITDA Margin Trend', metric: 'ebitdaMarginTrend', yLabel: 'Margin %' }
+        ]
       }
     };
 
@@ -2147,7 +2229,7 @@
       const data = {};
       
       switch (currentIndustry) {
-        case 'saas':
+        case 'saas': {
           data.mrrTrend = [];
           data.customersTrend = [];
           data.cash = [];
@@ -2187,9 +2269,10 @@
           data.customers = data.customersTrend[months - 1];
           data.ltv = (driverValues.mrr * 12 / (driverValues.churn / 100)) * (driverValues.grossMargin / 100) / driverValues.cac;
           data.nrr = data.nrrTrend[months - 1];
+        }
           break;
           
-        case 'media':
+        case 'media': {
           data.users = [];
           data.revenue = [];
           data.arpuTrend = [];
@@ -2220,9 +2303,10 @@
           data.arpu = data.arpuTrend[months - 1];
           data.dau = data.users[months - 1] * 0.4;
           data.ebitdaMargin = data.ebitdaMarginTrend[months - 1];
+        }
           break;
           
-        case 'manufacturing':
+        case 'manufacturing': {
           data.units = [];
           data.revenueTrend = [];
           data.grossProfitTrend = [];
@@ -2251,9 +2335,10 @@
           data.grossProfit = data.grossProfitTrend[months - 1];
           data.grossMargin = data.grossMarginTrend[months - 1];
           data.unitEconomics = data.units[months - 1] > 0 ? data.grossProfitTrend[months - 1] / data.units[months - 1] : 0;
+        }
           break;
           
-        case 'lending':
+        case 'lending': {
           data.portfolio = [];
           data.netIncome = [];
           data.defaultsTrend = [];
@@ -2279,9 +2364,10 @@
           data.netInterestMargin = ((driverValues.avgRate - driverValues.fundingCost) / driverValues.avgRate) * 100;
           data.lossRate = driverValues.defaultRate * (1 - driverValues.recoveryRate / 100);
           data.roe = (data.netIncome[months - 1] * 12 / (data.portfolio[months - 1] * 0.1)) * 100;
+        }
           break;
           
-        case 'realestate':
+        case 'realestate': {
           data.rent = [];
           data.noiTrend = [];
           data.fcf = [];
@@ -2302,7 +2388,79 @@
           data.noi = data.noiTrend[months - 1];
           data.noiMargin = (data.noi / data.rentalIncome) * 100;
           data.capRate = (data.noi * 12 / (driverValues.totalSqm * driverValues.rentPerSqm * 200)) * 100;
+        }
           break;
+
+        case 'consulting': {
+          // Scenario overlays
+          let adjHeadcount = driverValues.billableHeadcount;
+          let adjUtilization = driverValues.utilizationRate;
+          let adjBillRate = driverValues.avgBillRate;
+          let adjPipeline = driverValues.pipelineConversion;
+          let adjDeliveryCost = driverValues.deliveryCostRatio;
+          let adjSga = driverValues.sgaRatio;
+
+          if (scenario === 'upside') {
+            adjHeadcount = adjHeadcount * 1.03;
+            adjUtilization = Math.min(95, adjUtilization + 4);
+            adjBillRate = adjBillRate * 1.05;
+            adjPipeline = Math.min(80, adjPipeline + 6);
+            adjDeliveryCost = adjDeliveryCost - 2;
+            adjSga = adjSga - 1;
+          } else if (scenario === 'downside') {
+            adjHeadcount = adjHeadcount * 0.98;
+            adjUtilization = Math.max(45, adjUtilization - 6);
+            adjBillRate = adjBillRate * 0.96;
+            adjPipeline = Math.max(10, adjPipeline - 8);
+            adjDeliveryCost = adjDeliveryCost + 3;
+            adjSga = adjSga + 2;
+          }
+
+          const HOURS_PER_HEAD = 160;
+          // Pipeline conversion adds a demand momentum factor (0–15% uplift on revenue)
+          const demandFactor = 1 + (adjPipeline / 100) * 0.4;
+          const startingCash = 800000;
+
+          data.netRevenueTrend = [];
+          data.utilizationTrend = [];
+          data.projectMarginTrend = [];
+          data.ebitdaMarginTrend = [];
+          data.cashBalanceTrend = [];
+
+          let cashBalance = startingCash;
+
+          for (let i = 0; i < months; i++) {
+            // Utilization ramps slightly over time (±0.3pp per month trend)
+            const monthlyUtilAdj = adjUtilization + (i * 0.3 * (scenario === 'downside' ? -0.5 : 0.5));
+            const clampedUtil = Math.max(45, Math.min(95, monthlyUtilAdj));
+            const billableHours = adjHeadcount * HOURS_PER_HEAD * (clampedUtil / 100);
+            // Add pipeline momentum as the model matures
+            const momentumFactor = 1 + (demandFactor - 1) * (i / months);
+            const coreRevenue = billableHours * adjBillRate * momentumFactor;
+
+            const deliveryCost = coreRevenue * (adjDeliveryCost / 100);
+            const projectMarginPct = ((coreRevenue - deliveryCost) / coreRevenue) * 100;
+            const sga = coreRevenue * (adjSga / 100);
+            const ebitda = coreRevenue - deliveryCost - sga;
+            const ebitdaMarginPct = (ebitda / coreRevenue) * 100;
+
+            // Cash: starting balance + cumulative EBITDA minus working-capital drag (~3% of revenue)
+            const wcDrag = coreRevenue * 0.03;
+            cashBalance += ebitda - wcDrag;
+
+            data.netRevenueTrend.push(coreRevenue);
+            data.utilizationTrend.push(clampedUtil);
+            data.projectMarginTrend.push(projectMarginPct);
+            data.ebitdaMarginTrend.push(ebitdaMarginPct);
+            data.cashBalanceTrend.push(Math.max(0, cashBalance));
+          }
+
+          data.netRevenue = data.netRevenueTrend[months - 1];
+          data.utilization = data.utilizationTrend[months - 1];
+          data.projectMargin = data.projectMarginTrend[months - 1];
+          data.ebitdaMargin = data.ebitdaMarginTrend[months - 1];
+          break;
+        }
       }
       
       return data;
@@ -2312,6 +2470,258 @@
     // RENDERING
     // ============================================
     
+
+    // ============================================
+    // CONSULTING — Budget vs Forecast + Project Finance
+    // ============================================
+    function renderConsultingPanels() {
+      const panels = document.getElementById('consultingPanels');
+      if (!panels) return;
+
+      if (currentIndustry !== 'consulting') {
+        panels.style.display = 'none';
+        return;
+      }
+      panels.style.display = 'block';
+
+      const dv       = driverValues;
+      const months   = modelData.months || [];
+      const numMonths = months.length || 12;
+      const HOURS_PER_HEAD = 160;
+
+      // Recompute per-month data for any scenario using live driver values
+      // Mirrors generateScenarioData consulting logic exactly
+      function computeMonthly(scenario) {
+        let hc  = dv.billableHeadcount;
+        let ut  = dv.utilizationRate;
+        let br  = dv.avgBillRate;
+        let pip = dv.pipelineConversion;
+        let dc  = dv.deliveryCostRatio;
+        let sg  = dv.sgaRatio;
+        if (scenario === 'upside') {
+          hc = hc * 1.03; ut = Math.min(95, ut + 4); br = br * 1.05;
+          pip = Math.min(80, pip + 6); dc = dc - 2; sg = sg - 1;
+        } else if (scenario === 'downside') {
+          hc = hc * 0.98; ut = Math.max(45, ut - 6); br = br * 0.96;
+          pip = Math.max(10, pip - 8); dc = dc + 3; sg = sg + 2;
+        }
+        const df = 1 + (pip / 100) * 0.4;
+        const rows = [];
+        for (let i = 0; i < numMonths; i++) {
+          const clampedUtil = Math.max(45, Math.min(95, ut + (i * 0.3 * (scenario === 'downside' ? -0.5 : 0.5))));
+          const momentum    = 1 + (df - 1) * (i / numMonths);
+          const rev         = hc * HOURS_PER_HEAD * (clampedUtil / 100) * br * momentum;
+          const delCostAmt  = rev * (dc / 100);
+          const sgaAmt      = rev * (sg / 100);
+          const projMarg    = (rev - delCostAmt) / rev * 100;
+          const ebitdaMarg  = (rev - delCostAmt - sgaAmt) / rev * 100;
+          rows.push({ rev, delCostAmt, sgaAmt, projMarg, ebitdaMarg, util: clampedUtil });
+        }
+        return rows;
+      }
+
+      const baseMonthly = computeMonthly('base');
+      const scenMonthly = computeMonthly(currentScenario);
+      const scenLabel   = currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1);
+
+      // ── PANEL A: Budget vs Forecast Variance ──────────────────────────────
+      let totalBudget = 0, totalFcast = 0, atRiskCount = 0;
+      const bvfRows = [];
+
+      for (let i = 0; i < numMonths; i++) {
+        const budget  = baseMonthly[i].rev;
+        const fcast   = scenMonthly[i].rev;
+        const varAbs  = fcast - budget;
+        const varPct  = budget > 0 ? (varAbs / budget * 100) : 0;
+        totalBudget  += budget;
+        totalFcast   += fcast;
+        if (varPct < -5) atRiskCount++;
+
+        const varClass    = varAbs >= 0 ? 'var-pos' : 'var-neg';
+        const varSign     = varAbs >= 0 ? '+' : '';
+        const statusClass = varPct >= 2 ? 'status-green' : varPct >= -5 ? 'status-amber' : 'status-red';
+        const statusLabel = varPct >= 2 ? 'Ahead' : varPct >= -5 ? 'Watch' : 'Risk';
+
+        bvfRows.push(`<tr>
+          <td style="font-weight:600;">${months[i] || ('M'+(i+1))}</td>
+          <td style="text-align:right;">${formatValue(budget,'currency')}</td>
+          <td style="text-align:right;">${formatValue(fcast,'currency')}</td>
+          <td style="text-align:right;" class="${varClass}">${varSign}${formatValue(varAbs,'currency')}</td>
+          <td style="text-align:right;" class="${varClass}">${varSign}${varPct.toFixed(1)}%</td>
+          <td style="text-align:right;">${scenMonthly[i].util.toFixed(1)}%</td>
+          <td style="text-align:right;">${scenMonthly[i].projMarg.toFixed(1)}%</td>
+          <td style="text-align:center;"><span class="${statusClass}">${statusLabel}</span></td>
+        </tr>`);
+      }
+
+      const totalVar    = totalFcast - totalBudget;
+      const totalVarPct = totalBudget > 0 ? (totalVar / totalBudget * 100) : 0;
+      const totClass    = totalVar >= 0 ? 'var-pos' : 'var-neg';
+      const totSign     = totalVar >= 0 ? '+' : '';
+      const avgUtil     = scenMonthly.reduce((a,r) => a + r.util, 0) / numMonths;
+      const avgProjMarg = scenMonthly.reduce((a,r) => a + r.projMarg, 0) / numMonths;
+
+      document.getElementById('bvfTable').innerHTML = `
+        <thead><tr>
+          <th>Month</th>
+          <th style="text-align:right;">Budget (Base)</th>
+          <th style="text-align:right;">Forecast (${scenLabel})</th>
+          <th style="text-align:right;">Var $</th>
+          <th style="text-align:right;">Var %</th>
+          <th style="text-align:right;">Utilization</th>
+          <th style="text-align:right;">Proj Margin</th>
+          <th style="text-align:center;">Status</th>
+        </tr></thead>
+        <tbody>
+          ${bvfRows.join('')}
+          <tr style="background:#f8fafc;font-weight:700;border-top:2px solid #e2e8f0;">
+            <td>YTD Total</td>
+            <td style="text-align:right;">${formatValue(totalBudget,'currency')}</td>
+            <td style="text-align:right;">${formatValue(totalFcast,'currency')}</td>
+            <td style="text-align:right;" class="${totClass}">${totSign}${formatValue(totalVar,'currency')}</td>
+            <td style="text-align:right;" class="${totClass}">${totSign}${totalVarPct.toFixed(1)}%</td>
+            <td style="text-align:right;">${avgUtil.toFixed(1)}%</td>
+            <td style="text-align:right;">${avgProjMarg.toFixed(1)}%</td>
+            <td></td>
+          </tr>
+        </tbody>`;
+
+      const bvfBadge = document.getElementById('bvfStatusBadge');
+      if (atRiskCount === 0 && totalVarPct >= 0) {
+        bvfBadge.style.cssText = 'font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#d1fae5;color:#065f46;';
+        bvfBadge.textContent   = 'On Track';
+      } else if (atRiskCount <= 2) {
+        bvfBadge.style.cssText = 'font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#fef3c7;color:#92400e;';
+        bvfBadge.textContent   = atRiskCount + ' Month' + (atRiskCount !== 1 ? 's' : '') + ' at Risk';
+      } else {
+        bvfBadge.style.cssText = 'font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#fee2e2;color:#991b1b;';
+        bvfBadge.textContent   = atRiskCount + ' Months Below Plan';
+      }
+
+      const ytdVerb  = totalVarPct >= 2 ? 'tracking <strong>ahead</strong> of budget'
+                     : totalVarPct >= -5 ? 'within the <strong>acceptable ±5% band</strong>'
+                     : '<strong>below budget</strong> — outside the acceptable threshold';
+      const utilVerb = avgUtil >= 78 ? 'supporting full overhead absorption'
+                     : avgUtil >= 70 ? 'in the watch zone (70–78%)'
+                     : 'below 70% floor — unbillable capacity suppressing revenue recognition';
+      document.getElementById('bvfNarrative').innerHTML = `
+        <strong>Variance Analysis (${scenLabel}):</strong>
+        YTD forecast is ${ytdVerb} at <strong>${totSign}${totalVarPct.toFixed(1)}%</strong>
+        (${totSign}${formatValue(totalVar,'currency')} vs plan).
+        Average utilization of <strong>${avgUtil.toFixed(1)}%</strong> is ${utilVerb}.
+        Average project margin of <strong>${avgProjMarg.toFixed(1)}%</strong>
+        ${avgProjMarg >= 35 ? 'reflects sound delivery cost discipline.'
+          : avgProjMarg >= 25 ? 'is in the watch zone — delivery cost ratio requires monitoring.'
+          : 'is below the 25% floor — delivery cost allocation needs correction.'}
+        ${atRiskCount > 0 ? ` <strong>${atRiskCount} month(s)</strong> breach the −5% threshold — review utilization and pipeline conversion before the next forecast refresh.` : ''}`;
+
+      // ── PANEL B: Project-Level Finance ────────────────────────────────────
+      // Each practice uses live adjUtilization +/- offset, live adjBillRate, live adjDeliveryCost
+      let adjUt = dv.utilizationRate;
+      let adjBr = dv.avgBillRate;
+      let adjDc = dv.deliveryCostRatio;
+      let adjHc = dv.billableHeadcount;
+      if (currentScenario === 'upside') {
+        adjUt = Math.min(95, adjUt + 4); adjBr = adjBr * 1.05;
+        adjDc = adjDc - 2; adjHc = adjHc * 1.03;
+      } else if (currentScenario === 'downside') {
+        adjUt = Math.max(45, adjUt - 6); adjBr = adjBr * 0.96;
+        adjDc = adjDc + 3; adjHc = adjHc * 0.98;
+      }
+
+      const practices = [
+        { name: 'Strategy Transformation', practice: 'Management Consulting', hcShare: 0.28, utilOffset: +6,  brMult: 1.15, wipFactor: 1.2 },
+        { name: 'Digital Operations',      practice: 'Technology Advisory',   hcShare: 0.22, utilOffset: +2,  brMult: 1.05, wipFactor: 0.8 },
+        { name: 'Commercial Due Diligence',practice: 'Transaction Services',  hcShare: 0.18, utilOffset: -2,  brMult: 1.00, wipFactor: 0.5 },
+        { name: 'Supply Chain Review',     practice: 'Operations',            hcShare: 0.20, utilOffset: -6,  brMult: 0.92, wipFactor: 1.5 },
+        { name: 'HR Org Design',           practice: 'People & Change',       hcShare: 0.12, utilOffset: -12, brMult: 0.88, wipFactor: 0.3 },
+      ];
+
+      let projRiskCount = 0;
+      let totalProjRev = 0, totalWIP = 0;
+
+      const projRows = practices.map(p => {
+        const hc         = Math.round(adjHc * p.hcShare);
+        const util       = Math.max(45, Math.min(95, adjUt + p.utilOffset));
+        const br         = adjBr * p.brMult;
+        const rev        = hc * HOURS_PER_HEAD * (util / 100) * br;
+        const delCostAmt = rev * (adjDc / 100);
+        const projMarg   = (rev - delCostAmt) / rev * 100;
+        const wipBalance = rev * 0.4 * p.wipFactor;
+        const recognized = rev - wipBalance * 0.15;
+
+        // Budget = base scenario drivers for this practice
+        const baseHC   = Math.round(dv.billableHeadcount * p.hcShare);
+        const baseUtil = Math.max(45, Math.min(95, dv.utilizationRate + p.utilOffset));
+        const baseBR   = dv.avgBillRate * p.brMult;
+        const budgetRev = baseHC * HOURS_PER_HEAD * (baseUtil / 100) * baseBR;
+        const varAbs   = rev - budgetRev;
+        const varPct   = budgetRev > 0 ? (varAbs / budgetRev * 100) : 0;
+
+        totalProjRev += rev;
+        totalWIP     += wipBalance;
+        if (projMarg < 25) projRiskCount++;
+
+        const margClass   = projMarg >= 35 ? 'var-pos' : projMarg >= 25 ? 'var-neu' : 'var-neg';
+        const varClass    = varAbs >= 0 ? 'var-pos' : 'var-neg';
+        const varSign     = varAbs >= 0 ? '+' : '';
+        const statusClass = projMarg >= 35 ? 'status-green' : projMarg >= 25 ? 'status-amber' : 'status-red';
+        const statusLabel = projMarg >= 35 ? 'Healthy' : projMarg >= 25 ? 'Watch' : 'At Risk';
+
+        return `<tr>
+          <td style="font-weight:600;">${p.name}</td>
+          <td style="color:#64748b;font-size:11px;">${p.practice}</td>
+          <td style="text-align:right;">${hc}</td>
+          <td style="text-align:right;">${util.toFixed(1)}%</td>
+          <td style="text-align:right;">${formatValue(recognized,'currency')}</td>
+          <td style="text-align:right;color:#6366f1;font-weight:600;">${formatValue(wipBalance,'currency')}</td>
+          <td style="text-align:right;" class="${varClass}">${varSign}${varPct.toFixed(1)}%</td>
+          <td style="text-align:right;" class="${margClass}">${projMarg.toFixed(1)}%</td>
+          <td style="text-align:center;"><span class="${statusClass}">${statusLabel}</span></td>
+        </tr>`;
+      });
+
+      document.getElementById('projectTable').innerHTML = `
+        <thead><tr>
+          <th>Project</th>
+          <th>Practice</th>
+          <th style="text-align:right;">HC</th>
+          <th style="text-align:right;">Util%</th>
+          <th style="text-align:right;">Recognized Rev</th>
+          <th style="text-align:right;">WIP Balance</th>
+          <th style="text-align:right;">vs Budget</th>
+          <th style="text-align:right;">Proj Margin</th>
+          <th style="text-align:center;">Status</th>
+        </tr></thead>
+        <tbody>${projRows.join('')}</tbody>`;
+
+      const alertBadge = document.getElementById('projectFinanceAlert');
+      if (projRiskCount === 0) {
+        alertBadge.style.cssText = 'font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:#d1fae5;color:#065f46;';
+        alertBadge.textContent   = 'All Projects Healthy';
+      } else {
+        alertBadge.style.cssText = 'font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;background:' + (projRiskCount > 2 ? '#fee2e2;color:#991b1b;' : '#fef3c7;color:#92400e;');
+        alertBadge.textContent   = projRiskCount + ' Project' + (projRiskCount !== 1 ? 's' : '') + ' at Risk';
+      }
+
+      const atRiskNames = practices.filter(p => {
+        const util = Math.max(45, Math.min(95, adjUt + p.utilOffset));
+        const rev  = Math.round(adjHc * p.hcShare) * HOURS_PER_HEAD * (util/100) * adjBr * p.brMult;
+        const dc   = rev * (adjDc / 100);
+        return (rev - dc) / rev * 100 < 25;
+      }).map(p => p.name);
+
+      document.getElementById('projectNarrative').innerHTML = `
+        <strong>Project Finance (${scenLabel}):</strong>
+        ${practices.length} active engagements generating <strong>${formatValue(totalProjRev,'currency')}</strong> total monthly revenue
+        at an average utilization of <strong>${adjUt.toFixed(1)}%</strong> and bill rate of <strong>$${adjBr.toFixed(0)}/hr</strong>.
+        WIP balance of <strong>${formatValue(totalWIP,'currency')}</strong> represents unbilled recognized revenue pending invoicing
+        — monitor AR aging to protect cash flow.
+        ${projRiskCount > 0
+          ? `<strong>${atRiskNames.join(', ')}</strong> ${projRiskCount > 1 ? 'are' : 'is'} below the 25% project margin floor under the ${scenLabel} scenario.
+             Review delivery cost allocation and staffing mix before the next billing cycle.`
+          : `All project margins are above the 25% floor — delivery economics are intact.`}`;
+    }
     function renderAll() {
       renderControls();
       renderKPIs();
@@ -2320,6 +2730,7 @@
       renderSensitivity();
       renderDecisionBox();
       renderChartExplainers();
+      renderConsultingPanels();
       // Update print title
       const pt = document.getElementById('printTitle');
       if (pt) pt.textContent = `${INDUSTRIES[currentIndustry].title} — ${currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1)} Scenario`;
@@ -2565,6 +2976,44 @@
           fcfPos ? `<strong style="color:${pos};">✓ Free cash flow is positive at ${fv(fcf, 'currency')}/mo after debt service.</strong> The asset is self-funding. Positive FCF supports distributions, capital reserves, and the ability to pursue additional acquisitions.`
                  : `<strong style="color:${neg};">⚠ Free cash flow is negative at ${fv(Math.abs(fcf), 'currency')}/mo after debt service.</strong> The asset is consuming equity capital. Options: refinance at lower debt cost, increase occupancy, raise rents, or consider divestiture.`,
           'This chart shows <strong>Free Cash Flow</strong> after debt service (principal + interest). Unlike NOI, FCF is what owners actually receive after paying lenders. Consistently negative FCF depletes equity reserves and signals a structural mismatch between asset income and capital structure.');
+      } else if (currentIndustry === 'consulting') {
+        const rev0 = data.netRevenueTrend ? data.netRevenueTrend[0] : 0;
+        const revEnd = data.netRevenueTrend ? data.netRevenueTrend[months-1] : 0;
+        const revGrowth = rev0 > 0 ? ((revEnd - rev0) / rev0 * 100) : 0;
+        const revPos = revGrowth >= 5;
+        setExplainer('chart1', 'Net Revenue (M12)', fv(revEnd, 'currency'), (revPos ? '▲' : '▼') + ' ' + Math.abs(revGrowth).toFixed(1) + '% from M1',
+          revPos ? '✓ Growing' : '⚡ Flat/Declining', revPos ? pos : warn, revPos ? posBg : warnBg,
+          revPos ? greenStyle : warnStyle,
+          revPos
+            ? '<strong style="color:' + pos + ';">✓ Net revenue is growing.</strong> Recognized revenue reached ' + fv(revEnd, 'currency') + ' by month 12 — up ' + revGrowth.toFixed(1) + '% from ' + fv(rev0, 'currency') + '. Billable capacity is converting into recognized revenue at plan.'
+            : '<strong style="color:' + warn + ';">⚡ Net revenue is flat or declining.</strong> Revenue of ' + fv(revEnd, 'currency') + ' at month 12 represents ' + revGrowth.toFixed(1) + '% change from month 1. Utilization or bill rate pressure may be limiting recognized revenue.',
+          'This chart shows <strong>Net Revenue</strong> — recognized income from billable hours. It combines headcount, utilization rate, and average bill rate. The gap between Upside and Downside lines reflects planning uncertainty around delivery capacity and rate realization.');
+
+        const utilEnd = data.utilizationTrend ? data.utilizationTrend[months-1] : 0;
+        const utilPos = utilEnd >= 78;
+        const utilWarn2 = utilEnd >= 70 && utilEnd < 78;
+        setExplainer('chart2', 'Utilization (M12)', utilEnd.toFixed(1) + '%', utilPos ? 'Above 78% — healthy' : utilWarn2 ? 'Watch zone (70–78%)' : 'Below 70% — at risk',
+          utilPos ? '✓ On Target' : (utilWarn2 ? '⚡ Watch Zone' : '⚠ Below Target'), utilPos ? pos : (utilWarn2 ? warn : neg), utilPos ? posBg : (utilWarn2 ? warnBg : negBg),
+          utilPos ? greenStyle : (utilWarn2 ? warnStyle : redStyle),
+          utilPos
+            ? '<strong style="color:' + pos + ';">✓ Utilization of ' + utilEnd.toFixed(1) + '% is above the 78% healthy threshold.</strong> Billable headcount is being deployed efficiently. Overhead is fully absorbed and delivery economics are generating positive operating leverage.'
+            : utilWarn2
+            ? '<strong style="color:' + warn + ';">⚡ Utilization of ' + utilEnd.toFixed(1) + '% is in the watch zone.</strong> Some billable capacity is sitting unbilled. Unless pipeline conversion recovers, overhead absorption will be insufficient and project margin will compress.'
+            : '<strong style="color:' + neg + ';">⚠ Utilization of ' + utilEnd.toFixed(1) + '% is below the risk threshold.</strong> Significant billable capacity is going unbilled. Staffing mix and pipeline need immediate review.',
+          'This chart shows <strong>Utilization %</strong> — the share of available hours that are billed to clients. The single most important short-term lever in professional services. Declining utilization compresses project margin and EBITDA faster than any other driver.');
+
+        const emEnd2 = data.ebitdaMarginTrend ? data.ebitdaMarginTrend[months-1] : 0;
+        const emPos2 = emEnd2 >= 15;
+        const emWarn2 = emEnd2 >= 8 && emEnd2 < 15;
+        setExplainer('chart3', 'EBITDA Margin (M12)', emEnd2.toFixed(1) + '%', emPos2 ? 'Above 15% — healthy' : emWarn2 ? 'Watch zone (8–15%)' : 'Below 8% — risk',
+          emPos2 ? '✓ Healthy' : (emWarn2 ? '⚡ Thin Margin' : '⚠ Margin Risk'), emPos2 ? pos : (emWarn2 ? warn : neg), emPos2 ? posBg : (emWarn2 ? warnBg : negBg),
+          emPos2 ? greenStyle : (emWarn2 ? warnStyle : redStyle),
+          emPos2
+            ? '<strong style="color:' + pos + ';">✓ EBITDA margin of ' + emEnd2.toFixed(1) + '% is healthy.</strong> Delivery cost discipline and SG&A control are generating strong operating profitability. Overhead is being absorbed across the revenue base.'
+            : emWarn2
+            ? '<strong style="color:' + warn + ';">⚡ EBITDA margin of ' + emEnd2.toFixed(1) + '% is thin.</strong> SG&A or delivery costs are absorbing a disproportionate share of project margin. Tighten overhead before the next forecast refresh.'
+            : '<strong style="color:' + neg + ';">⚠ EBITDA margin of ' + emEnd2.toFixed(1) + '% is below acceptable floor.</strong> The firm is not generating sufficient return after delivery and overhead costs. Pricing discipline, staffing efficiency, and SG&A reduction are all required.',
+          'This chart shows <strong>EBITDA Margin %</strong> — operating profitability after all delivery costs and overhead. In professional services, this indicates whether the delivery and overhead structure is calibrated correctly for the revenue base.');
       }
     }
 
@@ -2668,6 +3117,28 @@
         const v = data.capRate || 0;
         const health = v >= 6 ? 'Above average yield' : v >= 4 ? 'Market rate' : 'Low yield — property may be overvalued relative to income';
         return 'Cap Rate = annual NOI ÷ property value. A quick valuation benchmark — think of it as the property\'s yield. Your Cap Rate: ' + v.toFixed(1) + '%. ' + health + '.';
+      },
+      // Consulting & Services
+      netRevenue: function(data, base) {
+        const v = data.netRevenue || 0;
+        const ctx = base && base.netRevenue ? ' | ' + (v > base.netRevenue ? '▲ ' : '▼ ') + Math.abs(((v - base.netRevenue)/base.netRevenue)*100).toFixed(0) + '% vs base scenario' : '';
+        return 'Recognized revenue from billable hours delivered — headcount × utilization × bill rate. This is the primary top-line measure of delivery capacity converted into income. Monthly run-rate: $' + (v/1e3).toFixed(0) + 'K.' + ctx;
+      },
+      utilization: function(data, base) {
+        const v = data.utilization || 0;
+        const health = v >= 78 ? 'Healthy — billable capacity is being absorbed efficiently.' : v >= 70 ? 'Watch zone — some capacity is not converting to revenue.' : 'Risk — significant unbillable capacity; overhead absorption is under pressure.';
+        return 'Utilization % = billable hours worked ÷ available hours. The primary driver of recognized revenue and delivery economics. At ' + v.toFixed(1) + '%, ' + health;
+      },
+      projectMargin: function(data, base) {
+        const v = data.projectMargin || 0;
+        const health = v >= 35 ? 'Strong — delivery cost discipline is protecting gross profitability.' : v >= 25 ? 'Watch — margin is adequate but thin; review delivery cost allocation.' : 'Risk — delivery economics are under pressure; overhead absorption is insufficient.';
+        return 'Project Margin % = (Revenue − Delivery Cost) ÷ Revenue. Measures how efficiently the practice delivers work after direct delivery costs. At ' + v.toFixed(1) + '%: ' + health;
+      },
+      ebitdaMargin: function(data, base) {
+        const v = data.ebitdaMargin || 0;
+        const ctx = base && base.ebitdaMargin !== undefined ? ' | ' + (v > base.ebitdaMargin ? '▲ ' : '▼ ') + Math.abs(v - base.ebitdaMargin).toFixed(1) + 'pp vs base scenario' : '';
+        const health = v >= 15 ? 'Strong operating leverage — overhead is being absorbed across the revenue base.' : v >= 8 ? 'Developing — profitability is positive but SG&A is consuming a meaningful share of gross profit.' : 'Thin — pricing discipline and SG&A control are needed to protect the bottom line.';
+        return 'EBITDA Margin % = (Revenue − Delivery Cost − SG&A) ÷ Revenue. Measures the firm\'s operating profitability after all delivery and overhead costs. At ' + v.toFixed(1) + '%: ' + health + ctx;
       }
     };
 
@@ -2868,45 +3339,58 @@
 
     function generateCommentary(industry, data) {
       const months = modelData.months.length;
-      
-      switch (currentIndustry) {
-        case 'saas':
-          const runway = data.cash[months - 1] / 200000;
-          const mrrGrowth = ((data.mrrTrend[months - 1] - data.mrrTrend[0]) / data.mrrTrend[0]) * 100;
-          return `
-            <p><strong>Performance:</strong> ARR stands at <span class="commentary-highlight">${formatValue(data.arr, 'currency')}</span> with ${formatValue(data.customers, 'number')} active customers. MRR grew ${mrrGrowth > 0 ? mrrGrowth.toFixed(1) + '% over the period' : 'with negative momentum'}.</p>
-            <p><strong>Unit Economics:</strong> LTV/CAC ratio is <span class="commentary-highlight">${data.ltv.toFixed(2)}x</span>. ${data.ltv > 3 ? 'Strong unit economics support efficient growth.' : 'Consider optimizing CAC or reducing churn to improve unit economics.'} Net Revenue Retention at ${data.nrr.toFixed(0)}% ${data.nrr > 110 ? 'demonstrates strong expansion' : 'shows baseline retention'}.</p>
-            <p><strong>Cash Position:</strong> Current cash balance of <span class="commentary-highlight">${formatValue(data.cash[months - 1], 'currency')}</span> provides approximately ${runway.toFixed(1)} months of runway. ${runway > 12 ? 'Healthy runway allows strategic investments.' : runway > 6 ? 'Monitor burn rate closely.' : 'Immediate action required to extend runway.'}</p>
-          `;
-          
-        case 'media':
-          const userGrowth = ((data.users[months - 1] - data.users[0]) / data.users[0]) * 100;
-          return `
-            <p><strong>Audience Growth:</strong> Platform reached <span class="commentary-highlight">${formatValue(data.users[months - 1], 'number')}</span> active users, growing ${userGrowth.toFixed(1)}% over the period. ARPU of <span class="commentary-highlight">${formatValue(data.arpu, 'currency')}</span> ${data.arpu > 5 ? 'exceeds industry benchmarks' : 'aligns with platform economics'}.</p>
-            <p><strong>Monetization:</strong> Monthly ad revenue of <span class="commentary-highlight">${formatValue(data.adRevenue, 'currency')}</span> driven by engagement and fill rate optimization. EBITDA margin at ${data.ebitdaMargin.toFixed(1)}% ${data.ebitdaMargin > 20 ? 'demonstrates strong operating leverage' : 'requires scale for profitability'}.</p>
-            <p><strong>Outlook:</strong> ${data.ebitdaMargin > 0 ? 'Positive unit economics achieved through scale.' : 'Path to profitability requires user base expansion or ARPU improvement.'} DAU estimated at ${formatValue(data.dau, 'number')} with engagement driving monetization.</p>
-          `;
-          
-        case 'manufacturing':
-          return `
-            <p><strong>Production:</strong> Manufacturing ${formatValue(data.units[months - 1], 'number')} units per month generating <span class="commentary-highlight">${formatValue(data.revenue, 'currency')}</span> in revenue. Utilization rate at ${driverValues.utilizationRate}% provides ${driverValues.utilizationRate < 85 ? 'capacity for volume growth' : 'optimal efficiency'}.</p>
-            <p><strong>Margin Performance:</strong> Gross margin of <span class="commentary-highlight">${data.grossMargin.toFixed(1)}%</span> driven by material efficiency and labor optimization. Unit contribution of ${formatValue(data.unitEconomics, 'currency')} ${data.grossMargin > 40 ? 'supports profitable scaling' : 'requires cost optimization'}.</p>
-            <p><strong>Cash Generation:</strong> Operating cash flow of <span class="commentary-highlight">${formatValue(data.cashFlow[months - 1], 'currency')}</span> per month. ${data.cashFlow[months - 1] > 0 ? 'Positive cash generation funds growth initiatives.' : 'Focus on margin improvement to achieve cash flow positivity.'}</p>
-          `;
-          
-        case 'lending':
-          return `
-            <p><strong>Portfolio:</strong> Outstanding loan portfolio of <span class="commentary-highlight">${formatValue(data.portfolioSize, 'currency')}</span> with net interest margin of ${data.netInterestMargin.toFixed(2)}%. Monthly originations drive steady ${driverValues.originations > 5000000 ? 'aggressive' : 'moderate'} portfolio growth.</p>
-            <p><strong>Credit Quality:</strong> Net loss rate of <span class="commentary-highlight">${data.lossRate.toFixed(2)}%</span> with ${driverValues.recoveryRate}% recovery on defaults. ${data.lossRate < 1 ? 'Credit performance remains strong with controlled losses.' : 'Monitor credit quality and underwriting standards closely.'}</p>
-            <p><strong>Returns:</strong> Annualized ROE of ${data.roe.toFixed(1)}% ${data.roe > 15 ? 'demonstrates attractive returns on equity' : 'shows moderate profitability requiring optimization'}. Monthly net income of ${formatValue(data.netIncome[months - 1], 'currency')}.</p>
-          `;
-          
-        case 'realestate':
-          return `
-            <p><strong>Occupancy:</strong> Property portfolio generating <span class="commentary-highlight">${formatValue(data.rentalIncome, 'currency')}</span> in monthly rental income at ${driverValues.occupancyRate}% occupancy. ${driverValues.occupancyRate > 90 ? 'Near-full occupancy maximizes revenue potential.' : 'Opportunity to improve occupancy through active leasing.'}</p>
-            <p><strong>Operating Performance:</strong> NOI of <span class="commentary-highlight">${formatValue(data.noi, 'currency')}</span> with ${data.noiMargin.toFixed(1)}% margin. Operating efficiency ${data.noiMargin > 65 ? 'exceeds market standards' : 'aligns with industry benchmarks'}. Cap rate at ${data.capRate.toFixed(2)}%.</p>
-            <p><strong>Cash Flow:</strong> Free cash flow after debt service of <span class="commentary-highlight">${formatValue(data.fcf[months - 1], 'currency')}</span> ${data.fcf[months - 1] > 0 ? 'supports distributions and reinvestment opportunities' : 'portfolio requires deleveraging or occupancy improvement'}.</p>
-          `;
+
+      if (currentIndustry === 'saas') {
+        const runway = data.cash[months - 1] / 200000;
+        const mrrGrowth = ((data.mrrTrend[months - 1] - data.mrrTrend[0]) / data.mrrTrend[0]) * 100;
+        return `
+          <p><strong>Performance:</strong> ARR stands at <span class="commentary-highlight">${formatValue(data.arr, 'currency')}</span> with ${formatValue(data.customers, 'number')} active customers. MRR grew ${mrrGrowth > 0 ? mrrGrowth.toFixed(1) + '% over the period' : 'with negative momentum'}.</p>
+          <p><strong>Unit Economics:</strong> LTV/CAC ratio is <span class="commentary-highlight">${data.ltv.toFixed(2)}x</span>. ${data.ltv > 3 ? 'Strong unit economics support efficient growth.' : 'Consider optimizing CAC or reducing churn to improve unit economics.'} Net Revenue Retention at ${data.nrr.toFixed(0)}% ${data.nrr > 110 ? 'demonstrates strong expansion' : 'shows baseline retention'}.</p>
+          <p><strong>Cash Position:</strong> Current cash balance of <span class="commentary-highlight">${formatValue(data.cash[months - 1], 'currency')}</span> provides approximately ${runway.toFixed(1)} months of runway. ${runway > 12 ? 'Healthy runway allows strategic investments.' : runway > 6 ? 'Monitor burn rate closely.' : 'Immediate action required to extend runway.'}</p>
+        `;
+
+      } else if (currentIndustry === 'media') {
+        const userGrowth = ((data.users[months - 1] - data.users[0]) / data.users[0]) * 100;
+        return `
+          <p><strong>Audience Growth:</strong> Platform reached <span class="commentary-highlight">${formatValue(data.users[months - 1], 'number')}</span> active users, growing ${userGrowth.toFixed(1)}% over the period. ARPU of <span class="commentary-highlight">${formatValue(data.arpu, 'currency')}</span> ${data.arpu > 5 ? 'exceeds industry benchmarks' : 'aligns with platform economics'}.</p>
+          <p><strong>Monetization:</strong> Monthly ad revenue of <span class="commentary-highlight">${formatValue(data.adRevenue, 'currency')}</span> driven by engagement and fill rate optimization. EBITDA margin at ${data.ebitdaMargin.toFixed(1)}% ${data.ebitdaMargin > 20 ? 'demonstrates strong operating leverage' : 'requires scale for profitability'}.</p>
+          <p><strong>Outlook:</strong> ${data.ebitdaMargin > 0 ? 'Positive unit economics achieved through scale.' : 'Path to profitability requires user base expansion or ARPU improvement.'} DAU estimated at ${formatValue(data.dau, 'number')} with engagement driving monetization.</p>
+        `;
+
+      } else if (currentIndustry === 'manufacturing') {
+        return `
+          <p><strong>Production:</strong> Manufacturing ${formatValue(data.units[months - 1], 'number')} units per month generating <span class="commentary-highlight">${formatValue(data.revenue, 'currency')}</span> in revenue. Utilization rate at ${driverValues.utilizationRate}% provides ${driverValues.utilizationRate < 85 ? 'capacity for volume growth' : 'optimal efficiency'}.</p>
+          <p><strong>Margin Performance:</strong> Gross margin of <span class="commentary-highlight">${data.grossMargin.toFixed(1)}%</span> driven by material efficiency and labor optimization. Unit contribution of ${formatValue(data.unitEconomics, 'currency')} ${data.grossMargin > 40 ? 'supports profitable scaling' : 'requires cost optimization'}.</p>
+          <p><strong>Cash Generation:</strong> Operating cash flow of <span class="commentary-highlight">${formatValue(data.cashFlow[months - 1], 'currency')}</span> per month. ${data.cashFlow[months - 1] > 0 ? 'Positive cash generation funds growth initiatives.' : 'Focus on margin improvement to achieve cash flow positivity.'}</p>
+        `;
+
+      } else if (currentIndustry === 'lending') {
+        return `
+          <p><strong>Portfolio:</strong> Outstanding loan portfolio of <span class="commentary-highlight">${formatValue(data.portfolioSize, 'currency')}</span> with net interest margin of ${data.netInterestMargin.toFixed(2)}%. Monthly originations drive steady ${driverValues.originations > 5000000 ? 'aggressive' : 'moderate'} portfolio growth.</p>
+          <p><strong>Credit Quality:</strong> Net loss rate of <span class="commentary-highlight">${data.lossRate.toFixed(2)}%</span> with ${driverValues.recoveryRate}% recovery on defaults. ${data.lossRate < 1 ? 'Credit performance remains strong with controlled losses.' : 'Monitor credit quality and underwriting standards closely.'}</p>
+          <p><strong>Returns:</strong> Annualized ROE of ${data.roe.toFixed(1)}% ${data.roe > 15 ? 'demonstrates attractive returns on equity' : 'shows moderate profitability requiring optimization'}. Monthly net income of ${formatValue(data.netIncome[months - 1], 'currency')}.</p>
+        `;
+
+      } else if (currentIndustry === 'realestate') {
+        return `
+          <p><strong>Occupancy:</strong> Property portfolio generating <span class="commentary-highlight">${formatValue(data.rentalIncome, 'currency')}</span> in monthly rental income at ${driverValues.occupancyRate}% occupancy. ${driverValues.occupancyRate > 90 ? 'Near-full occupancy maximizes revenue potential.' : 'Opportunity to improve occupancy through active leasing.'}</p>
+          <p><strong>Operating Performance:</strong> NOI of <span class="commentary-highlight">${formatValue(data.noi, 'currency')}</span> with ${data.noiMargin.toFixed(1)}% margin. Operating efficiency ${data.noiMargin > 65 ? 'exceeds market standards' : 'aligns with industry benchmarks'}. Cap rate at ${data.capRate.toFixed(2)}%.</p>
+          <p><strong>Cash Flow:</strong> Free cash flow after debt service of <span class="commentary-highlight">${formatValue(data.fcf[months - 1], 'currency')}</span> ${data.fcf[months - 1] > 0 ? 'supports distributions and reinvestment opportunities' : 'portfolio requires deleveraging or occupancy improvement'}.</p>
+        `;
+
+      } else if (currentIndustry === 'consulting') {
+        const revM1 = data.netRevenueTrend ? data.netRevenueTrend[0] : 0;
+        const revEnd = data.netRevenue || 0;
+        const revGrowth = revM1 > 0 ? ((revEnd - revM1) / revM1 * 100) : 0;
+        const util = data.utilization || 0;
+        const pm = data.projectMargin || 0;
+        const em = data.ebitdaMargin || 0;
+        const scenLabel = currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1);
+        return `
+          <p><strong>Performance:</strong> Net revenue of <span class="commentary-highlight">${formatValue(revEnd, 'currency')}</span> at month 12 reflects ${revGrowth >= 0 ? 'positive' : 'declining'} recognition momentum (${revGrowth >= 0 ? '+' : ''}${revGrowth.toFixed(1)}% from month 1). Utilization of <span class="commentary-highlight">${util.toFixed(1)}%</span> is the primary delivery lever — ${util >= 78 ? 'tracking above plan and supporting full overhead absorption' : util >= 70 ? 'within acceptable range but approaching the watch threshold' : 'below target, indicating unbillable capacity and overhead absorption risk'}.</p>
+          <p><strong>Margin Quality:</strong> Project margin of <span class="commentary-highlight">${pm.toFixed(1)}%</span> ${pm >= 35 ? 'reflects sound delivery cost discipline' : pm >= 25 ? 'is in the watch zone; delivery costs absorbing higher share of revenue than target' : 'is under pressure — delivery cost ratio needs corrective attention'}. EBITDA margin of <span class="commentary-highlight">${em.toFixed(1)}%</span> ${em >= 15 ? 'demonstrates overhead is efficiently absorbed at current scale' : em >= 8 ? 'is positive but thin; SG&A consuming a meaningful share of project margin' : 'is below acceptable floor — SG&A and delivery costs are eroding profitability'}.</p>
+          <p><strong>Outlook &amp; Action:</strong> ${em >= 15 && util >= 78 ? 'Run plan — utilization and project margins support growth. Protect bill rate and staffing mix on lower-margin engagements.' : em >= 8 && util >= 70 ? 'Proceed cautiously — refresh utilization assumptions and validate pricing on weaker-performing work before committing to headcount additions.' : 'Hold forecast pending corrective action. Review staffing mix, validate utilization assumptions by practice area, and assess delivery cost allocation on underperforming engagements.'}</p>
+        `;
       }
     }
 
@@ -3107,6 +3591,12 @@
           csv = 'Month,Unit ID,Available Sqm,Occupied Flag,Rent Rate,Operating Cost,Maintenance,Debt Service\n';
           csv += 'Jan 2025,UNIT001,5000,1,30,45000,5000,12500\n';
           csv += 'Jan 2025,UNIT002,3000,0,30,27000,3000,7500\n';
+          break;
+        case 'consulting':
+          csv = 'Month,Practice,Project,Billable Headcount,Utilization %,Bill Rate,Net Revenue,Delivery Cost,SG&A,Forecast,Budget\n';
+          csv += 'Jan 2025,Management Consulting,Project Alpha,12,78,95,142560,74131,25661,142000,138000\n';
+          csv += 'Jan 2025,Technology Advisory,Project Beta,8,74,85,80256,41733,14446,78000,80000\n';
+          csv += 'Feb 2025,Management Consulting,Project Alpha,12,80,95,146304,76078,26335,145000,138000\n';
           break;
       }
       
@@ -3482,6 +3972,12 @@
         case 'realestate': {
           return data.fcf ? data.fcf[months - 1] : 0;
         }
+        case 'consulting': {
+          const revC = data.netRevenueTrend ? data.netRevenueTrend[months-1] : 0;
+          const delivC = revC * (driverValues.deliveryCostRatio / 100);
+          const sgaC = revC * (driverValues.sgaRatio / 100);
+          return revC - delivC - sgaC;
+        }
         default: return 0;
       }
     }
@@ -3494,6 +3990,7 @@
         case 'manufacturing': return scenario.revenueTrend ? scenario.revenueTrend[months - 1] : 0;
         case 'lending': return scenario.portfolio ? scenario.portfolio[months - 1] * (driverValues.avgRate / 100 / 12) : 0;
         case 'realestate': return scenario.rent ? scenario.rent[months - 1] : 0;
+        case 'consulting': return scenario.netRevenueTrend ? scenario.netRevenueTrend[months - 1] : 0;
         default: return 0;
       }
     }
@@ -3502,6 +3999,7 @@
       const months = 12;
       switch (currentIndustry) {
         case 'saas': return scenario.cash ? scenario.cash[months - 1] : 0;
+        case 'consulting': return scenario.cashBalanceTrend ? scenario.cashBalanceTrend[months - 1] : 0;
         default: return computeEbitdaProxy(scenario);
       }
     }
@@ -3792,6 +4290,25 @@
         } else {
           flags.push({ label: `NOI margin ${noi.toFixed(1)}% — ${noi >= 65 ? 'above market' : 'watch costs'}`, cls: noi >= 65 ? 'guardrail-flag--ok' : 'guardrail-flag--warn' });
         }
+      } else if (currentIndustry === 'consulting') {
+        const utilG = data.utilization || 0;
+        const pmG = data.projectMargin || 0;
+        const emG = data.ebitdaMargin || 0;
+        flags.push(utilG >= 78
+          ? { label: `Utilization ${utilG.toFixed(1)}% — healthy`, cls: 'guardrail-flag--ok' }
+          : utilG >= 70
+          ? { label: `Utilization ${utilG.toFixed(1)}% — watch zone`, cls: 'guardrail-flag--warn' }
+          : { label: `Utilization ${utilG.toFixed(1)}% — below target ⚠`, cls: 'guardrail-flag--risk' });
+        flags.push(pmG >= 35
+          ? { label: `Project margin ${pmG.toFixed(1)}% — healthy`, cls: 'guardrail-flag--ok' }
+          : pmG >= 25
+          ? { label: `Project margin ${pmG.toFixed(1)}% — watch`, cls: 'guardrail-flag--warn' }
+          : { label: `Project margin ${pmG.toFixed(1)}% — delivery cost risk ⚠`, cls: 'guardrail-flag--risk' });
+        flags.push(emG >= 15
+          ? { label: `EBITDA margin ${emG.toFixed(1)}% — healthy`, cls: 'guardrail-flag--ok' }
+          : emG >= 8
+          ? { label: `EBITDA margin ${emG.toFixed(1)}% — watch`, cls: 'guardrail-flag--warn' }
+          : { label: `EBITDA margin ${emG.toFixed(1)}% — below floor ⚠`, cls: 'guardrail-flag--risk' });
       }
       return flags;
     }
@@ -3977,6 +4494,39 @@
           ];
           nextStep = `Run a pipeline analysis of off-market assets within 500m; prioritise sub-5% cap rate acquisitions with 90%+ occupancy.`;
         }
+      } else if (currentIndustry === 'consulting') {
+        const utilD = data.utilization || 0;
+        const pmD = data.projectMargin || 0;
+        const emD = data.ebitdaMargin || 0;
+
+        if (hasRisk) {
+          boxClass = 'decision-box--hold'; eyebrow = 'DECISION';
+          verdict = `Hold forecast — <span class="verdict-action">fix utilization and delivery economics first</span>`;
+          bullets = [
+            `Utilization of ${utilD.toFixed(1)}% is below the 70% floor — significant bench time is accumulating cost without billable output. Staffing mix needs immediate review.`,
+            `Project margin of ${pmD.toFixed(1)}% indicates delivery cost is absorbing too much of recognized revenue. Validate delivery cost allocation by engagement before the next planning cycle.`,
+            `Do not add headcount until utilization and project margin stabilize — additional capacity at current utilization worsens overhead absorption and EBITDA.`
+          ];
+          nextStep = `Review staffing mix by practice area; validate bill rates and delivery cost on underperforming engagements before next forecast refresh.`;
+        } else if (hasWarn) {
+          boxClass = 'decision-box--caution'; eyebrow = 'DECISION';
+          verdict = `Proceed cautiously — <span class="verdict-action">refresh utilization and staffing mix assumptions</span>`;
+          bullets = [
+            `Utilization of ${utilD.toFixed(1)}% and project margin of ${pmD.toFixed(1)}% are within acceptable range but require active management to hold plan.`,
+            `Prioritize high-utilization practices and protect bill rates on key accounts — resist discounting on renewal cycles.`,
+            `Tighten SG&A approval thresholds before the next quarter; overhead growth above revenue growth will compress EBITDA margin further.`
+          ];
+          nextStep = `Refresh utilization assumptions by team; review pricing discipline on low-margin work and validate SG&A run-rate before committing to headcount additions.`;
+        } else {
+          boxClass = 'decision-box--run'; eyebrow = 'DECISION';
+          verdict = `Run plan — <span class="verdict-action">utilization and project margins support growth</span>`;
+          bullets = [
+            `Utilization of ${utilD.toFixed(1)}% and project margin of ${pmD.toFixed(1)}% confirm delivery economics are intact. The staffing model is being used efficiently.`,
+            `EBITDA margin of ${emD.toFixed(1)}% demonstrates overhead is being absorbed at current revenue scale — pricing discipline is working.`,
+            `Growth investment is justified: incremental headcount will add revenue at current utilization rates without disproportionate overhead growth.`
+          ];
+          nextStep = `Proceed with approved headcount plan; protect bill rate floors on renewals and validate pipeline conversion assumptions at the start of next quarter.`;
+        }
       }
 
       if (!verdict) { box.style.display = 'none'; return; }
@@ -4024,10 +4574,14 @@
 
         if (scenario === 'base') {
           tooltip = 'Base Case: Central assumptions at baseline drivers. All other scenarios are relative to this. Use as your planning default.';
-          // Enrich with live data if available
           if (currentIndustry === 'saas' && data.nrr !== undefined) {
             const runway = data.cash ? Math.round(data.cash[data.cash.length - 1] / 200000) : '—';
             tooltip = `Base Case: Baseline assumptions. NRR ~${data.nrr ? data.nrr.toFixed(0) : '—'}%, ARR $${data.arr ? (data.arr / 1e6).toFixed(1) : '—'}M at month 12. Use as your planning baseline.`;
+          } else if (currentIndustry === 'consulting') {
+            const rev = data.netRevenue || 0;
+            const util = (data.utilization || 0).toFixed(1);
+            const em = (data.ebitdaMargin || 0).toFixed(1);
+            tooltip = `Base Case: Planning baseline. Net revenue $${(rev/1e3).toFixed(0)}K/mo, utilization ${util}%, EBITDA margin ${em}%.`;
           }
         } else if (scenario === 'upside') {
           tooltip = `Upside (${pct}): Optimistic scenario — better retention, higher conversion, stronger margins. Use to plan growth investment if leading indicators hit targets.`;
@@ -4035,6 +4589,13 @@
             const baseArr = modelData.scenarios.base && modelData.scenarios.base.arr ? modelData.scenarios.base.arr : 0;
             const uplift = baseArr > 0 ? (((data.arr - baseArr) / baseArr) * 100).toFixed(0) : '—';
             tooltip = `Upside (+25% drivers): ${uplift !== '—' ? `ARR +${uplift}% vs base case.` : ''} Better retention, stronger growth. Use to plan growth investment when metrics are tracking ahead.`;
+          } else if (currentIndustry === 'consulting') {
+            const baseRev = (modelData.scenarios.base || {}).netRevenue || 0;
+            const rev = data.netRevenue || 0;
+            const uplift = baseRev > 0 ? (((rev - baseRev) / baseRev) * 100).toFixed(0) : '—';
+            const util = (data.utilization || 0).toFixed(1);
+            const em = (data.ebitdaMargin || 0).toFixed(1);
+            tooltip = `Upside: Better utilization and pricing. Net revenue +${uplift}% vs base, utilization ${util}%, EBITDA margin ${em}%.`;
           }
         } else {
           tooltip = `Downside (${pct}): Conservative scenario — higher churn, slower growth, margin pressure. Use to stress-test funding needs and plan contingencies.`;
@@ -4042,6 +4603,13 @@
             const baseArr = modelData.scenarios.base && modelData.scenarios.base.arr ? modelData.scenarios.base.arr : 0;
             const drop = baseArr > 0 ? (((baseArr - data.arr) / baseArr) * 100).toFixed(0) : '—';
             tooltip = `Downside (−25% drivers): ${drop !== '—' ? `ARR −${drop}% vs base case.` : ''} Higher churn, slower growth. Use to stress-test runway and set contingency budgets.`;
+          } else if (currentIndustry === 'consulting') {
+            const baseRev = (modelData.scenarios.base || {}).netRevenue || 0;
+            const rev = data.netRevenue || 0;
+            const drop = baseRev > 0 ? (((baseRev - rev) / baseRev) * 100).toFixed(0) : '—';
+            const util = (data.utilization || 0).toFixed(1);
+            const em = (data.ebitdaMargin || 0).toFixed(1);
+            tooltip = `Downside: Weaker utilization and cost pressure reduce profitability. Net revenue −${drop}% vs base, utilization ${util}%, EBITDA margin ${em}%.`;
           }
         }
 
@@ -4080,7 +4648,7 @@
         btn.addEventListener('click', toggle);
       })();
 
-      /* ── Sidebar accordion: touch-safe, aria-expanded, hidden ── */
+      /* ── Sidebar accordion: reliable click-based toggle ── */
       (function() {
         var sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;
@@ -4089,23 +4657,18 @@
           var body = header.nextElementSibling;
           if (!body || !body.classList.contains('sb-acc-body')) return;
 
-          /* Set initial ARIA state from current DOM state */
-          var isOpen = header.classList.contains('open');
-          header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-          if (!isOpen) body.setAttribute('hidden', '');
+          /* Remove any inline onclick to avoid double-firing */
+          header.removeAttribute('onclick');
 
-          var lastEventTime = 0;
+          header.addEventListener('click', function(e) {
+            /* Only respond to clicks directly on the header, not bubbled from child buttons */
+            var target = e.target;
+            /* If the click was on an inner button (sb-acc-tab, sb-acc-btn etc), let it propagate normally */
+            if (target !== header && (target.tagName === 'BUTTON' || target.closest('button'))) return;
 
-          function handleToggle(e) {
-            if (e.type === 'click' && Date.now() - lastEventTime < 500) return;
-            if (e.type === 'touchend') lastEventTime = Date.now();
+            var opening = !body.classList.contains('open');
 
-            e.preventDefault();
-            e.stopPropagation();
-
-            var opening = !header.classList.contains('open');
-
-            /* Close all other accordion panels */
+            /* Close all other panels */
             sidebar.querySelectorAll('.sb-acc-header').forEach(function(h) {
               if (h === header) return;
               h.classList.remove('open');
@@ -4113,7 +4676,7 @@
               var b = h.nextElementSibling;
               if (b && b.classList.contains('sb-acc-body')) {
                 b.classList.remove('open');
-                b.setAttribute('hidden', '');
+                b.style.display = 'none';
               }
             });
 
@@ -4121,18 +4684,13 @@
             header.classList.toggle('open', opening);
             header.setAttribute('aria-expanded', opening ? 'true' : 'false');
             body.classList.toggle('open', opening);
-            if (opening) {
-              body.removeAttribute('hidden');
-            } else {
-              body.setAttribute('hidden', '');
-            }
-          }
+            body.style.display = opening ? 'block' : 'none';
+          });
 
-          header.addEventListener('touchend', handleToggle, { passive: false });
-          header.addEventListener('click', handleToggle);
-
-          /* Remove the old inline onclick to avoid double-firing */
-          header.removeAttribute('onclick');
+          /* Set initial visual state without using the 'hidden' attribute */
+          var isOpen = body.classList.contains('open');
+          header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          body.style.display = isOpen ? 'block' : 'none';
         });
       })();
     });
