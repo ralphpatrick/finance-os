@@ -4661,10 +4661,10 @@
           header.removeAttribute('onclick');
 
           header.addEventListener('click', function(e) {
-            /* Only respond to clicks directly on the header, not bubbled from child buttons */
+            /* Headers are <button> elements — clicks from child spans bubble up naturally.
+               Only bail if the click came from a nested interactive element that is NOT this header. */
             var target = e.target;
-            /* If the click was on an inner button (sb-acc-tab, sb-acc-btn etc), let it propagate normally */
-            if (target !== header && (target.tagName === 'BUTTON' || target.closest('button'))) return;
+            if (target !== header && target.closest && target.closest('.sb-acc-tab, .sb-acc-btn, [data-action]')) return;
 
             var opening = !body.classList.contains('open');
 
