@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Ralph Patrick Divina — FP&A / Finance Business Partner. 7 years turning operational data into decision-ready insights." name="description"/>
+<meta content="#0B1220" name="theme-color"/>
+<title>Ralph Patrick Divina | FP&A / Finance Business Partner</title>
+<link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<style>
+/* ── Design tokens (matches portfolio site) ── */
+:root {
+  --bg: #ffffff;
+  --bg-muted: #f6f8fb;
+  --text: #0b1220;
+  --muted: #4a5568;
+  --border: rgba(12, 23, 45, 0.10);
+  --shadow: 0 10px 30px rgba(11, 18, 32, 0.08);
+  --shadow-soft: 0 8px 18px rgba(11, 18, 32, 0.06);
+  --accent: #0f766e;
+  --accent-2: #1b4d7a;
+  --accent-soft: rgba(15, 118, 110, 0.10);
+  --radius: 18px;
+  --radius-sm: 14px;
+  --max: 1120px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+p { margin: 0; }
+h1,h2,h3 { margin: 0; letter-spacing: -0.02em; }
+img { max-width: 100%; display: block; }
+
+.container {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* ── Nav ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  gap: 16px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.brand-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease, border-color 140ms ease;
+  cursor: pointer;
+  user-select: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn-solid {
+  background: var(--text);
+  color: white;
+  box-shadow: var(--shadow-soft);
+}
+.btn-solid:hover { box-shadow: var(--shadow); }
+.btn-ghost {
+  background: white;
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-ghost:hover { border-color: rgba(12,23,45,0.18); box-shadow: 0 6px 18px rgba(11,18,32,0.06); }
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.btn-link:hover { text-decoration: underline; }
+
+/* ── Hero ── */
+.hero {
+  padding: 72px 0 52px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-copy--centered { max-width: 100%; text-align: center; }
+.hero-copy--centered .eyebrow { justify-content: center; }
+.hero-copy--centered .hero-actions { justify-content: center; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+}
+.hero-title {
+  margin-top: 20px;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.hero-title .accent { color: var(--accent-2); }
+.hero-subtitle {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-actions {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-metrics {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.metric-card {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: white;
+  text-align: center;
+}
+.metric-label { font-size: 12px; color: var(--muted); }
+.metric-value { font-weight: 650; font-size: 13px; margin-top: 6px; }
+
+/* ── Section base ── */
+.section { padding: 72px 0; }
+.section-muted { background: var(--bg-muted); }
+.section-head { display: grid; gap: 10px; margin-bottom: 32px; }
+.section-head h2 { font-size: 28px; line-height: 1.1; }
+.section-subhead { color: var(--muted); max-width: 70ch; font-size: 15px; }
+
+/* ── Profile / About ── */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.profile-photo-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+  padding: 14px;
+  text-align: center;
+}
+.profile-photo-card img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.profile-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 10px;
+  background: var(--bg-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px dashed rgba(12,23,45,0.15);
+}
+.profile-photo-placeholder .initials {
+  font-size: 42px;
+  font-weight: 750;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+}
+.profile-name-card {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--bg-muted);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.profile-name-card .name { font-size: 14px; font-weight: 700; color: var(--text); }
+.profile-name-card .role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.profile-name-card .web { font-size: 12px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+
+.profile-body { display: grid; gap: 20px; }
+.profile-lead {
+  font-size: 17px;
+  font-weight: 520;
+  line-height: 1.65;
+  color: var(--text);
+}
+.profile-sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* Skills grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.skill-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 520;
+  line-height: 1.45;
+}
+.skill-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(15,118,110,0.18);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* ── Experience ── */
+.experience-list { display: grid; gap: 20px; }
+.exp-card {
+  padding: 24px 26px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 160ms ease, border-color 160ms ease;
+}
+.exp-card:hover {
+  border-color: rgba(15,118,110,0.25);
+  box-shadow: 0 4px 24px rgba(11,18,32,0.08);
+}
+.exp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.exp-company {
+  font-size: 17px;
+  font-weight: 720;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.exp-location {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.exp-period {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-muted);
+  flex-shrink: 0;
+}
+.exp-role {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 6px;
+}
+.exp-divider {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+.exp-bullets { display: grid; gap: 8px; }
+.exp-bullet {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.exp-bullet-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+/* ── KPI highlight ── */
+.kpi-highlight {
+  display: inline;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* ── Education & Cert ── */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.edu-card {
+  padding: 20px 22px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.edu-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.edu-degree {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.edu-school {
+  font-size: 13px;
+  color: var(--muted);
+}
+.edu-year {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 4px 10px;
+  background: var(--accent-soft);
+  border-radius: 999px;
+  border: 1px solid rgba(15,118,110,0.18);
+  display: inline-block;
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+/* ── Contact ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 160ms, border-color 160ms;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.contact-card:hover {
+  box-shadow: var(--shadow);
+  border-color: rgba(12,23,45,0.16);
+}
+.contact-card-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.contact-card-value {
+  font-size: 15px;
+  font-weight: 650;
+}
+.contact-card-arrow {
+  margin-top: auto;
+  font-size: 18px;
+  color: var(--muted);
+}
+.copy-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: auto;
+  transition: color 140ms ease;
+}
+.contact-card:hover .copy-hint { color: var(--accent); }
+
+/* ── Footer ── */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+footer a { color: var(--accent); font-weight: 600; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .profile-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 32px; }
+  .hero-metrics { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 26px; }
+  .hero-metrics { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<header class="site-header" id="top">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Go to top">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Ralph Patrick Divina</span>
+    </a>
+    <div class="nav-cta">
+      <a class="btn btn-solid" href="Ralph Patrick Divina - Finance Business Partner.pdf" download>Download PDF ↓</a>
+      <a class="btn btn-link" href="https://www.linkedin.com/in/ralph-patrick-divina-55534614a/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-copy--centered">
+      <div class="eyebrow">Finance Business Partner · FP&amp;A · 7 Years Experience</div>
+      <h1 class="hero-title">
+        Ralph Patrick Divina — <span class="accent">FP&amp;A / Finance Business Partner</span>
+      </h1>
+      <p class="hero-subtitle">
+        Finance systems that turn data into decisions across multi-entity environments (KSA + PH)
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="#experience">View Experience ↓</a>
+        <a class="btn btn-ghost" href="Ralph Patrick Divina - Finance Business Partner.pdf" download>Download FP&amp;A Resume PDF</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <div class="metric-label">Experience</div>
+          <div class="metric-value">7 Years FP&amp;A</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Regions</div>
+          <div class="metric-value">KSA + Philippines</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">DSO Impact</div>
+          <div class="metric-value">−10–12 Days in 3 Months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Profile ── -->
+<section class="section section-muted" id="about">
+  <div class="container">
+    <div class="section-head">
+      <h2>Executive Profile</h2>
+      <p class="section-subhead">Finance Business Partner and FP&amp;A professional turning operational data into decision-ready insights.</p>
+    </div>
+    <div class="profile-grid">
+      <!-- Photo -->
+      <div class="profile-photo-card">
+        <img src="avatar-ralph.png" alt="Ralph Patrick Divina" style="width:100%;border-radius:10px;object-fit:cover;"/>
+        <div class="profile-name-card">
+          <div class="name">Ralph Patrick P. Divina</div>
+          <div class="role">Finance Business Partner / FP&amp;A Lead</div>
+          <div class="web">ralphpatrick.com</div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="profile-body">
+        <p class="profile-lead">
+          Finance Business Partner / FP&amp;A professional with 7 years' experience turning operational data into decision-ready insights across multi-entity environments (KSA + PH).
+        </p>
+        <p class="profile-sub">
+          Owns budgeting, rolling forecasts, monthly variance commentary, KPI dashboards, and executive performance packs. Strong business partnering with commercial and operations teams to drive margin, cost control, cash runway, and performance accountability.
+        </p>
+
+        <div class="section-head" style="margin-bottom:12px; margin-top:4px;">
+          <h2 style="font-size:18px;">Core Skills</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-item"><span class="skill-icon">◆</span>Finance Business Partnering: stakeholder management, KPI ownership</div>
+          <div class="skill-item"><span class="skill-icon">◆</span>Commercial &amp; Ops Finance: pricing, margin drivers, cost control, vendor spend</div>
+          <div class="skill-item"><span class="skill-icon">◆</span>FP&amp;A: budgeting, forecasting, variance analysis, performance insights</div>
+          <div class="skill-item"><span class="skill-icon">◆</span>Reporting &amp; Systems: exec packs, dashboards, Excel/PowerPoint, SAP, Zoho Books</div>
+          <div class="skill-item"><span class="skill-icon">◆</span>Financial Modeling: driver-based models, scenarios/sensitivity, runway planning</div>
+          <div class="skill-item"><span class="skill-icon">◆</span>Cash &amp; Working Capital: DSO management, AR follow-ups, cash conversion cycles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ── -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="section-head">
+      <h2>Professional Experience</h2>
+      <p class="section-subhead">7 years across marketing &amp; advertising and industrial trading in Saudi Arabia.</p>
+    </div>
+    <div class="experience-list">
+
+      <!-- Job 1 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Lampaah Marketing &amp; Advertising</div>
+            <div class="exp-location">Riyadh, Saudi Arabia</div>
+            <div class="exp-role">Finance Lead (FP&amp;A / Business Partnering)</div>
+          </div>
+          <div class="exp-period">2021 – 2024</div>
+        </div>
+        <hr class="exp-divider"/>
+        <div class="exp-bullets">
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Owned annual budget consolidation, rolling forecasts, and projection updates tied to revenue trends, labor utilization, and vendor commitments.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Built driver-based Excel models (supported by SAP extracts and Zoho Books outputs) to forecast margin, burn rate, and runway for leadership decisions.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Produced monthly performance packs with KPI commentary (gross margin by category, inventory aging/turns, vendor spend, fulfillment/handling costs, and cash conversion) highlighting risks and actions.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Partnered with ops and commercial leads to translate numbers into actions — reprice, pause spend, rebalance vendor mix, tighten cost controls — and coached KPI owners to improve performance accountability.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span><span class="kpi-highlight">Reduced DSO by 10–12 days in 3 months</span> by tightening invoice cutoffs, shortening invoice-to-send time, and running weekly AR follow-ups with clear escalation on overdue accounts.</span></div>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Aldrees Industrial Trading and Manufacturing</div>
+            <div class="exp-location">Riyadh, Saudi Arabia</div>
+            <div class="exp-role">Sales Operations &amp; Finance Analyst</div>
+          </div>
+          <div class="exp-period">2017 – 2021</div>
+        </div>
+        <hr class="exp-divider"/>
+        <div class="exp-bullets">
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Built monthly sales and cost projections from SAP extracts to support pricing decisions, margin tracking, and management reporting.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Supported forecasting and monthly reporting by validating revenue, pricing, and cost movements using SAP ERP data and operational context.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Delivered cost and margin analysis to improve commercial performance visibility and support day-to-day decision-making.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-dot"></span><span>Coordinated cross-functional workflows (sales, operations, finance) to reduce data gaps and keep reporting aligned with operational reality.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Education ── -->
+<section class="section section-muted" id="education">
+  <div class="container">
+    <div class="section-head">
+      <h2>Education &amp; Certifications</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-label">Degree</div>
+        <div class="edu-degree">Bachelor of Science in Business Administration, Major in Financial Management</div>
+        <div class="edu-school">AMA University, Quezon City, Metro Manila, Philippines</div>
+        <div class="edu-year">2023</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-label">Certification (In Progress)</div>
+        <div class="edu-degree">Certified Management Accountant (CMA®) Candidate</div>
+        <div class="edu-school">Institute of Management Accountants (IMA)</div>
+        <div class="edu-year">In Progress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <h2>Get in Touch</h2>
+      <p class="section-subhead">Open to Finance Business Partner and FP&amp;A roles. Reach out via LinkedIn or download the resume PDF.</p>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-card" href="https://www.linkedin.com/in/ralph-patrick-divina-55534614a/" target="_blank" rel="noreferrer">
+        <div class="contact-card-label">LinkedIn</div>
+        <div class="contact-card-value">Ralph Patrick Divina</div>
+        <div class="contact-card-arrow">↗</div>
+      </a>
+      <a class="contact-card" href="https://ralphpatrick.com" target="_blank" rel="noreferrer">
+        <div class="contact-card-label">Portfolio</div>
+        <div class="contact-card-value">ralphpatrick.com</div>
+        <div class="contact-card-arrow">↗</div>
+      </a>
+      <a class="contact-card" href="Ralph Patrick Divina - Finance Business Partner.pdf" download>
+        <div class="contact-card-label">Resume PDF</div>
+        <div class="contact-card-value">Download FP&amp;A Resume</div>
+        <div class="copy-hint">Download ↓</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Ralph Patrick P. Divina · FP&amp;A / Finance Business Partner · <a href="https://ralphpatrick.com" target="_blank">ralphpatrick.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
