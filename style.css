@@ -226,7 +226,12 @@ img { max-width: 100%; display: block; }
   line-height: 1.05;
   letter-spacing: -0.03em;
 }
+
 .accent { color: var(--accent-2); }
+
+.hero-title .accent {
+  color: #3F8F8F;
+}
 
 .hero-subtitle {
   margin-top: 14px;
