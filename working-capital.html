@@ -1167,6 +1167,7 @@
         <div class="section-header-with-help">
           <h2 class="module-section-title">13-Week Cash Flow View</h2>
           <span class="help-icon" data-help="Short-term weekly cash plan: cash in (collections) vs. cash out (payroll, vendors, overhead). Spot shortfalls before they become a crisis."></span>
+          <span id="badge-start-13w" style="display:none; font-size:11px; font-weight:600; padding:3px 10px; border-radius:999px; background:rgba(15,118,110,0.10); border:1px solid rgba(15,118,110,0.25); color:#0f766e; white-space:nowrap;"></span>
         </div>
         <div class="module-card">
           <div class="chart-wrap"><canvas id="chart-13week" height="180"></canvas></div>
@@ -1197,11 +1198,26 @@
         </div>
       </div>
 
+      <!-- Chart Methodology Explainer -->
+      <div style="margin-bottom:24px; padding:14px 18px; border-radius:12px; background:#f8faff; border:1px solid #dde3f0; display:flex; gap:14px; align-items:flex-start;">
+        <div style="font-size:18px; flex-shrink:0; margin-top:1px;">🔍</div>
+        <div>
+          <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#5d6b7a; margin-bottom:5px;">Why these two charts show different numbers</div>
+          <div style="font-size:13px; color:#374151; line-height:1.65;">
+            Both charts share the same inputs, but answer <strong>different questions</strong> at different time scales — so their methodologies intentionally differ.
+            The <strong>13-Week view</strong> uses a simple linear weekly ramp to model near-term cash flow rhythm (cash in vs. cash out week by week) — working capital adjustments like DSO/DPO/DIO are excluded because at a weekly horizon, what matters is the flow, not the accounting timing.
+            The <strong>12-Month view</strong> uses compound monthly growth and applies full working capital adjustments (DSO, DPO, DIO) to project your strategic cash balance over time — this is where those timing lags actually matter.
+            Both charts now start from the same cash baseline so you can compare direction and magnitude without confusion.
+          </div>
+        </div>
+      </div>
+
       <!-- CASH BALANCE CHART -->
       <div class="module-section">
         <div class="section-header-with-help">
           <h2 class="module-section-title">12-Month Cash Balance Forecast</h2>
           <span class="help-icon" data-help="Projected cash balance each month based on revenue, COGS, OpEx, and working capital timing."></span>
+          <span id="badge-start-12m" style="display:none; font-size:11px; font-weight:600; padding:3px 10px; border-radius:999px; background:rgba(15,118,110,0.10); border:1px solid rgba(15,118,110,0.25); color:#0f766e; white-space:nowrap;"></span>
         </div>
         <div class="module-card">
           <div class="chart-wrap"><canvas id="chart-cash" height="160"></canvas></div>
@@ -1239,7 +1255,7 @@
         </div>
         <div class="module-card" style="overflow-x:auto;">
           <table class="data-table" id="detail-table">
-            <thead><tr><th>Month</th><th>Revenue</th><th>COGS</th><th>Gross Profit</th><th>OpEx</th><th>Net Cash Flow</th><th>Ending Cash</th></tr></thead>
+            <thead><tr><th>Month</th><th>Starting Cash</th><th>Revenue</th><th>COGS</th><th>Gross Profit</th><th>OpEx</th><th>Net Cash Flow</th><th>Ending Cash</th></tr></thead>
             <tbody id="detail-tbody"></tbody>
           </table>
         </div>
@@ -1547,27 +1563,95 @@
     // Cash Balance Chart
     const cashCtx = document.getElementById('chart-cash').getContext('2d');
     if (chartCash) chartCash.destroy();
+
+    // Declare here so both the 12-month chart and the 13-week chart can use it
+    const startCashAligned = months[0].cash - months[0].netCF;
+    const m1Drop = startCashAligned - months[0].cash;
+    const showWcAnnotation = m1Drop > startCashAligned * 0.05;
+
+    // Build datasets — add a flat dashed reference line at starting cash if the WC drop is meaningful
+    const cashDatasets = [{
+      label: 'Cash Balance',
+      data: months.map(m => m.cash),
+      borderColor: months[11].cash > months[0].cash ? 'rgba(15,118,110,1)' : 'rgba(239,68,68,1)',
+      backgroundColor: months[11].cash > months[0].cash ? 'rgba(15,118,110,0.08)' : 'rgba(239,68,68,0.08)',
+      fill: true, tension: 0.4, pointRadius: 4,
+    }];
+
+    if (showWcAnnotation) {
+      cashDatasets.push({
+        label: 'Starting Cash (pre-WC)',
+        data: months.map(() => startCashAligned),
+        borderColor: 'rgba(217,119,6,0.55)',
+        borderDash: [6, 4],
+        borderWidth: 1.5,
+        pointRadius: 0,
+        fill: false,
+        tension: 0,
+      });
+    }
+
+    // Inline label plugin: renders the $ amount in the middle of the dashed starting-cash line
+    const wcLabelPlugin = {
+      id: 'wcLabel',
+      afterDraw(chart) {
+        if (!showWcAnnotation) return;
+        try {
+          const { ctx, scales: { x, y }, chartArea } = chart;
+          const yPx = y.getPixelForValue(startCashAligned);
+          const midX = (chartArea.left + chartArea.right) / 2;
+          const label = fmtK(startCashAligned);
+          ctx.save();
+          ctx.font = '600 11px system-ui, sans-serif';
+          const tw = ctx.measureText(label).width;
+          const pw = tw + 14, ph = 18;
+          // Flip label below the line if too close to top edge
+          const spaceAbove = yPx - chartArea.top;
+          const py = spaceAbove < ph + 8 ? yPx + 4 : yPx - ph - 4;
+          const px = midX - pw / 2;
+          // pill bg
+          ctx.fillStyle = '#fffbeb';
+          ctx.strokeStyle = 'rgba(217,119,6,0.5)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(px + 5, py);
+          ctx.lineTo(px + pw - 5, py);
+          ctx.quadraticCurveTo(px + pw, py, px + pw, py + 5);
+          ctx.lineTo(px + pw, py + ph - 5);
+          ctx.quadraticCurveTo(px + pw, py + ph, px + pw - 5, py + ph);
+          ctx.lineTo(px + 5, py + ph);
+          ctx.quadraticCurveTo(px, py + ph, px, py + ph - 5);
+          ctx.lineTo(px, py + 5);
+          ctx.quadraticCurveTo(px, py, px + 5, py);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+          // text
+          ctx.fillStyle = '#92400e';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, midX, py + ph / 2);
+          ctx.restore();
+        } catch(e) {}
+      }
+    };
+
     chartCash = new Chart(cashCtx, {
       type: 'line',
-      data: {
-        labels: months.map(m => m.label),
-        datasets: [{
-          label: 'Cash Balance',
-          data: months.map(m => m.cash),
-          borderColor: months[11].cash > months[0].cash ? 'rgba(15,118,110,1)' : 'rgba(239,68,68,1)',
-          backgroundColor: months[11].cash > months[0].cash ? 'rgba(15,118,110,0.08)' : 'rgba(239,68,68,0.08)',
-          fill: true, tension: 0.4, pointRadius: 4,
-        }]
-      },
+      data: { labels: months.map(m => m.label), datasets: cashDatasets },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + Math.round(ctx.parsed.y).toLocaleString() } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + Math.round(ctx.parsed.y).toLocaleString() } }
+        },
         scales: {
           y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => fmtK(v) } },
           x: { grid: { display: false } }
         }
-      }
+      },
+      plugins: [wcLabelPlugin]
     });
 
     // ── 13-Week Cash Flow Chart ──────────────────────────
@@ -1579,7 +1663,15 @@
     const weekLabels = Array.from({length:13}, (_,i) => 'W'+(i+1));
     const weekCashIn = weekLabels.map((_,i) => Math.round(weeklyRevenue * (1 + growth/4 * i)));
     const weekCashOut = weekLabels.map((_,i) => Math.round((weeklyCogsAmt + weeklyOpex) * (1 + growth/4 * i * 0.3)));
-    let wCash = inp.cash;
+    // Align starting cash to same pre-working-capital base used by the 12-month chart (declared above)
+    let wCash = startCashAligned;
+
+    // Show matching starting cash badge on both chart titles
+    const badgeLabel = '▶ Starting cash: ' + fmtK(startCashAligned);
+    ['badge-start-13w', 'badge-start-12m'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = badgeLabel; el.style.display = 'inline-block'; }
+    });
     const weekBalance = weekLabels.map((_,i) => {
       wCash += weekCashIn[i] - weekCashOut[i];
       return Math.max(wCash, 0);
@@ -1587,7 +1679,7 @@
 
     const week13ctx = document.getElementById('chart-13week').getContext('2d');
     if (chart13Week) chart13Week.destroy();
-    const w13Positive = weekBalance[12] > inp.cash;
+    const w13Positive = weekBalance[12] > startCashAligned;
     chart13Week = new Chart(week13ctx, {
       type: 'bar',
       data: {
@@ -1637,8 +1729,8 @@
 
     // 13-Week explainer
     const week13End = weekBalance[12];
-    const week13Pos = week13End > inp.cash;
-    const week13Low = weekBalance.some(b => b < inp.cash * 0.15);
+    const week13Pos = week13End > startCashAligned;
+    const week13Low = weekBalance.some(b => b < startCashAligned * 0.15);
     const avgWeeklyNet = weekCashIn.reduce((a,v,i) => a + v - weekCashOut[i], 0) / 13;
     document.getElementById('week13-explainer').style.display = '';
     document.getElementById('week13-live-value').textContent = fmtK(week13End);
@@ -1655,10 +1747,10 @@
       week13VerdictEl.innerHTML = `<strong style="color:#dc2626;">⚠ Cash shortfall risk detected.</strong> One or more weeks dip critically close to zero — the business is vulnerable to a missed payment or unexpected expense. Act now: accelerate collections, defer discretionary spend, and review payroll timing.`;
     } else if (!week13Pos) {
       week13VerdictEl.style.cssText = 'padding:12px 16px; border-radius:10px; background:#fffbeb; border-left:3px solid #d97706; font-size:13px; line-height:1.6;';
-      week13VerdictEl.innerHTML = `<strong style="color:#d97706;">⚡ Cash is declining week over week.</strong> Cash out exceeds cash in on a net basis — ending at ${fmtK(week13End)} vs. starting at ${fmtK(inp.cash)}. Watch closely and identify which weeks are the most cash-intensive to plan ahead.`;
+      week13VerdictEl.innerHTML = `<strong style="color:#d97706;">⚡ Cash is declining week over week.</strong> Cash out exceeds cash in on a net basis — ending at ${fmtK(week13End)} vs. starting at ${fmtK(startCashAligned)}. Watch closely and identify which weeks are the most cash-intensive to plan ahead.`;
     } else {
       week13VerdictEl.style.cssText = 'padding:12px 16px; border-radius:10px; background:#f0fdf9; border-left:3px solid #0f766e; font-size:13px; line-height:1.6;';
-      week13VerdictEl.innerHTML = `<strong style="color:#0f766e;">✓ Cash is building week over week.</strong> Collections are outpacing outflows — ending 13-week cash is ${fmtK(week13End)}, up from ${fmtK(inp.cash)}. The business has a positive short-term cash position.`;
+      week13VerdictEl.innerHTML = `<strong style="color:#0f766e;">✓ Cash is building week over week.</strong> Collections are outpacing outflows — ending 13-week cash is ${fmtK(week13End)}, up from ${fmtK(startCashAligned)}. The business has a positive short-term cash position.`;
     }
 
     // ── 12-Month Cash Balance explainer ─────────────────
@@ -1688,12 +1780,20 @@
 
     // Detail Table
     const tbody = document.getElementById('detail-tbody');
-    tbody.innerHTML = months.map(m => `<tr>
-      <td>${m.label}</td><td>${fmt(m.rev)}</td><td>${fmt(m.cogsAmt)}</td>
-      <td>${fmt(m.gp)}</td><td>${fmt(m.opex)}</td>
-      <td style="color:${m.netCF>=0?'var(--accent)':'#ef4444'}">${fmtK(m.netCF)}</td>
-      <td><strong>${fmtK(m.cash)}</strong></td>
-    </tr>`).join('');
+    // Build rows — track running starting cash for each month
+    let rowStartCash = startCashAligned;
+    tbody.innerHTML = months.map((m, i) => {
+      const sc = rowStartCash;
+      rowStartCash = m.cash;
+      return `<tr>
+        <td>${m.label}</td>
+        <td style="color:var(--muted)">${fmtK(sc)}</td>
+        <td>${fmt(m.rev)}</td><td>${fmt(m.cogsAmt)}</td>
+        <td>${fmt(m.gp)}</td><td>${fmt(m.opex)}</td>
+        <td style="color:${m.netCF>=0?'var(--accent)':'#ef4444'}">${fmtK(m.netCF)}</td>
+        <td><strong>${fmtK(m.cash)}</strong></td>
+      </tr>`;
+    }).join('');
   }
 
   // Init
