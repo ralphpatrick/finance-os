@@ -499,6 +499,161 @@
     }
     .help-icon::before { content: '?'; line-height: 1; }
 
+
+    /* ═══ DEMO GUIDE overlay ═══ */
+    .demo-guide-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; font-size: 11px; font-weight: 700;
+      background: rgba(37,99,235,0.10); border: 1px solid rgba(37,99,235,0.25);
+      color: #1d4ed8; border-radius: 999px; cursor: pointer;
+      transition: all 140ms ease; letter-spacing: 0.02em;
+    }
+    .demo-guide-btn:hover { background: rgba(37,99,235,0.18); }
+    .demo-guide-overlay {
+      position: fixed; inset: 0; z-index: 9990;
+      background: rgba(11,18,32,0.62); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .demo-guide-overlay.open { display: flex; }
+    .demo-guide-modal {
+      background: white; border-radius: 18px;
+      max-width: 680px; width: 100%; max-height: 82vh; overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.28); padding: 32px 36px;
+      position: relative;
+    }
+    .demo-guide-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(11,18,32,0.08); border: none; cursor: pointer;
+      font-size: 16px; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: background 120ms;
+    }
+    .demo-guide-close:hover { background: rgba(11,18,32,0.14); }
+    .demo-guide-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.10em; color: #1d4ed8; margin-bottom: 6px; }
+    .demo-guide-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 20px; }
+    .demo-step { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+    .demo-step-num {
+      width: 28px; height: 28px; border-radius: 50%; background: #1d4ed8;
+      color: white; font-size: 12px; font-weight: 800; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .demo-step-body { flex: 1; }
+    .demo-step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .demo-step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .demo-step-desc strong { color: var(--text); }
+    .demo-highlight-box {
+      margin-top: 20px; padding: 16px 18px;
+      background: rgba(37,99,235,0.05); border: 1.5px solid rgba(37,99,235,0.18);
+      border-radius: 12px; font-size: 13px; color: var(--text); line-height: 1.6;
+    }
+
+    /* ═══ WORKFORCE ECONOMICS section ═══ */
+    .econ-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px; margin-bottom: 20px;
+    }
+    .econ-card {
+      padding: 18px 20px; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); background: white;
+    }
+    .econ-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+    .econ-value { font-size: 24px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 4px; }
+    .econ-sub { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .econ-trend { display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 700; margin-top: 6px; }
+    .econ-up { color: #059669; }  .econ-down { color: #dc2626; }
+
+    /* ═══ FTE vs CONTRACTOR breakeven ═══ */
+    .fte-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+    .fte-table th { padding: 9px 12px; border-bottom: 2px solid var(--border);
+      font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--muted); text-align: left; }
+    .fte-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    .fte-table tr:last-child td { border-bottom: none; }
+    .fte-win { color: #059669; font-weight: 700; }
+    .fte-lose { color: #dc2626; font-weight: 700; }
+    .fte-neutral { color: var(--muted); }
+
+    /* ═══ BUDGET vs ACTUALS ═══ */
+    .bva-row { display: grid; grid-template-columns: 120px repeat(4,1fr); gap: 0;
+      align-items: center; border-bottom: 1px solid var(--border); }
+    .bva-row:last-child { border-bottom: none; }
+    .bva-header { font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); padding: 8px 12px; }
+    .bva-cell { padding: 10px 12px; font-size: 13px; }
+    .bva-label { font-weight: 600; font-size: 13px; }
+    .bva-pos { color: #dc2626; font-weight: 700; } /* over budget */
+    .bva-neg { color: #059669; font-weight: 700; } /* under budget */
+    .bva-neutral { color: var(--muted); }
+    .bva-bar-wrap { height: 6px; background: rgba(11,18,32,0.08); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+    .bva-bar { height: 100%; border-radius: 3px; transition: width 400ms ease; }
+
+    /* ═══ COMP INFLATION FORWARD CURVE ═══ */
+    .infl-scenario-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .infl-tab { padding: 6px 14px; font-size: 12px; font-weight: 600;
+      border-radius: 999px; border: 1px solid var(--border);
+      background: white; cursor: pointer; transition: all 120ms; }
+    .infl-tab.active { background: var(--text); color: white; border-color: var(--text); }
+
+    /* ═══ UTILIZATION GAUGES (replace hiring triggers table) ═══ */
+    .gauge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .gauge-card {
+      padding: 18px 20px; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); background: white; position: relative;
+    }
+    .gauge-fn { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .gauge-util-big { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+    .gauge-bar-track { height: 8px; border-radius: 4px; background: rgba(11,18,32,0.08);
+      margin: 10px 0 6px; position: relative; overflow: visible; }
+    .gauge-bar-fill { height: 100%; border-radius: 4px; transition: width 500ms ease; }
+    .gauge-threshold-marker {
+      position: absolute; top: -4px; width: 2px; height: 16px;
+      background: var(--muted); border-radius: 1px;
+    }
+    .gauge-meta { font-size: 11px; color: var(--muted); display: flex;
+      justify-content: space-between; margin-top: 4px; }
+    .gauge-verdict {
+      margin-top: 10px; padding: 8px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; line-height: 1.4;
+    }
+    .gauge-verdict.recommend { background: rgba(5,150,105,0.08); color: #065f46; }
+    .gauge-verdict.caution   { background: rgba(217,119,6,0.08);  color: #92400e; }
+    .gauge-verdict.delay     { background: rgba(239,68,68,0.08);   color: #991b1b; }
+    .gauge-verdict.monitor   { background: rgba(107,114,128,0.08); color: #374151; }
+
+    /* ═══ KNAPSACK OPTIMIZER output ═══ */
+    .ks-allocation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin-bottom: 16px; }
+    .ks-fn-card {
+      padding: 14px 16px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: white; transition: border-color 200ms;
+    }
+    .ks-fn-card.ks-active { border-color: #059669; background: rgba(5,150,105,0.04); }
+    .ks-fn-card.ks-partial { border-color: #d97706; background: rgba(217,119,6,0.04); }
+    .ks-fn-name { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .ks-fn-hires { font-size: 22px; font-weight: 800; color: #059669; }
+    .ks-fn-util { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .ks-summary-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .ks-proof {
+      margin-top: 14px; padding: 14px 16px;
+      background: rgba(246,248,251,0.8); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 12px; color: var(--muted); line-height: 1.6;
+    }
+    .ks-proof strong { color: var(--text); }
+    .ks-infeasible {
+      padding: 16px; background: rgba(239,68,68,0.06);
+      border: 1.5px solid rgba(239,68,68,0.18); border-radius: 10px;
+      font-size: 13px; color: #991b1b; line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .demo-guide-modal { padding: 22px 20px; }
+      .gauge-grid { grid-template-columns: 1fr 1fr; }
+      .bva-row { grid-template-columns: 90px repeat(4,1fr); }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 980px) {
       .module-layout { grid-template-columns: 1fr; padding: 16px; }
@@ -1468,6 +1623,269 @@
       .module-layout { padding: 12px; }
     }
 
+    /* ═══════════════════════════════════════════════
+       WORKFORCE GAP ENGINE — New UI Pieces
+    ═══════════════════════════════════════════════ */
+
+    /* Situation Story Card */
+    .wge-story-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .wge-story-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .wge-story-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .wge-story-text p {
+      margin: 0 0 8px 0;
+    }
+    .wge-story-text p:last-child { margin-bottom: 0; }
+    .wge-story-highlight {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .wge-story-alert { color: #dc2626; font-weight: 700; }
+    .wge-story-ok    { color: #059669; font-weight: 700; }
+    .wge-story-warn  { color: #d97706; font-weight: 700; }
+
+    /* Optimize badge + button */
+    .wge-optimize-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+    }
+    .wge-optimize-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 1.5px solid var(--accent);
+      background: white;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 140ms ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .wge-optimize-btn:hover {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 14px rgba(15,118,110,0.22);
+    }
+    .wge-optimize-btn:active { transform: translateY(1px); }
+    .wge-optimized-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(15,118,110,0.10);
+      border: 1px solid rgba(15,118,110,0.22);
+      color: #0f766e;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .wge-optimized-badge.visible { opacity: 1; }
+
+    /* Recommended Hiring Mix Card */
+    .wge-mix-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .wge-mix-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .wge-mix-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .wge-stat-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .wge-chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(246,248,251,0.7);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .wge-chip-label {
+      color: var(--muted);
+      font-weight: 500;
+      margin-right: 4px;
+    }
+    .wge-chip.alert { background: rgba(220,38,38,0.06); border-color: rgba(220,38,38,0.20); color: #991b1b; }
+    .wge-chip.ok    { background: rgba(5,150,105,0.06);  border-color: rgba(5,150,105,0.20);  color: #065f46; }
+    .wge-chip.warn  { background: rgba(217,119,6,0.06);  border-color: rgba(217,119,6,0.20);  color: #92400e; }
+
+    /* Mix table */
+    .wge-mix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .wge-mix-table th {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .wge-mix-table th:not(:first-child) { text-align: center; }
+    .wge-mix-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .wge-mix-table td:not(:first-child) { text-align: center; }
+    .wge-mix-table tr:last-child td { border-bottom: none; }
+    .wge-mix-table tr.wge-row-bottleneck {
+      background: rgba(15,118,110,0.05);
+    }
+    .wge-mix-table tr.wge-row-bottleneck td:first-child {
+      border-left: 3px solid var(--accent);
+      padding-left: 7px;
+    }
+    .wge-mix-table tr.wge-row-zero td {
+      opacity: 0.45;
+    }
+    .wge-fn-name { font-weight: 700; font-size: 13px; }
+    .wge-fn-tag {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15,118,110,0.10);
+      color: #0f766e;
+      margin-left: 5px;
+    }
+    .wge-val-green { color: #059669; font-weight: 700; }
+    .wge-val-red   { color: #dc2626; font-weight: 700; }
+    .wge-val-warn  { color: #d97706; font-weight: 700; }
+    .wge-val-muted { color: var(--muted); }
+
+    /* Shortfall callout */
+    .wge-shortfall {
+      margin-top: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: rgba(217,119,6,0.06);
+      border: 1px solid rgba(217,119,6,0.22);
+      font-size: 12px;
+      line-height: 1.55;
+      color: #92400e;
+    }
+    .wge-shortfall strong { color: #78350f; }
+
+    /* Target Utilization Slider row */
+    .wge-slider-row {
+      margin-bottom: 10px;
+    }
+    .wge-slider-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .wge-slider-label {
+      font-size: 11px;
+      color: var(--muted);
+      flex: 1;
+      line-height: 1.3;
+    }
+    .wge-slider-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-mono, monospace);
+      min-width: 36px;
+      text-align: right;
+    }
+    .wge-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--bg-muted, #f0f2f5);
+      outline: none;
+      cursor: pointer;
+    }
+    .wge-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(15,118,110,0.28);
+      transition: transform 120ms ease;
+    }
+    .wge-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+    .wge-slider::-moz-range-thumb {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: none;
+      box-shadow: 0 2px 6px rgba(15,118,110,0.28);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .wge-mix-table { font-size: 11px; }
+      .wge-mix-table th, .wge-mix-table td { padding: 7px 7px; }
+    }
+    @media (max-width: 560px) {
+      .wge-stat-chips { flex-direction: column; }
+      .wge-mix-table { font-size: 10px; }
+      .wge-mix-table th, .wge-mix-table td { padding: 6px 5px; }
+    }
 
 </style>
 <style>
@@ -1706,6 +2124,22 @@
             <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
               <button class="sb-acc-btn" onclick="resetAssumptions()" style="font-size:11px;color:var(--muted);">↺ Reset to defaults</button>
             </div>
+            <div class="assump-divider">Workforce Planning</div>
+            <div class="wge-slider-row">
+              <div class="wge-slider-label-row">
+                <label class="wge-slider-label" for="aTargetUtil"><span data-tt="Target utilization for coverage planning. The solver computes how many hires are needed to bring every function to this level. Default 85%.">Target utilization (%)</span></label>
+                <span class="wge-slider-value" id="aTargetUtilVal">85%</span>
+              </div>
+              <input class="wge-slider" id="aTargetUtil" type="range" min="70" max="95" step="1" value="85">
+            </div>
+            <div class="assump-row">
+              <label class="assump-label" for="aBacklogClearMonths"><span data-tt="Spread the existing backlog relief over this many months. The solver adds backlog/months to monthly demand to compute effective demand. Default 3.">Backlog clear (mo)</span></label>
+              <input class="assump-input" id="aBacklogClearMonths" type="number" value="3" min="1" max="24" step="1" onchange="onAssumpChange()">
+            </div>
+            <div class="assump-row">
+              <label class="assump-label" for="aMinRunwayAfterHire"><span data-tt="Minimum months of runway that must remain after applying the full feasible hiring plan. The solver stops adding hires if this floor would be breached. Default 12.">Min runway after hire (mo)</span></label>
+              <input class="assump-input" id="aMinRunwayAfterHire" type="number" value="12" min="1" max="60" step="1" onchange="onAssumpChange()">
+            </div>
           </div>
         </div>
       </div>
@@ -1717,9 +2151,13 @@
 
       <!-- ══ SUMMARY SECTION ══ -->
       <section class="module-section">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
           <h2 class="module-section-title" style="margin: 0;">Summary</h2>
           <span class="help-icon" id="summaryHelp" data-help="Quick snapshot: are we overstaffed? Burning too much cash? Team overloaded? At a glance view for the CFO or board."></span>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+            <span class="wge-optimized-badge" id="optimizedBadge">✓ Optimized Plan</span>
+            <button class="wge-optimize-btn" id="optimizeCoverageBtn" data-tt="Runs the hiring-sequence optimizer: scores every possible next hire by utilisation-reduction per dollar, allocates greedily in that order while respecting the runway floor, and shows the exact sequence — hire #1, #2, … — with the rationale for each.">⚡ Optimize Coverage</button>
+          </div>
         </div>
 
         <!-- Standardized Decision Box -->
@@ -1730,6 +2168,34 @@
             <ul class="decision-box-bullets" id="decisionBullets"></ul>
             <div class="decision-box-next" id="decisionNext"></div>
           </div>
+        </div>
+
+        <!-- Dynamic Situation Story -->
+        <div class="wge-story-card" id="situationStoryCard">
+          <div class="wge-story-eyebrow" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <span>📊 Situation Analysis</span>
+            <button class="demo-guide-btn" onclick="openDemoGuide()">&#127919; Demo Guide</button>
+          </div>
+          <div class="wge-story-text" id="situationStoryContent"><em style="color:var(--muted);">Loading analysis…</em></div>
+        </div>
+
+        <!-- Recommended Hiring Mix -->
+        <div class="wge-mix-card" id="recommendedHiringMixCard">
+          <div class="wge-mix-header">
+            <div class="wge-mix-title">Recommended Hiring Mix</div>
+          </div>
+          <div class="wge-stat-chips" id="wgeSummaryChips"></div>
+          <div id="wgeMixTable"></div>
+          <div id="wgeShortfall"></div>
+        </div>
+
+        <!-- Hiring Sequence Optimizer (populated when Optimize Coverage is clicked) -->
+        <div class="wge-mix-card" id="wgeOptimizeCard" style="display:none;">
+          <div class="wge-mix-header">
+            <div class="wge-mix-title">⚡ Optimal Hiring Sequence</div>
+            <div style="font-size:11px;color:var(--muted);font-weight:500;">Ordered by utilisation-reduction per dollar · runway-constrained</div>
+          </div>
+          <div id="wgeOptimizePanel"><em style="color:var(--muted);font-size:13px;">Click Optimize Coverage to generate.</em></div>
         </div>
 
         <div id="summaryKPIs" class="kpi-grid"></div>
@@ -1816,6 +2282,19 @@
         <div id="fullyLoadedCosts"></div>
       </section>
 
+      <!-- ══ WORKFORCE ECONOMICS ══ -->
+      <section class="module-section">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <h2 class="module-section-title" style="margin: 0;">Workforce Economics</h2>
+          <span class="help-icon" id="workEconHelp" data-help="Revenue per employee, attrition cost, span of control, and FTE vs contractor breakeven."></span>
+        </div>
+        <div class="econ-grid" id="workEconKPIs"></div>
+        <div class="module-card" style="margin-top:0;">
+          <div class="card-title" style="margin-bottom:14px;">FTE vs. Contractor Breakeven</div>
+          <div id="fteContractorTable"></div>
+        </div>
+      </section>
+
       <!-- ══ CAPACITY &amp; UTILIZATION ══ -->
       <section class="module-section">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
@@ -1870,10 +2349,41 @@
         <div id="hiringTriggers"></div>
       </section>
 
-      <!-- ══ HIRING STRATEGY COMPARISON ══ -->
+      <!-- ══ BUDGET vs ACTUALS ══ -->
       <section class="module-section">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-          <h2 class="module-section-title" style="margin: 0;">Hiring Strategy Comparison</h2>
+          <h2 class="module-section-title" style="margin: 0;">Budget vs. Actuals</h2>
+          <span class="help-icon" id="bvaHelp" data-help="Actuals vs plan for headcount and opex."></span>
+        </div>
+        <div class="module-card">
+          <div class="card-title" style="margin-bottom:14px;">Headcount &amp; Opex Variance</div>
+          <div id="bvaTable"></div>
+        </div>
+      </section>
+
+      <!-- ══ COMP INFLATION FORWARD CURVE ══ -->
+      <section class="module-section">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <h2 class="module-section-title" style="margin: 0;">Comp Inflation Forward Curve</h2>
+          <span class="help-icon" id="inflHelp" data-help="How payroll compounds at different inflation rates over 18 months."></span>
+        </div>
+        <div class="module-card">
+          <div class="infl-scenario-tabs">
+            <button class="infl-tab active" id="inflTab4" onclick="showInflTab(4)">4% Low</button>
+            <button class="infl-tab" id="inflTab6" onclick="showInflTab(6)">6% Base</button>
+            <button class="infl-tab" id="inflTab8" onclick="showInflTab(8)">8% High</button>
+            <button class="infl-tab" id="inflTab10" onclick="showInflTab(10)">10% Stress</button>
+          </div>
+          <canvas id="inflCanvas" class="chart-canvas" style="display:block;height:220px;"></canvas>
+          <div id="inflTooltip" class="chart-tooltip"></div>
+          <div id="inflSummary" style="margin-top:12px;font-size:13px;color:var(--muted);line-height:1.6;"></div>
+        </div>
+      </section>
+
+      <!-- ══ RUNWAY IMPACT ══ -->
+      <section class="module-section">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <h2 class="module-section-title" style="margin: 0;">Runway Impact Scenarios</h2>
           <span class="help-icon" id="runwayHelp" data-help="Hire fast = solve bottlenecks but burn cash faster. Hire slow = preserve runway but risk team burnout. This shows the tradeoff explicitly."></span>
         </div>
 
@@ -1921,6 +2431,22 @@
       </section>
 
 
+<div class="demo-guide-overlay" id="demoGuideOverlay" onclick="closeDemoGuideOnBg(event)" style="display:none;">
+      <div class="demo-guide-modal">
+        <button class="demo-guide-close" onclick="closeDemoGuide()">&#x2715;</button>
+        <div class="demo-guide-eyebrow">Demo Playbook</div>
+        <div class="demo-guide-title">Indirect Cost &amp; Headcount CoE</div>
+        <div class="demo-step"><div class="demo-step-num">1</div><div class="demo-step-body"><div class="demo-step-title">Load Sample Data</div><div class="demo-step-desc">Click <strong>Sample</strong> in the sidebar. Loads a realistic 12-month dataset: 4 functions, 73&ndash;95 employees, $2.4M cash, $185K/mo burn. All charts populate instantly.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">2</div><div class="demo-step-body"><div class="demo-step-title">Read the Decision Box</div><div class="demo-step-desc">The top card answers: <strong>hire, hold, cut, or raise?</strong> Walk through how the rule fires: utilization vs threshold, runway vs floor. Confidence shows proximity to the boundary.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">3</div><div class="demo-step-body"><div class="demo-step-title">Show the Coverage Gap</div><div class="demo-step-desc">Scroll to <strong>Recommended Hiring Mix</strong>. Point out the bottleneck (green highlight). Show full plan vs feasible plan &mdash; that gap is exactly what the runway floor prevents. This is the CoE core value-add.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">4</div><div class="demo-step-body"><div class="demo-step-title">Run the Knapsack Optimizer</div><div class="demo-step-desc">Click <strong>&#x26A1; Optimize Coverage</strong>. The bounded DP knapsack finds the <em>globally optimal</em> allocation &mdash; not greedy order. Show the function cards with post-hire utilization. Toggle <strong>Show Proof</strong> to expose the exact math: budget units, DP dimensions, traceback result.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">5</div><div class="demo-step-body"><div class="demo-step-title">Drag the Target Utilization Slider</div><div class="demo-step-desc">Open <strong>Assumptions</strong>. Drag target util from 85% to 75% &mdash; watch the coverage gap, KPIs, and story update live. Demonstrates full model reactivity.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">6</div><div class="demo-step-body"><div class="demo-step-title">Show Workforce Economics</div><div class="demo-step-desc">Scroll to <strong>Workforce Economics</strong>. Revenue per employee is the #1 benchmark investors ask about. Attrition cost surfaces hidden P&amp;L exposure. FTE vs Contractor gives a breakeven utilization number for make-vs-buy decisions.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">7</div><div class="demo-step-body"><div class="demo-step-title">Budget vs. Actuals</div><div class="demo-step-desc">Show the 6-month variance table. Persistent over-budget headcount + high utilization = <strong>the hiring plan was too conservative</strong>. Teams are absorbing demand the model didn&rsquo;t anticipate. This connects the dots for the CFO.</div></div></div>
+        <div class="demo-step"><div class="demo-step-num">8</div><div class="demo-step-body"><div class="demo-step-title">Switch Scenarios</div><div class="demo-step-desc">Use <strong>Upside / Downside</strong> tabs in the sidebar. Show how the hiring decision flips under demand surge vs contraction. This is the risk/sensitivity slide in any board deck &mdash; shown live, not in a static table.</div></div></div>
+        <div class="demo-highlight-box"><strong>Key talking point:</strong> Every number flows from the same dataset. Change one assumption and the decision, story, hiring mix, workforce economics, budget variance, and comp curve all update together. That is what a real Center of Excellence looks like &mdash; not a deck refreshed once a quarter.</div>
+      </div>
+    </div>
     </main>
   </div>
 
@@ -1963,7 +2489,10 @@
       compInflation:   6,    // % per year comp inflation
       scenarUpside:    1.15, // multiplier for upside scenario
       scenarDownside:  0.85, // multiplier for downside scenario
-      scenarUtilShift: 10    // percentage-point demand shift for upside/downside
+      scenarUtilShift: 10,   // percentage-point demand shift for upside/downside
+      targetUtilization: 85, // % target utilization for coverage solver
+      backlogClearMonths: 3, // spread backlog relief over N months
+      minRunwayAfterHire: 12 // minimum runway floor after feasible plan
     };
 
     function readAssumptions() {
@@ -1991,8 +2520,16 @@
         compInflation:   safeInput('aCompInflation',    0,    50,   d.compInflation   || 6),
         scenarUpside:    safeInput('aScenarUpside',     0.5,  5,    d.scenarUpside    || 1.15),
         scenarDownside:  safeInput('aScenarDownside',   0.1,  1,    d.scenarDownside  || 0.85),
-        scenarUtilShift: safeInput('aScenarUtilShift',  0,    40,   d.scenarUtilShift || 10)
+        scenarUtilShift: safeInput('aScenarUtilShift',  0,    40,   d.scenarUtilShift || 10),
+        backlogClearMonths: safeInput('aBacklogClearMonths', 1, 24, d.backlogClearMonths || 3),
+        minRunwayAfterHire: safeInput('aMinRunwayAfterHire', 1, 60, d.minRunwayAfterHire || 12)
       };
+      // Read slider separately (range input has no invalid state)
+      const sliderEl = document.getElementById('aTargetUtil');
+      if (sliderEl) {
+        const sv = parseInt(sliderEl.value, 10);
+        if (isFinite(sv) && sv >= 70 && sv <= 95) updates.targetUtilization = sv;
+      }
       // Only update ASSUMP where values are valid (null = keep existing)
       Object.keys(updates).forEach(k => { if (updates[k] !== null) ASSUMP[k] = updates[k]; });
     }
@@ -2117,7 +2654,12 @@
           ]
         }
       ],
-      runway: { cash: 2400000, burn: 185000 }
+      runway: { cash: 2400000, burn: 185000 },
+      revenue: [420000,438000,455000,471000,490000,512000,535000,558000,580000,602000,628000,654000],
+      budgetHeadcount: [70,71,72,74,75,76,77,78,79,80,82,83],
+      budgetOpex: [175000,177000,179000,181000,183000,185000,187000,189000,191000,193000,195000,197000],
+      attritionRate: 0.018,
+      managerCount: 8
     };
 
     // ========== STATE MANAGEMENT ==========
@@ -2171,6 +2713,12 @@
       'Target Runway':   'The desired months of runway post-fundraise. 18 months is the standard — gives 6 months to deploy capital plus buffer before next raise.',
       'Comp Inflation':  'Annual % increase applied to recurring payroll costs (salary, benefits, taxes, bonus). Models merit raises and market comp drift. Applied monthly (rate÷12) to each data period.',
       'Hiring Lead Time':'Months between approving a hire and the new employee\'s start date. Delays capacity relief and shifts when one-time costs hit cash.',
+      'Revenue per Employee': 'Monthly revenue divided by total headcount. The primary measure of workforce productivity. Higher = more output per dollar spent on people.',
+      'Attrition Cost': 'Cost of replacing a departing employee. Standard assumption: 125% of annual salary. Covers recruiting, onboarding, and ramp-up time to full productivity.',
+      'Span of Control': 'Average number of direct reports per manager. Optimal range: 5-8. Below 4 = over-managed. Above 10 = under-managed and risks execution breakdown.',
+      'FTE vs Contractor': 'Breakeven analysis: at what utilization does hiring FTE beat contracting? FTE wins when annual utilization exceeds the crossover threshold.',
+      'Budget Variance': 'Actual vs. budgeted headcount and opex. Positive = over budget. Negative = under budget. Persistent variance signals broken forecasting process.',
+      'Comp Inflation Forward': 'Projected total payroll cost at different comp inflation rates over 18 months. Shows the compounding effect of merit cycles on future burn.',
     };
 
     /**
@@ -2624,7 +3172,8 @@
       runwaySafeHire: 12, runwaySafeCon: 15,
       rampMonths: 3, oneTimeCost: 16000,
       compInflation: 6,
-      scenarUpside: 1.15, scenarDownside: 0.85, scenarUtilShift: 10
+      scenarUpside: 1.15, scenarDownside: 0.85, scenarUtilShift: 10,
+      targetUtilization: 85, backlogClearMonths: 3, minRunwayAfterHire: 12
     };
 
     const ASSUMP_INPUT_MAP = {
@@ -2634,18 +3183,30 @@
       rampMonths: 'aRampMonths', oneTimeCost: 'aOneTimeCost',
       compInflation: 'aCompInflation',
       scenarUpside: 'aScenarUpside', scenarDownside: 'aScenarDownside',
-      scenarUtilShift: 'aScenarUtilShift'
+      scenarUtilShift: 'aScenarUtilShift',
+      backlogClearMonths: 'aBacklogClearMonths',
+      minRunwayAfterHire: 'aMinRunwayAfterHire'
     };
 
     function resetAssumptions() {
       // Write defaults back to inputs
       Object.keys(ASSUMP_DEFAULTS).forEach(key => {
-        const el = document.getElementById(ASSUMP_INPUT_MAP[key]);
-        if (el) {
-          el.value = ASSUMP_DEFAULTS[key];
-          el.classList.remove('invalid');
+        const elId = ASSUMP_INPUT_MAP[key];
+        if (elId) {
+          const el = document.getElementById(elId);
+          if (el) {
+            el.value = ASSUMP_DEFAULTS[key];
+            el.classList.remove('invalid');
+          }
         }
       });
+      // Reset slider separately
+      const sliderEl = document.getElementById('aTargetUtil');
+      if (sliderEl) {
+        sliderEl.value = ASSUMP_DEFAULTS.targetUtilization;
+        const valEl = document.getElementById('aTargetUtilVal');
+        if (valEl) valEl.textContent = ASSUMP_DEFAULTS.targetUtilization + '%';
+      }
       // Apply to ASSUMP object
       Object.assign(ASSUMP, ASSUMP_DEFAULTS);
       // Re-render
@@ -2748,6 +3309,269 @@
     }
 
     // ========== RENDERING FUNCTIONS ==========
+
+
+    // ========== DEMO GUIDE ==========
+    function openDemoGuide() {
+      var el = document.getElementById('demoGuideOverlay');
+      if (el) { el.style.display='flex'; el.classList.add('open'); }
+    }
+    function closeDemoGuide() {
+      var el = document.getElementById('demoGuideOverlay');
+      if (el) { el.style.display='none'; el.classList.remove('open'); }
+    }
+    function closeDemoGuideOnBg(e) {
+      if (e.target === document.getElementById('demoGuideOverlay')) closeDemoGuide();
+    }
+
+    // ========== WORKFORCE ECONOMICS ==========
+    function renderWorkforceEconomics() {
+      if (!activeDataset) return;
+      var data = activeDataset;
+      var last = data.months[data.months.length - 1];
+      var first = data.months[0];
+      var revenue = data.revenue || [];
+      var lastRev = revenue.length ? revenue[revenue.length - 1] : 0;
+      var firstRev = revenue.length ? revenue[0] : 0;
+      var totalHC = last.functions.reduce(function(s,f){return s+f.headcount;},0);
+      var firstHC = first.functions.reduce(function(s,f){return s+f.headcount;},0);
+      var revPerEmp = totalHC > 0 ? lastRev / totalHC : 0;
+      var firstRevPerEmp = firstHC > 0 ? firstRev / firstHC : 0;
+      var revPerEmpTrend = firstRevPerEmp > 0 ? ((revPerEmp - firstRevPerEmp) / firstRevPerEmp * 100) : 0;
+      var totalAnnualSalary = last.functions.reduce(function(s,f){return s + f.costs.salary * 12;}, 0);
+      var attritionRate = data.attritionRate || 0.018;
+      var attritionCostPerHead = (totalAnnualSalary / Math.max(totalHC, 1)) * 1.25;
+      var annualAttritionCost = Math.round(totalHC * attritionRate * 12) * attritionCostPerHead;
+      var managerCount = data.managerCount || Math.ceil(totalHC / 7);
+      var spanOfControl = managerCount > 0 ? (totalHC / managerCount).toFixed(1) : '--';
+      var spanOk = parseFloat(spanOfControl) >= 4 && parseFloat(spanOfControl) <= 10;
+      var monthlyOpex = last.functions.reduce(function(s,f){var c=f.costs;return s+(c.salary+c.benefits+c.taxes+c.bonus);},0);
+      var costPerHead = totalHC > 0 ? monthlyOpex / totalHC : 0;
+      var el = document.getElementById('workEconKPIs');
+      if (!el) return;
+      el.innerHTML =
+        '<div class="econ-card">' +
+          '<div class="econ-eyebrow">Revenue per Employee</div>' +
+          '<div class="econ-value">' + (lastRev > 0 ? formatCurrency(revPerEmp, 0) : '--') + '</div>' +
+          '<div class="econ-sub">Monthly revenue / headcount</div>' +
+          (lastRev > 0 ? '<div class="econ-trend ' + (revPerEmpTrend >= 0 ? 'econ-up' : 'econ-down') + '">' + (revPerEmpTrend >= 0 ? '&#9650;' : '&#9660;') + ' ' + Math.abs(revPerEmpTrend).toFixed(1) + '% vs Jan</div>' : '') +
+        '</div>' +
+        '<div class="econ-card">' +
+          '<div class="econ-eyebrow">Annual Attrition Cost</div>' +
+          '<div class="econ-value">' + formatCurrency(annualAttritionCost, 0) + '</div>' +
+          '<div class="econ-sub">' + (attritionRate * 100 * 12).toFixed(1) + '% annual rate x 1.25x salary</div>' +
+          '<div class="econ-trend econ-down">Hidden P&amp;L exposure per year</div>' +
+        '</div>' +
+        '<div class="econ-card">' +
+          '<div class="econ-eyebrow">Span of Control</div>' +
+          '<div class="econ-value" style="color:' + (spanOk ? '#059669' : '#d97706') + ';">' + spanOfControl + '</div>' +
+          '<div class="econ-sub">' + totalHC + ' employees / ' + managerCount + ' managers</div>' +
+          '<div class="econ-trend ' + (spanOk ? 'econ-up' : 'econ-down') + '">' + (spanOk ? 'Healthy (4-10)' : 'Outside 4-10 range') + '</div>' +
+        '</div>' +
+        '<div class="econ-card">' +
+          '<div class="econ-eyebrow">Cost per Coverage Point</div>' +
+          '<div class="econ-value">' + formatCurrency(costPerHead / 10, 0) + '</div>' +
+          '<div class="econ-sub">Opex per employee per 10% utilization</div>' +
+          '<div class="econ-trend econ-down">Lower = more efficient workforce</div>' +
+        '</div>';
+      renderFteContractorTable(costPerHead);
+    }
+
+    function renderFteContractorTable(costPerHead) {
+      var el = document.getElementById('fteContractorTable');
+      if (!el) return;
+      var premium = 1.4;
+      var contractorRate = costPerHead * premium;
+      var annualFTE = costPerHead * 12;
+      var annualCon = contractorRate * 12;
+      var scenarios = [
+        {label:'Full-time (100%)', util:1.0},
+        {label:'High (80%)',       util:0.8},
+        {label:'Medium (60%)',     util:0.6},
+        {label:'Low (40%)',        util:0.4},
+        {label:'Fractional (20%)', util:0.2}
+      ];
+      var html = '<table class="fte-table"><thead><tr><th>Utilization</th><th>FTE Annual</th><th>Contractor Annual</th><th>FTE vs Con</th><th>Winner</th></tr></thead><tbody>';
+      scenarios.forEach(function(s) {
+        var effFTE = annualFTE;
+        var effCon = annualCon * s.util;
+        var diff = effFTE - effCon;
+        var fteWins = diff < 0;
+        html += '<tr>' +
+          '<td>' + s.label + '</td>' +
+          '<td>' + formatCurrency(effFTE,0) + '</td>' +
+          '<td>' + formatCurrency(effCon,0) + '</td>' +
+          '<td class="' + (fteWins?'fte-win':'fte-lose') + '">' + (fteWins?'-':'+') + formatCurrency(Math.abs(diff),0) + '</td>' +
+          '<td class="' + (fteWins?'fte-win':diff>0?'fte-lose':'fte-neutral') + '">' + (fteWins?'FTE':'Contractor') + '</td>' +
+        '</tr>';
+      });
+      html += '</tbody></table>';
+      html += '<div style="margin-top:10px;font-size:12px;color:var(--muted);line-height:1.5;">Breakeven at <strong>' + Math.round(100/premium) + '% utilization</strong>. FTE wins when usage is consistent. Contractor wins for episodic or uncertain work. Contractor rate = ' + premium + 'x loaded FTE cost.</div>';
+      el.innerHTML = html;
+    }
+
+    // ========== BUDGET vs ACTUALS ==========
+    function renderBudgetVsActuals() {
+      if (!activeDataset) return;
+      var data = activeDataset;
+      var budHC = data.budgetHeadcount || [];
+      var budOp = data.budgetOpex || [];
+      if (!budHC.length) return;
+      var el = document.getElementById('bvaTable');
+      if (!el) return;
+      var months = data.months;
+      var showCount = Math.min(6, months.length);
+      var startIdx = months.length - showCount;
+      var html = '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr>' +
+        '<th style="text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">Month</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">HC Actual</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">HC Budget</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">HC Var</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">Opex Actual</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">Opex Budget</th>' +
+        '<th style="text-align:center;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--muted);">Opex Var</th>' +
+      '</tr></thead><tbody>';
+      for (var i = startIdx; i < months.length; i++) {
+        var m = months[i];
+        var actualHC = m.functions.reduce(function(s,f){return s+f.headcount;},0);
+        var bHC = budHC[i] || actualHC;
+        var hcV = actualHC - bHC;
+        var actualOp = m.functions.reduce(function(s,f){var c=f.costs;return s+(c.salary+c.benefits+c.taxes+c.bonus);},0);
+        var bOp = budOp[i] || actualOp;
+        var opV = actualOp - bOp;
+        html += '<tr style="border-bottom:1px solid var(--border);">' +
+          '<td style="padding:10px 12px;font-weight:600;">' + m.month + '</td>' +
+          '<td style="text-align:center;padding:10px 12px;">' + actualHC + '</td>' +
+          '<td style="text-align:center;padding:10px 12px;color:var(--muted);">' + bHC + '</td>' +
+          '<td class="' + (hcV>0?'bva-pos':hcV<0?'bva-neg':'bva-neutral') + '" style="text-align:center;padding:10px 12px;">' + (hcV>0?'+':'') + hcV + '</td>' +
+          '<td style="text-align:center;padding:10px 12px;">' + formatCurrency(actualOp,0) + '</td>' +
+          '<td style="text-align:center;padding:10px 12px;color:var(--muted);">' + formatCurrency(bOp,0) + '</td>' +
+          '<td class="' + (opV>0?'bva-pos':opV<0?'bva-neg':'bva-neutral') + '" style="text-align:center;padding:10px 12px;">' + (opV>0?'+':'') + formatCurrency(Math.abs(opV),0) + '</td>' +
+        '</tr>';
+      }
+      html += '</tbody></table></div>';
+      var last3HC = 0, last3Bud = 0;
+      for (var j = Math.max(0, months.length-3); j < months.length; j++) {
+        last3HC += months[j].functions.reduce(function(s,f){return s+f.headcount;},0);
+        last3Bud += (budHC[j] || 0);
+      }
+      var trailing = last3HC - last3Bud;
+      var note_style = trailing > 0 ? 'background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.18);color:#991b1b;' : trailing < 0 ? 'background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.18);color:#065f46;' : 'background:rgba(107,114,128,0.06);border:1px solid var(--border);color:var(--muted);';
+      html += '<div style="margin-top:12px;padding:12px 14px;border-radius:9px;font-size:12px;line-height:1.6;' + note_style + '"><strong>3-month trailing:</strong> ' + (trailing > 0 ? 'Headcount running +' + trailing + ' heads over plan. If utilization is high, the budget model was too conservative.' : trailing < 0 ? 'Headcount running ' + trailing + ' heads under plan. Verify demand is not left unserved.' : 'On plan.') + '</div>';
+      el.innerHTML = html;
+    }
+
+    // ========== COMP INFLATION FORWARD CURVE ==========
+    var activeInflTab = 6;
+    var inflChartPoints = [];
+    function showInflTab(rate) {
+      activeInflTab = rate;
+      [4,6,8,10].forEach(function(r) {
+        var btn = document.getElementById('inflTab' + r);
+        if (btn) btn.classList.toggle('active', r === rate);
+      });
+      renderInflCurve();
+    }
+    function renderInflCurve() {
+      if (!activeDataset) return;
+      var canvas = document.getElementById('inflCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.getBoundingClientRect();
+      if (!rect.width) return;
+      canvas.width = rect.width * dpr;
+      canvas.height = 220 * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = '220px';
+      ctx.scale(dpr, dpr);
+      var w = rect.width, h = 220;
+      var pad = {top:30, right:55, bottom:40, left:72};
+      var cw = w - pad.left - pad.right, ch = h - pad.top - pad.bottom;
+      var data = activeDataset;
+      var last = data.months[data.months.length - 1];
+      var basePayroll = last.functions.reduce(function(s,f){var c=f.costs;return s+(c.salary+c.benefits+c.taxes+c.bonus);},0);
+      var rates = [4,6,8,10];
+      var rateColors = {4:'#059669', 6:'#0f766e', 8:'#d97706', 10:'#dc2626'};
+      var months18 = [];
+      for (var i = 0; i <= 18; i++) months18.push(i);
+      var series = {};
+      rates.forEach(function(r) {
+        series[r] = months18.map(function(mo) { return basePayroll * Math.pow(1 + r/100/12, mo); });
+      });
+      var maxVal = Math.max.apply(null, series[10]);
+      var minVal = basePayroll * 0.99;
+      var range = maxVal - minVal;
+      ctx.strokeStyle = 'rgba(12,23,45,0.07)'; ctx.lineWidth = 1;
+      for (var gi = 0; gi <= 4; gi++) {
+        var gy = pad.top + (gi/4)*ch;
+        ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(w-pad.right, gy); ctx.stroke();
+        var gv = maxVal - (gi/4)*range;
+        ctx.fillStyle = 'rgba(93,107,122,0.75)'; ctx.font = '10px sans-serif';
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+        ctx.fillText('$'+(gv/1000).toFixed(0)+'k', pad.left-6, gy);
+      }
+      inflChartPoints = [];
+      rates.forEach(function(r) {
+        var pts = series[r];
+        ctx.beginPath();
+        ctx.strokeStyle = r === activeInflTab ? rateColors[r] : 'rgba(150,160,175,0.28)';
+        ctx.lineWidth = r === activeInflTab ? 2.5 : 1;
+        pts.forEach(function(v,i) {
+          var x = pad.left + (i/(months18.length-1))*cw;
+          var y = pad.top + ch - ((v-minVal)/range)*ch;
+          if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        if (r === activeInflTab) {
+          pts.forEach(function(v,i) {
+            if (i % 3 === 0) {
+              var x = pad.left + (i/(months18.length-1))*cw;
+              var y = pad.top + ch - ((v-minVal)/range)*ch;
+              ctx.fillStyle = rateColors[r]; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+              inflChartPoints.push({x:x,y:y,month:'Mo '+i,val:v,rate:r});
+            }
+          });
+          var endV = pts[18];
+          var endX = pad.left + cw, endY = pad.top + ch - ((endV-minVal)/range)*ch;
+          ctx.fillStyle = rateColors[r]; ctx.font = 'bold 11px sans-serif';
+          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+          ctx.fillText(r+'%', endX+6, endY);
+        }
+      });
+      ctx.fillStyle = 'rgba(93,107,122,0.7)'; ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      [0,3,6,9,12,15,18].forEach(function(mo) {
+        var x = pad.left + (mo/(months18.length-1))*cw;
+        ctx.fillText('Mo '+mo, x, h-pad.bottom+6);
+      });
+      var r = activeInflTab;
+      var end18 = series[r][18];
+      var diff4 = series[r].slice(1).reduce(function(s,v,i){return s+(v-series[4][i+1]);},0);
+      var summaryEl = document.getElementById('inflSummary');
+      if (summaryEl) {
+        summaryEl.innerHTML = '<strong>'+r+'% scenario:</strong> Monthly payroll grows from ' + formatCurrency(basePayroll,0) + ' to ' + formatCurrency(end18,0) + ' over 18 months (' + formatCurrency(end18*12,0) + '/yr). ' +
+          (r > 4 ? 'Premium vs 4% base: <strong>' + formatCurrency(diff4,0) + '</strong> cumulative over 18 months.' : 'Baseline scenario &mdash; any merit cycle above this adds incremental cash drag.');
+      }
+      var ttEl = document.getElementById('inflTooltip');
+      if (ttEl) {
+        canvas.onmousemove = function(e) {
+          var rect2 = canvas.getBoundingClientRect();
+          var mx = e.clientX - rect2.left, my = e.clientY - rect2.top;
+          var closest = null, minD = 30;
+          inflChartPoints.forEach(function(p) {
+            var d = Math.sqrt((mx-p.x)**2+(my-p.y)**2);
+            if (d < minD) { minD=d; closest=p; }
+          });
+          if (closest) {
+            ttEl.innerHTML = '<strong>'+closest.month+'</strong><br>' + formatCurrency(closest.val,0) + '/mo at ' + closest.rate + '%';
+            ttEl.style.left=(mx+15)+'px'; ttEl.style.top=(my-10)+'px';
+            ttEl.classList.add('visible');
+          } else ttEl.classList.remove('visible');
+        };
+        canvas.onmouseleave = function() { ttEl.classList.remove('visible'); };
+      }
+    }
 
     function renderSummaryKPIs() {
       const data = activeDataset;
@@ -3042,70 +3866,67 @@
     function renderFullyLoadedCosts() {
       const data = activeDataset;
       const last = data.months[data.months.length - 1];
-      let html = '';
-
-      last.functions.forEach(func => {
-        const c = func.costs;
-        const runRate = c.salary + c.benefits + c.taxes + c.bonus;
-        const oneTime = c.equipment + c.recruiting + c.onboarding;
-        const perHead = safeNum(runRate / (func.headcount || 1));
-        const annualPerHead = perHead * 12;
-
-        html += `
-          <div class="module-card">
-            <div class="card-header">
-              <div class="card-title">${func.name}</div>
-              <div style="font-size: 13px; color: var(--muted);">${func.headcount} employees</div>
-            </div>
-            <div style="padding: 12px 16px; background: rgba(246,248,251,0.7); border-left: 3px solid ${COLORS.functions[FUNCTIONS.indexOf(func.name)]}; border-radius: 8px; margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: var(--text);">
-              ${func.name === 'Sales' ?
-                'What it costs to close deals. Includes reps, managers, and sales ops. Higher comp plans (bonuses) reflect commission structures.' :
-              func.name === 'Engineering' ?
-                'What it costs to build product. Includes developers, product managers, designers. High salary reflects competitive tech talent market.' :
-              func.name === 'G&A' ?
-                'What it costs to run the company. Includes finance, HR, legal, admin. Enables the business to function but doesn\'t directly generate revenue.' :
-                'What it costs to serve customers. Includes support, success, implementation. Scales with customer count and complexity.'}
-            </div>
-            <div class="kpi-grid">
-              <div class="kpi-box">
-                <div class="kpi-box-label">
-                  Monthly/Head <span class="tt-icon" data-tt="${GLOSSARY['Monthly/Head'].replace(/"/g,'&quot;')}">?</span>
-                </div>
-                <div class="kpi-box-value" style="font-size: 18px;">${formatCurrency(perHead, 0)}</div>
-              </div>
-              <div class="kpi-box">
-                <div class="kpi-box-label">
-                  Annual/Head <span class="tt-icon" data-tt="${GLOSSARY['Annual/Head'].replace(/"/g,'&quot;')}">?</span>
-                </div>
-                <div class="kpi-box-value" style="font-size: 18px;">${formatCurrency(annualPerHead, 0)}</div>
-              </div>
-              <div class="kpi-box">
-                <div class="kpi-box-label">
-                  Monthly Run Rate <span class="tt-icon" data-tt="${GLOSSARY['Monthly Run Rate'].replace(/"/g,'&quot;')}">?</span>
-                </div>
-                <div class="kpi-box-value" style="font-size: 18px;">${formatCurrency(runRate, 0)}</div>
-              </div>
-              <div class="kpi-box">
-                <div class="kpi-box-label">
-                  One-Time Costs <span class="tt-icon" data-tt="${GLOSSARY['One-Time Costs'].replace(/"/g,'&quot;')}">?</span>
-                </div>
-                <div class="kpi-box-value" style="font-size: 18px; color: ${oneTime > 0 ? COLORS.caution : COLORS.success};">${formatCurrency(oneTime, 0)}</div>
-              </div>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(246,248,251,0.5); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12px;">
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-                <div><span style="color: var(--muted);">Base Salary:</span> <strong>${formatCurrency(c.salary / func.headcount, 0)}/mo</strong></div>
-                <div><span style="color: var(--muted);">Benefits:</span> <strong>${formatCurrency(c.benefits / func.headcount, 0)}/mo</strong></div>
-                <div><span style="color: var(--muted);">Taxes:</span> <strong>${formatCurrency(c.taxes / func.headcount, 0)}/mo</strong></div>
-                <div><span style="color: var(--muted);">Bonus:</span> <strong>${formatCurrency(c.bonus / func.headcount, 0)}/mo</strong></div>
-                <div><span style="color: var(--muted);">Equipment:</span> <strong>${formatCurrency(c.equipment, 0)} total</strong></div>
-                <div><span style="color: var(--muted);">Recruiting:</span> <strong>${formatCurrency(c.recruiting, 0)} total</strong></div>
-              </div>
-            </div>
-          </div>
-        `;
+      const fnData = last.functions.map(function(func) {
+        var c = func.costs;
+        var comp   = c.salary + c.bonus;
+        var burden = c.benefits + c.taxes;
+        var onetime= c.equipment + c.recruiting + c.onboarding;
+        var total  = comp + burden + onetime;
+        var perHead = total / Math.max(func.headcount, 1);
+        return { name: func.name, headcount: func.headcount, comp: comp, burden: burden, onetime: onetime, total: total, perHead: perHead,
+                 salary: c.salary, benefits: c.benefits, taxes: c.taxes, bonus: c.bonus,
+                 equipment: c.equipment, recruiting: c.recruiting, onboarding: c.onboarding };
       });
-
+      var maxTotal = Math.max.apply(null, fnData.map(function(f){return f.total;}));
+      var html = '';
+      fnData.forEach(function(f, fi) {
+        var compPct   = (f.comp   / f.total) * 100;
+        var burdenPct = (f.burden / f.total) * 100;
+        var onePct    = (f.onetime/ Math.max(f.total,1)) * 100;
+        var barWidthPct = (f.total / maxTotal) * 100;
+        var accentColor = COLORS.functions[fi] || '#111827';
+        var isCompHeavy = compPct > 70;
+        var label = isCompHeavy ? 'Comp-heavy' : f.onetime > f.burden ? 'Overhead-heavy' : 'Balanced';
+        var labelColor = isCompHeavy ? '#374151' : f.onetime > f.burden ? '#d97706' : '#059669';
+        var oneTimeBar = f.onetime > 0 ? '<div style="width:'+onePct.toFixed(1)+'%;background:#D97706;" title="One-time: '+formatCurrency(f.onetime,0)+'"></div>' : '';
+        var oneTimeLegend = f.onetime > 0 ? '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#D97706;margin-right:4px;"></span>One-time '+onePct.toFixed(0)+'% &mdash; '+formatCurrency(f.onetime,0)+'</span>' : '';
+        html +=
+          '<div class="module-card" style="margin-bottom:16px;">'+
+          '<div class="card-header">'+
+            '<div style="display:flex;align-items:center;gap:10px;">'+
+              '<div style="width:4px;height:36px;border-radius:2px;background:'+accentColor+';flex-shrink:0;"></div>'+
+              '<div>'+
+                '<div class="card-title">'+f.name+'</div>'+
+                '<div style="font-size:12px;color:var(--muted);">'+f.headcount+' employees &middot; '+formatCurrency(f.perHead,0)+'/head/mo</div>'+
+              '</div>'+
+            '</div>'+
+            '<div style="text-align:right;">'+
+              '<div style="font-size:18px;font-weight:800;">'+formatCurrency(f.total,0)+'</div>'+
+              '<div style="font-size:11px;font-weight:700;color:'+labelColor+';text-transform:uppercase;letter-spacing:0.05em;">'+label+'</div>'+
+            '</div>'+
+          '</div>'+
+          '<div style="margin-bottom:14px;">'+
+            '<div style="display:flex;gap:0;height:20px;border-radius:6px;overflow:hidden;width:'+barWidthPct.toFixed(1)+'%;min-width:60px;">'+
+              '<div style="width:'+compPct.toFixed(1)+'%;background:#111827;" title="Comp (salary+bonus): '+formatCurrency(f.comp,0)+'"></div>'+
+              '<div style="width:'+burdenPct.toFixed(1)+'%;background:#6B7280;" title="Burden (benefits+taxes): '+formatCurrency(f.burden,0)+'"></div>'+
+              oneTimeBar+
+            '</div>'+
+            '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;font-size:11px;color:var(--muted);">'+
+              '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#111827;margin-right:4px;"></span>Comp '+compPct.toFixed(0)+'% &mdash; '+formatCurrency(f.comp,0)+'</span>'+
+              '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#6B7280;margin-right:4px;"></span>Burden '+burdenPct.toFixed(0)+'% &mdash; '+formatCurrency(f.burden,0)+'</span>'+
+              oneTimeLegend+
+            '</div>'+
+          '</div>'+
+          '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:12px;padding:12px;background:rgba(246,248,251,0.6);border:1px solid var(--border);border-radius:var(--radius-sm);">'+
+            '<div><span style="color:var(--muted);">Salary:</span> <strong>'+formatCurrency(f.salary/f.headcount,0)+'/mo/head</strong></div>'+
+            '<div><span style="color:var(--muted);">Benefits:</span> <strong>'+formatCurrency(f.benefits/f.headcount,0)+'/mo/head</strong></div>'+
+            '<div><span style="color:var(--muted);">Taxes:</span> <strong>'+formatCurrency(f.taxes/f.headcount,0)+'/mo/head</strong></div>'+
+            '<div><span style="color:var(--muted);">Bonus:</span> <strong>'+formatCurrency(f.bonus/f.headcount,0)+'/mo/head</strong></div>'+
+            '<div><span style="color:var(--muted);">Equipment:</span> <strong>'+formatCurrency(f.equipment,0)+' total</strong></div>'+
+            '<div><span style="color:var(--muted);">Recruiting:</span> <strong>'+formatCurrency(f.recruiting,0)+' total</strong></div>'+
+          '</div>'+
+          '</div>';
+      });
       document.getElementById('fullyLoadedCosts').innerHTML = html;
     }
 
@@ -3245,53 +4066,66 @@
       const uRed    = ASSUMP.utilRed;
       const uYellow = ASSUMP.utilYellow;
       const rCrit   = ASSUMP.runwayCritical;
-      let html = '';
+      let html = '<div class="gauge-grid">';
 
       FUNCTIONS.forEach((fname, fi) => {
         const recent = data.months.slice(-3).map(m => m.functions[fi]);
-        const avgUtil = recent.reduce((s, f) => {
+        const monthlyUtils = recent.map(f => {
           const cap = safeNum(f.capacity.capacity, 1);
-          return s + ((f.capacity.demand / cap) * 100);
-        }, 0) / recent.length;
-
+          return (f.capacity.demand / cap) * 100;
+        });
+        const avgUtil = monthlyUtils.reduce((s,v)=>s+v,0) / monthlyUtils.length;
         const backlogs = recent.map(f => Math.max(0, f.capacity.demand - f.capacity.capacity));
-        const backlogGrowth = backlogs.length > 1 ? ((backlogs[backlogs.length - 1] - backlogs[0]) / Math.max(1, backlogs[0])) * 100 : 0;
+        const backlogGrowth = backlogs.length > 1 ? ((backlogs[backlogs.length-1] - backlogs[0]) / Math.max(1, backlogs[0])) * 100 : 0;
 
-        let recType, message, reasons = [];
-
+        let verdictCls, verdictLabel, verdictIcon;
         if (runway < rCrit) {
-          recType = 'delay';
-          message = `Delay hiring in ${fname}`;
-          reasons.push(`Runway is ${fmtSafe(runway)} months (< ${rCrit}-month threshold).`);
-          reasons.push('Preserve cash until revenue inflects or funding is secured.');
+          verdictCls = 'delay'; verdictLabel = 'Pause — runway critical'; verdictIcon = '&#9940;';
         } else if (avgUtil > uRed || backlogGrowth > 15) {
-          recType = 'recommend';
-          message = `Recommend hiring in ${fname}`;
-          if (avgUtil > uRed) reasons.push(`Utilization at ${fmtSafe(avgUtil)}% (> ${uRed}% for 2+ months).`);
-          if (backlogGrowth > 15) reasons.push(`Backlog growth ${fmtSafe(backlogGrowth)}% (> 15% threshold).`);
-          reasons.push('Team is at capacity risk — hire to maintain delivery velocity.');
+          verdictCls = 'recommend'; verdictLabel = 'Hire now'; verdictIcon = '&#9989;';
         } else if (avgUtil < uYellow) {
-          recType = 'caution';
-          message = `Monitor capacity in ${fname}`;
-          reasons.push(`Utilization at ${fmtSafe(avgUtil)}% (< ${uYellow}%) — potential overcapacity.`);
-          reasons.push('Consider workload redistribution or delay next hire.');
+          verdictCls = 'monitor'; verdictLabel = 'Overcapacity — hold'; verdictIcon = '&#9888;';
         } else {
-          recType = 'caution';
-          message = `No action needed for ${fname}`;
-          reasons.push(`Utilization at ${fmtSafe(avgUtil)}% — healthy ${uYellow}–${uRed}% range.`);
-          reasons.push('Team appropriately sized for current demand.');
+          verdictCls = 'caution'; verdictLabel = 'Healthy — watch'; verdictIcon = '&#128065;';
         }
 
-        html += `
-          <div class="hiring-rec ${recType}">
-            <div class="hiring-rec-title">${message}</div>
-            <div class="hiring-rec-reason">
-              ${reasons.map(r => `<div style="margin-bottom: 4px;">• ${r}</div>`).join('')}
-            </div>
-          </div>
-        `;
+        const barScale = 120;
+        const yellowPct = (uYellow / barScale) * 100;
+        const redPct    = Math.min((uRed / barScale) * 100, 100);
+        const fillPct   = Math.min((avgUtil / barScale) * 100, 100);
+        const fillColor = avgUtil > uRed ? '#dc2626' : avgUtil > uYellow ? '#d97706' : '#059669';
+
+        const sparkMax = Math.max(...monthlyUtils, uRed + 5);
+        const sparks = monthlyUtils.map((u, idx) => {
+          const h = Math.max(4, Math.round((u / sparkMax) * 32));
+          const sc = u > uRed ? '#dc2626' : u > uYellow ? '#d97706' : '#059669';
+          return '<div style="width:8px;height:' + h + 'px;background:' + sc + ';border-radius:2px;align-self:flex-end;" title="' + data.months[data.months.length-3+idx].month + ': ' + u.toFixed(1) + '%"></div>';
+        }).join('');
+
+        const accentColor = COLORS.functions[fi] || '#111827';
+
+        html += '<div class="gauge-card">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+            '<div class="gauge-fn" style="border-left:3px solid ' + accentColor + ';padding-left:8px;">' + fname + '</div>' +
+            '<div style="display:flex;gap:4px;align-items:flex-end;height:32px;">' + sparks + '</div>' +
+          '</div>' +
+          '<div class="gauge-util-big" style="color:' + fillColor + ';">' + fmtSafe(avgUtil) + '%</div>' +
+          '<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">3-month avg utilization</div>' +
+          '<div class="gauge-bar-track" style="position:relative;overflow:visible;">' +
+            '<div class="gauge-bar-fill" style="width:' + fillPct + '%;background:' + fillColor + ';"></div>' +
+            '<div class="gauge-threshold-marker" style="left:' + yellowPct + '%;border-color:#d97706;" title="Caution (' + uYellow + '%)"></div>' +
+            '<div class="gauge-threshold-marker" style="left:' + redPct + '%;border-color:#dc2626;" title="Overload (' + uRed + '%)"></div>' +
+          '</div>' +
+          '<div class="gauge-meta" style="margin-top:6px;">' +
+            '<span style="color:#d97706;">&#8593; ' + uYellow + '% caution</span>' +
+            '<span style="color:#dc2626;">&#8593; ' + uRed + '% overload</span>' +
+          '</div>' +
+          (backlogGrowth > 5 ? '<div style="font-size:11px;color:#d97706;margin-top:6px;">Backlog +' + fmtSafe(backlogGrowth) + '% over 3 mo</div>' : '') +
+          '<div class="gauge-verdict ' + verdictCls + '" style="margin-top:10px;">' + verdictIcon + ' ' + verdictLabel + '</div>' +
+        '</div>';
       });
 
+      html += '</div>';
       document.getElementById('hiringTriggers').innerHTML = html;
     }
 
@@ -3662,11 +4496,607 @@ Notes:
       document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 
+
+    // ========== WORKFORCE GAP ENGINE ==========
+
+    function getCurrentMonthSnapshot(data) {
+      return data.months[data.months.length - 1];
+    }
+
+    function computeFunctionWorkforceGap(f, assump) {
+      var currentHC       = safeNum(f.headcount, 0);
+      var currentCapacity = safeNum(f.capacity.capacity, 0);
+      var currentDemand   = safeNum(f.capacity.demand, 0);
+      var backlogUnits    = Math.max(0, currentDemand - currentCapacity);
+      var capacityPerHead = currentHC > 0 ? currentCapacity / currentHC : 0;
+      var bcm = safeNum(assump.backlogClearMonths, 1);
+      var effectiveDemand = currentDemand + (bcm > 0 ? backlogUnits / bcm : 0);
+      var targetUtilPct   = safeNum(assump.targetUtilization, 85) / 100;
+      var requiredCapacity = targetUtilPct > 0 ? effectiveDemand / targetUtilPct : effectiveDemand;
+      var requiredHC      = capacityPerHead > 0 ? Math.ceil(requiredCapacity / capacityPerHead) : currentHC;
+      var hireGap         = Math.max(0, requiredHC - currentHC);
+      var currentUtil     = currentCapacity > 0 ? (currentDemand / currentCapacity) * 100 : 0;
+      var postHireHC      = currentHC + hireGap;
+      var postHireUtil    = (postHireHC > 0 && capacityPerHead > 0)
+        ? (effectiveDemand / (postHireHC * capacityPerHead)) * 100 : currentUtil;
+      var c = f.costs;
+      var recurringCompTotal = safeNum(c.salary) + safeNum(c.benefits) + safeNum(c.taxes) + safeNum(c.bonus);
+      var monthlyRecurringPerHead = recurringCompTotal / Math.max(currentHC, 1);
+      var oneTimeCostPerHead      = safeNum(assump.oneTimeCost, 0);
+      var incrementalRecurringCost = hireGap * monthlyRecurringPerHead;
+      var incrementalOneTimeCost   = hireGap * oneTimeCostPerHead;
+      var severityPrimary   = currentUtil - safeNum(assump.targetUtilization, 85);
+      var severitySecondary = backlogUnits;
+      var severityTertiary  = currentDemand - currentCapacity;
+      return {
+        name: f.name, currentHC: currentHC, currentCapacity: currentCapacity,
+        currentDemand: currentDemand, backlogUnits: backlogUnits,
+        capacityPerHead: capacityPerHead, currentUtil: currentUtil,
+        targetUtilization: safeNum(assump.targetUtilization, 85),
+        effectiveDemand: effectiveDemand, requiredHC: requiredHC, hireGap: hireGap,
+        monthlyRecurringPerHead: monthlyRecurringPerHead,
+        oneTimeCostPerHead: oneTimeCostPerHead,
+        incrementalRecurringCost: incrementalRecurringCost,
+        incrementalOneTimeCost: incrementalOneTimeCost,
+        postHireUtil: postHireUtil,
+        severityPrimary: severityPrimary, severitySecondary: severitySecondary,
+        severityTertiary: severityTertiary
+      };
+    }
+
+    function computeWorkforceGapPlan(data, assump) {
+      var snap     = getCurrentMonthSnapshot(data);
+      var funcGaps = snap.functions.map(function(f) { return computeFunctionWorkforceGap(f, assump); });
+      var sorted   = funcGaps.slice().sort(function(a, b) {
+        if (b.severityPrimary !== a.severityPrimary)     return b.severityPrimary - a.severityPrimary;
+        if (b.severitySecondary !== a.severitySecondary)  return b.severitySecondary - a.severitySecondary;
+        if (b.severityTertiary !== a.severityTertiary)    return b.severityTertiary - a.severityTertiary;
+        return a.name.localeCompare(b.name);
+      });
+      var bottleneck = sorted[0];
+      var fullPlanTotalGap      = funcGaps.reduce(function(s,f){return s+f.hireGap;},0);
+      var fullPlanRecurringLift = funcGaps.reduce(function(s,f){return s+f.incrementalRecurringCost;},0);
+      var fullPlanOneTimeCost   = funcGaps.reduce(function(s,f){return s+f.incrementalOneTimeCost;},0);
+      var cash      = safeNum(data.runway.cash, 0);
+      var burn      = safeNum(data.runway.burn, 1);
+      var minRunway = safeNum(assump.minRunwayAfterHire, 12);
+
+      function projectedRunway(totalOneTime, totalRecurringLift) {
+        var denom = burn + totalRecurringLift;
+        if (denom <= 0) return Infinity;
+        return (cash - totalOneTime) / denom;
+      }
+
+      var feasibleHiresByFn = {};
+      funcGaps.forEach(function(f) { feasibleHiresByFn[f.name] = 0; });
+      var allocRunning = 0;
+      var totalFeasibleRecurring = 0;
+      var totalFeasibleOneTime   = 0;
+      var keepGoing = true;
+      while (keepGoing) {
+        keepGoing = false;
+        for (var i = 0; i < sorted.length; i++) {
+          var fg = sorted[i];
+          if (feasibleHiresByFn[fg.name] >= fg.hireGap) continue;
+          var trialRecurring = totalFeasibleRecurring + fg.monthlyRecurringPerHead;
+          var trialOneTime   = totalFeasibleOneTime   + fg.oneTimeCostPerHead;
+          var trialRunway    = projectedRunway(trialOneTime, trialRecurring);
+          if (trialRunway >= minRunway) {
+            feasibleHiresByFn[fg.name]++;
+            totalFeasibleRecurring = trialRecurring;
+            totalFeasibleOneTime   = trialOneTime;
+            allocRunning++;
+            keepGoing = true;
+            break;
+          }
+        }
+      }
+      var totalFeasibleHires = allocRunning;
+      var feasibleRunway = projectedRunway(totalFeasibleOneTime, totalFeasibleRecurring);
+      var fullRunway     = projectedRunway(fullPlanOneTimeCost,  fullPlanRecurringLift);
+      var enriched = funcGaps.map(function(fg) {
+        return Object.assign({}, fg, { feasibleHires: feasibleHiresByFn[fg.name] || 0 });
+      });
+      return {
+        snap: snap, funcGaps: enriched,
+        sorted: sorted.map(function(s) { return Object.assign({}, s, { feasibleHires: feasibleHiresByFn[s.name] || 0 }); }),
+        bottleneck: Object.assign({}, bottleneck, { feasibleHires: feasibleHiresByFn[bottleneck.name] || 0 }),
+        fullPlan: {
+          totalGap: fullPlanTotalGap, totalRecurringLift: fullPlanRecurringLift,
+          totalOneTimeCost: fullPlanOneTimeCost, projectedRunway: fullRunway
+        },
+        feasiblePlan: {
+          totalFeasibleHires: totalFeasibleHires, totalRecurringLift: totalFeasibleRecurring,
+          totalOneTimeCost: totalFeasibleOneTime, projectedRunway: feasibleRunway
+        },
+        currentRunway: cash / burn,
+        totalHC: snap.functions.reduce(function(s,f){return s+safeNum(f.headcount,0);},0),
+        numFunctions: snap.functions.length
+      };
+    }
+
+    function buildSituationStory(plan) {
+      var bottleneck  = plan.bottleneck;
+      var fullPlan    = plan.fullPlan;
+      var feasiblePlan= plan.feasiblePlan;
+      var currentRunway = plan.currentRunway;
+      var totalHC    = plan.totalHC;
+      var numFunctions = plan.numFunctions;
+      var targetUtil = safeNum(ASSUMP.targetUtilization, 85);
+      var bnUtil     = safeNum(bottleneck.currentUtil);
+      var bnName     = bottleneck.name;
+      var avgUtil    = plan.funcGaps.reduce(function(s,f){return s+f.currentUtil;},0) / plan.funcGaps.length;
+      var overTarget = plan.funcGaps.filter(function(f){return f.currentUtil > targetUtil;});
+      var minRwy     = safeNum(ASSUMP.minRunwayAfterHire, 12);
+      var lines      = [];
+
+      if (overTarget.length === 0) {
+        lines.push('The company has <strong>' + totalHC + ' employees</strong> across ' + numFunctions + ' functions, with all teams currently operating below the <strong>' + targetUtil + '% target utilization</strong>. Average utilization is ' + fmtSafe(avgUtil) + '%. No function requires additional headcount to meet coverage targets.');
+      } else if (overTarget.length === 1) {
+        lines.push('The company has <strong>' + totalHC + ' employees</strong> across ' + numFunctions + ' functions. The primary bottleneck is <strong>' + bnName + '</strong> at <span class="wge-story-alert">' + fmtSafe(bnUtil) + '% utilization</span> &mdash; above the <strong>' + targetUtil + '% target</strong>. The remaining ' + (numFunctions - 1) + ' function' + (numFunctions - 1 !== 1 ? 's are' : ' is') + ' within acceptable range.');
+      } else {
+        var names = overTarget.map(function(f){return f.name;}).join(', ');
+        lines.push('The company has <strong>' + totalHC + ' employees</strong> across ' + numFunctions + ' functions. <strong>' + overTarget.length + ' functions are above the ' + targetUtil + '% utilization target</strong>: ' + names + '. The primary bottleneck is <strong>' + bnName + '</strong> at <span class="wge-story-alert">' + fmtSafe(bnUtil) + '%</span>.');
+      }
+
+      if (fullPlan.totalGap === 0) {
+        lines.push('The workforce coverage model finds <span class="wge-story-ok">no additional hires are required</span> to bring all functions to target utilization under current demand and backlog assumptions.');
+      } else {
+        var bcm = safeNum(ASSUMP.backlogClearMonths, 3);
+        var hasBacklog = plan.funcGaps.some(function(f){return f.backlogUnits > 0;});
+        var backlogNote = hasBacklog ? ' (includes backlog relief spread over ' + bcm + ' months)' : '';
+        lines.push('To cover current workflows and bring all functions to <strong>' + targetUtil + '% target utilization</strong>, the model estimates <strong>' + fullPlan.totalGap + ' additional hire' + (fullPlan.totalGap !== 1 ? 's' : '') + ' are needed' + backlogNote + '</strong>. Incremental monthly recurring cost: <strong>' + formatCurrency(fullPlan.totalRecurringLift, 0) + '/mo</strong>.');
+      }
+
+      if (fullPlan.totalGap === 0) {
+        lines.push('Current runway is <span class="wge-story-ok">' + (isFinite(currentRunway) ? fmtSafe(currentRunway) : '&mdash;') + ' months</span>. No hiring action is required to maintain full coverage.');
+      } else if (feasiblePlan.totalFeasibleHires >= fullPlan.totalGap) {
+        lines.push('<span class="wge-story-ok">Full coverage is feasible today.</span> All ' + fullPlan.totalGap + ' hires can be made while keeping runway at or above ' + minRwy + ' months. Projected runway after full plan: <strong>' + (isFinite(feasiblePlan.projectedRunway) ? fmtSafe(feasiblePlan.projectedRunway) : '&mdash;') + ' months</strong>.');
+      } else if (feasiblePlan.totalFeasibleHires > 0) {
+        var uncovered = fullPlan.totalGap - feasiblePlan.totalFeasibleHires;
+        lines.push('Current cash supports only <strong>' + feasiblePlan.totalFeasibleHires + ' of ' + fullPlan.totalGap + ' recommended hires</strong> while keeping at least ' + minRwy + ' months of runway. <span class="wge-story-warn">Staged hiring is recommended</span> &mdash; ' + uncovered + ' hire' + (uncovered !== 1 ? 's' : '') + ' remain uncovered until runway improves or capital is raised. Projected runway after feasible plan: <strong>' + (isFinite(feasiblePlan.projectedRunway) ? fmtSafe(feasiblePlan.projectedRunway) : '&mdash;') + ' months</strong>.');
+      } else {
+        lines.push('<span class="wge-story-alert">Runway is too tight to add any hires</span> while maintaining the ' + minRwy + '-month floor. Current runway: ' + (isFinite(currentRunway) ? fmtSafe(currentRunway) : '&mdash;') + ' months. Priority should be cash preservation or raising capital before expanding headcount.');
+      }
+      return lines;
+    }
+
+    function renderSituationStory(plan) {
+      var el = document.getElementById('situationStoryContent');
+      if (!el) return;
+      var lines = buildSituationStory(plan);
+      el.innerHTML = lines.map(function(l){ return '<p>' + l + '</p>'; }).join('');
+    }
+
+    function renderRecommendedHiringMix(plan) {
+      var chipsEl = document.getElementById('wgeSummaryChips');
+      var tableEl = document.getElementById('wgeMixTable');
+      var shortEl = document.getElementById('wgeShortfall');
+      if (!chipsEl || !tableEl || !shortEl) return;
+      var fullPlan     = plan.fullPlan;
+      var feasiblePlan = plan.feasiblePlan;
+      var bottleneck   = plan.bottleneck;
+      var funcGaps     = plan.funcGaps;
+      var minRwy       = safeNum(ASSUMP.minRunwayAfterHire, 12);
+      var targetUtil   = safeNum(ASSUMP.targetUtilization, 85);
+      var runAfterStr  = isFinite(feasiblePlan.projectedRunway) ? fmtSafe(feasiblePlan.projectedRunway) + ' mo' : '&mdash;';
+      var bnChipCls    = bottleneck.currentUtil > targetUtil ? 'alert' : 'ok';
+      chipsEl.innerHTML =
+        '<div class="wge-chip ' + (fullPlan.totalGap > 0 ? 'warn' : 'ok') + '">' +
+          '<span class="wge-chip-label">Full coverage:</span>+' + fullPlan.totalGap + ' hire' + (fullPlan.totalGap !== 1 ? 's' : '') +
+        '</div>' +
+        '<div class="wge-chip ' + (feasiblePlan.totalFeasibleHires < fullPlan.totalGap && fullPlan.totalGap > 0 ? 'warn' : 'ok') + '">' +
+          '<span class="wge-chip-label">Feasible now:</span>+' + feasiblePlan.totalFeasibleHires +
+        '</div>' +
+        '<div class="wge-chip ' + bnChipCls + '">' +
+          '<span class="wge-chip-label">Bottleneck:</span>' + bottleneck.name + ' &middot; ' + fmtSafe(bottleneck.currentUtil) + '%' +
+        '</div>' +
+        '<div class="wge-chip">' +
+          '<span class="wge-chip-label">Runway after plan:</span>' + runAfterStr +
+        '</div>';
+
+      var allZero = funcGaps.every(function(f){ return f.hireGap === 0; });
+      var tHtml = '<table class="wge-mix-table"><thead><tr>' +
+        '<th>Function</th><th>HC</th><th>Util</th><th>Full +</th><th>Feasible +</th>' +
+        '<th>Post-hire util</th><th>Monthly lift</th><th>One-time cost</th>' +
+        '</tr></thead><tbody>';
+      funcGaps.forEach(function(fg) {
+        var isBN   = fg.name === bottleneck.name;
+        var isZero = fg.hireGap === 0 && !allZero;
+        var rowCls = isBN ? 'wge-row-bottleneck' : isZero ? 'wge-row-zero' : '';
+        var utilCls = fg.currentUtil > targetUtil ? 'wge-val-red' : fg.currentUtil > (targetUtil - 10) ? 'wge-val-warn' : 'wge-val-green';
+        var postCls = fg.postHireUtil > targetUtil ? 'wge-val-warn' : 'wge-val-green';
+        var fnTag   = isBN ? '<span class="wge-fn-tag">bottleneck</span>' : '';
+        tHtml += '<tr class="' + rowCls + '">' +
+          '<td><span class="wge-fn-name">' + fg.name + '</span>' + fnTag + '</td>' +
+          '<td>' + fg.currentHC + '</td>' +
+          '<td class="' + utilCls + '">' + fmtSafe(fg.currentUtil) + '%</td>' +
+          '<td class="' + (fg.hireGap > 0 ? 'wge-val-warn' : 'wge-val-muted') + '">' + (fg.hireGap > 0 ? '+' + fg.hireGap : '&mdash;') + '</td>' +
+          '<td class="' + (fg.feasibleHires > 0 ? 'wge-val-green' : 'wge-val-muted') + '">' + (fg.feasibleHires > 0 ? '+' + fg.feasibleHires : '&mdash;') + '</td>' +
+          '<td class="' + postCls + '">' + (fg.hireGap > 0 ? fmtSafe(fg.postHireUtil) + '%' : '&mdash;') + '</td>' +
+          '<td class="' + (fg.incrementalRecurringCost > 0 ? 'wge-val-warn' : 'wge-val-muted') + '">' + (fg.incrementalRecurringCost > 0 ? formatCurrency(fg.incrementalRecurringCost, 0) : '&mdash;') + '</td>' +
+          '<td class="' + (fg.incrementalOneTimeCost > 0 ? 'wge-val-red' : 'wge-val-muted') + '">' + (fg.incrementalOneTimeCost > 0 ? formatCurrency(fg.incrementalOneTimeCost, 0) : '&mdash;') + '</td>' +
+          '</tr>';
+      });
+      tHtml += '</tbody></table>';
+      tableEl.innerHTML = tHtml;
+      var uncovered = fullPlan.totalGap - feasiblePlan.totalFeasibleHires;
+      if (uncovered > 0 && fullPlan.totalGap > 0) {
+        shortEl.innerHTML = '<div class="wge-shortfall"><strong>Runway constraint prevents full coverage today.</strong> ' +
+          uncovered + ' hire' + (uncovered !== 1 ? 's' : '') + ' remain' + (uncovered === 1 ? 's' : '') + ' uncovered &mdash; adding them would push runway below the ' + minRwy + '-month floor. ' +
+          'Resolve by raising capital, reducing baseline burn, or revisiting the runway floor assumption.</div>';
+      } else { shortEl.innerHTML = ''; }
+    }
+
+    function renderSummaryKPIsNew(plan) {
+      var bottleneck   = plan.bottleneck;
+      var fullPlan     = plan.fullPlan;
+      var feasiblePlan = plan.feasiblePlan;
+      var currentRunway = plan.currentRunway;
+      var totalHC      = plan.totalHC;
+      var data         = activeDataset;
+      var last         = data.months[data.months.length - 1];
+      var totalCost    = last.functions.reduce(function(s,f){
+        var c=f.costs; return s+(c.salary+c.benefits+c.taxes+c.bonus+c.equipment+c.recruiting+c.onboarding);
+      },0);
+      var avgUtil  = plan.funcGaps.reduce(function(s,f){return s+f.currentUtil;},0) / plan.funcGaps.length;
+      var runFmt   = isFinite(currentRunway) ? fmtSafe(currentRunway) + ' mo' : '&mdash;';
+      var bnUtil   = safeNum(bottleneck.currentUtil);
+      var target   = safeNum(ASSUMP.targetUtilization, 85);
+      var bnColor  = bnUtil > target ? COLORS.warning : bnUtil > target - 10 ? COLORS.caution : COLORS.success;
+      var fprColor = isFinite(feasiblePlan.projectedRunway) && feasiblePlan.projectedRunway < ASSUMP.runwayCaution ? COLORS.caution : COLORS.success;
+      var el = document.getElementById('summaryKPIs');
+      if (!el) return;
+      el.innerHTML =
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Bottleneck Function <span class="tt-icon" data-tt="The function with the highest utilization relative to target.">?</span></div>' +
+          '<div class="kpi-box-value" style="font-size:17px;color:' + bnColor + ';">' + bottleneck.name + '</div>' +
+          '<div class="kpi-box-sub">' + fmtSafe(bnUtil) + '% util &middot; target ' + target + '% <span style="color:var(--muted);">avg ' + fmtSafe(avgUtil) + '%</span></div>' +
+        '</div>' +
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Coverage Gap <span class="tt-icon" data-tt="Total additional hires needed to reach target utilization, accounting for backlog relief.">?</span></div>' +
+          '<div class="kpi-box-value" style="color:' + (fullPlan.totalGap > 0 ? COLORS.caution : COLORS.success) + ';">+' + fullPlan.totalGap + '</div>' +
+          '<div class="kpi-box-sub">' + (fullPlan.totalGap > 0 ? 'heads needed for full coverage' : 'No hiring needed') + '</div>' +
+        '</div>' +
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Feasible Now <span class="tt-icon" data-tt="Hires that can be made immediately while keeping runway at or above the minimum runway floor.">?</span></div>' +
+          '<div class="kpi-box-value" style="color:' + (feasiblePlan.totalFeasibleHires > 0 ? COLORS.success : COLORS.muted) + ';">+' + feasiblePlan.totalFeasibleHires + '</div>' +
+          '<div class="kpi-box-sub">' + (feasiblePlan.totalFeasibleHires < fullPlan.totalGap && fullPlan.totalGap > 0 ? 'Staged hiring required' : feasiblePlan.totalFeasibleHires === 0 && fullPlan.totalGap > 0 ? 'Runway too tight' : 'Full plan feasible') + '</div>' +
+        '</div>' +
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Runway After Plan <span class="tt-icon" data-tt="Projected months of runway after applying the feasible hiring plan, including one-time costs.">?</span></div>' +
+          '<div class="kpi-box-value" style="color:' + fprColor + ';">' + (isFinite(feasiblePlan.projectedRunway) ? fmtSafe(feasiblePlan.projectedRunway) + ' mo' : runFmt) + '</div>' +
+          '<div class="kpi-box-sub">Current: ' + runFmt + '</div>' +
+        '</div>' +
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Monthly Lift <span class="tt-icon" data-tt="Incremental monthly recurring payroll cost from the feasible hiring plan.">?</span></div>' +
+          '<div class="kpi-box-value" style="font-size:16px;">' + formatCurrency(feasiblePlan.totalRecurringLift, 0) + '</div>' +
+          '<div class="kpi-box-sub">Recurring &middot; ' + formatCurrency(feasiblePlan.totalOneTimeCost, 0) + ' one-time</div>' +
+        '</div>' +
+        '<div class="kpi-box">' +
+          '<div class="kpi-box-label">Total Headcount <span class="tt-icon" data-tt="' + GLOSSARY['Headcount'].replace(/"/g,'&quot;') + '">?</span></div>' +
+          '<div class="kpi-box-value">' + totalHC + '</div>' +
+          '<div class="kpi-box-sub">Across ' + plan.numFunctions + ' functions &middot; ' + formatCurrency(totalCost, 0) + '/mo opex</div>' +
+        '</div>';
+    }
+
+    function computeDecisionFromPlan(plan, runway) {
+      var fullPlan     = plan.fullPlan;
+      var feasiblePlan = plan.feasiblePlan;
+      var bottleneck   = plan.bottleneck;
+      var r        = safeNum(runway);
+      var rCrit    = ASSUMP.runwayCritical;
+      var rCaution = ASSUMP.runwayCaution;
+      var minRwy   = safeNum(ASSUMP.minRunwayAfterHire, 12);
+      var target   = safeNum(ASSUMP.targetUtilization, 85);
+      var bnUtil   = safeNum(bottleneck.currentUtil);
+      var near     = Math.abs(r - rCrit) <= 1 || Math.abs(r - rCaution) <= 1;
+      var decision, cssClass, confidence, ruleText;
+      if (r < rCrit) {
+        decision = 'CUT BURN'; cssClass = 'bd-cut'; confidence = near ? 'LOW' : 'HIGH';
+        ruleText = 'Rule: Runway < ' + rCrit + ' mo → CUT BURN';
+      } else if (fullPlan.totalGap <= 0) {
+        decision = "DON'T HIRE"; cssClass = 'bd-nohire'; confidence = 'HIGH';
+        ruleText = "Rule: All functions at or below " + target + "% target → DON'T HIRE";
+      } else if (feasiblePlan.totalFeasibleHires <= 0 && r < minRwy) {
+        decision = 'RAISE'; cssClass = 'bd-raise'; confidence = near ? 'LOW' : 'MED';
+        ruleText = 'Rule: Need ' + fullPlan.totalGap + ' hires but runway < ' + minRwy + ' mo floor → RAISE';
+      } else if (feasiblePlan.totalFeasibleHires < fullPlan.totalGap) {
+        decision = 'SLOW GROWTH'; cssClass = 'bd-slow'; confidence = near ? 'LOW' : 'MED';
+        ruleText = 'Rule: ' + feasiblePlan.totalFeasibleHires + '/' + fullPlan.totalGap + ' hires feasible → SLOW GROWTH';
+      } else {
+        decision = 'HIRE'; cssClass = 'bd-hire'; confidence = near ? 'LOW' : 'HIGH';
+        ruleText = 'Rule: ' + fullPlan.totalGap + ' hires needed AND fully feasible → HIRE';
+      }
+      var capSig  = bnUtil > target
+        ? { label: 'Bottleneck: ' + bottleneck.name + ' ' + fmtSafe(bnUtil) + '%', cls: 'sig-red' }
+        : bnUtil > target - 10
+          ? { label: 'Capacity: Near limit', cls: 'sig-yellow' }
+          : { label: 'Capacity: Healthy', cls: 'sig-green' };
+      var cashSig = r < rCrit   ? { label: 'Runway: Critical', cls: 'sig-red' }
+                  : r < rCaution ? { label: 'Runway: Caution', cls: 'sig-yellow' }
+                  :                { label: 'Runway: Safe', cls: 'sig-green' };
+      var bullets = [];
+      bullets.push('Bottleneck: ' + bottleneck.name + ' at ' + fmtSafe(bnUtil) + '% utilization (target ' + target + '%).');
+      if (fullPlan.totalGap > 0) bullets.push('Coverage gap: +' + fullPlan.totalGap + ' heads needed; +' + feasiblePlan.totalFeasibleHires + ' feasible now.');
+      bullets.push('Runway: ' + (isFinite(r) ? fmtSafe(r) : '—') + ' mo current → ' + (isFinite(feasiblePlan.projectedRunway) ? fmtSafe(feasiblePlan.projectedRunway) : '—') + ' mo after feasible plan.');
+      if (decision === 'SLOW GROWTH') bullets.push('Hire ' + feasiblePlan.totalFeasibleHires + ' now in highest-severity functions; defer remaining ' + (fullPlan.totalGap - feasiblePlan.totalFeasibleHires) + '.');
+      if (decision === 'RAISE') bullets.push('Raise capital or cut baseline burn before expanding headcount.');
+      if (decision === 'CUT BURN') bullets.push('Immediate priority: reduce monthly spend. All hiring paused.');
+      return { decision: decision, cssClass: cssClass, confidence: confidence,
+               capSig: capSig, cashSig: cashSig, bullets: bullets, ruleText: ruleText,
+               vals: { u: bnUtil, r: r, uRed: ASSUMP.utilRed, uYellow: ASSUMP.utilYellow, rCrit: rCrit, rCaution: rCaution } };
+    }
+
+    function runWorkforceGapEngine() {
+      if (!activeDataset) return null;
+      return computeWorkforceGapPlan(activeDataset, ASSUMP);
+    }
+
+
+    // ========== KNAPSACK HIRING OPTIMIZER ==========
+    // Finds the GLOBALLY OPTIMAL allocation of hires across functions,
+    // maximising total utilisation reduction subject to the runway floor constraint.
+    // Uses bounded DP knapsack. Items = individual hires per function.
+    // Capacity = maximum affordable one-time spend (cash - minRunway*burn).
+    // Value = utilisation reduction delivered by each hire.
+    function computeKnapsackOptimizer(plan) {
+      var cash     = safeNum(activeDataset.runway.cash, 0);
+      var burn     = safeNum(activeDataset.runway.burn, 1);
+      var minRwy   = safeNum(ASSUMP.minRunwayAfterHire, 12);
+      var target   = safeNum(ASSUMP.targetUtilization, 85);
+
+      // Budget = how much one-time cash we can deploy while keeping runway floor
+      var cashBudget = Math.max(0, cash - minRwy * burn);
+
+      // Build item list: one item per possible hire-unit per function
+      // Each item: { fn, hireIndex (0-based), utilDelta, oneTimeCost, monthlyRecurring }
+      var items = [];
+      plan.funcGaps.forEach(function(fg) {
+        if (fg.hireGap <= 0) return;
+        for (var k = 0; k < fg.hireGap; k++) {
+          // utilDelta for hire k+1 in this function
+          var newHC = fg.currentHC + k + 1;
+          var newUtil = fg.capacityPerHead > 0
+            ? (fg.effectiveDemand / (newHC * fg.capacityPerHead)) * 100
+            : fg.currentUtil;
+          var utilBefore = k === 0 ? fg.currentUtil
+            : (fg.capacityPerHead > 0 ? (fg.effectiveDemand / ((fg.currentHC + k) * fg.capacityPerHead)) * 100 : fg.currentUtil);
+          items.push({
+            fn: fg.name,
+            hireIndex: k,
+            utilBefore: utilBefore,
+            utilAfter: newUtil,
+            utilDelta: Math.max(0, utilBefore - newUtil),
+            oneTimeCost: fg.oneTimeCostPerHead,
+            monthlyRecurring: fg.monthlyRecurringPerHead
+          });
+        }
+      });
+
+      if (items.length === 0) return { allocation: {}, totalHires: 0, totalUtil: 0, totalOneTime: 0, totalRecurring: 0, projectedRunway: cash/burn, items: [], infeasibleReason: null };
+
+      // DP: capacity in $1000 increments to keep state space manageable
+      // Round all costs to nearest $500
+      var unitSize = 500;
+      var capacityUnits = Math.floor(cashBudget / unitSize);
+
+      if (capacityUnits <= 0) {
+        return { allocation: {}, totalHires: 0, totalUtil: 0, totalOneTime: 0, totalRecurring: 0,
+                 projectedRunway: cash/burn, items: items, infeasibleReason: 'No cash available beyond runway floor.' };
+      }
+
+      var itemCosts = items.map(function(it) { return Math.max(1, Math.round(it.oneTimeCost / unitSize)); });
+      // Cap capacity to avoid memory issues (max 2000 units = $1M at $500 granularity)
+      var maxCap = Math.min(capacityUnits, 2000);
+
+      // Standard 0/1 knapsack DP
+      // dp[c] = max total utilDelta achievable with c capacity units
+      var dp = new Float64Array(maxCap + 1);
+      var choice = []; // choice[i][c] = item index chosen (or -1) at state (i, c)
+      for (var i = 0; i < items.length; i++) {
+        var w = itemCosts[i];
+        var v = items[i].utilDelta;
+        var newDp = dp.slice();
+        var rowChoice = new Int16Array(maxCap + 1).fill(-1);
+        for (var c = w; c <= maxCap; c++) {
+          var withItem = dp[c - w] + v;
+          if (withItem > newDp[c]) {
+            newDp[c] = withItem;
+            rowChoice[c] = i;
+          }
+        }
+        dp = newDp;
+        choice.push(rowChoice);
+      }
+
+      // Traceback
+      var selected = [];
+      var rem = maxCap;
+      for (var ii = items.length - 1; ii >= 0; ii--) {
+        if (rem >= 0 && choice[ii][rem] === ii) {
+          selected.push(ii);
+          rem -= itemCosts[ii];
+        }
+      }
+
+      // But we also need to check recurring cost constraint (runway floor on ongoing basis)
+      // Prune selected items if total recurring would breach runway
+      // Sort selected by highest utilDelta first, add while feasible
+      var selectedItems = selected.map(function(idx){return items[idx];});
+      selectedItems.sort(function(a,b){return b.utilDelta - a.utilDelta;});
+
+      var allocation = {};
+      var totalOneTime = 0, totalRecurring = 0, totalUtil = 0, totalHires = 0;
+      var feasibleItems = [];
+      selectedItems.forEach(function(it) {
+        var trialOneTime    = totalOneTime + it.oneTimeCost;
+        var trialRecurring  = totalRecurring + it.monthlyRecurring;
+        var trialRunway = (burn + trialRecurring) > 0 ? (cash - trialOneTime) / (burn + trialRecurring) : Infinity;
+        if (trialRunway >= minRwy) {
+          allocation[it.fn] = (allocation[it.fn] || 0) + 1;
+          totalOneTime    = trialOneTime;
+          totalRecurring  = trialRecurring;
+          totalUtil       += it.utilDelta;
+          totalHires++;
+          feasibleItems.push(it);
+        }
+      });
+
+      var projectedRunway = (burn + totalRecurring) > 0 ? (cash - totalOneTime) / (burn + totalRecurring) : cash / burn;
+
+      return {
+        allocation: allocation,
+        totalHires: totalHires,
+        totalUtilReduction: totalUtil,
+        totalOneTime: totalOneTime,
+        totalRecurring: totalRecurring,
+        projectedRunway: projectedRunway,
+        items: feasibleItems,
+        cashBudget: cashBudget,
+        infeasibleReason: null
+      };
+    }
+
+    function renderOptimizeSequence(ksResult, plan) {
+      var container = document.getElementById('wgeOptimizePanel');
+      var card      = document.getElementById('wgeOptimizeCard');
+      if (!container) return;
+      if (card) card.style.display = 'block';
+
+      if (!ksResult || plan.fullPlan.totalGap === 0) {
+        container.innerHTML = '<p style="color:var(--muted);font-size:13px;">No hires needed — all functions are at or below target utilization.</p>';
+        return;
+      }
+
+      if (ksResult.infeasibleReason) {
+        container.innerHTML = '<div class="ks-infeasible"><strong>No hires feasible:</strong> ' + ksResult.infeasibleReason + ' Current runway: ' + fmtSafe(plan.currentRunway) + ' mo. Runway floor: ' + safeNum(ASSUMP.minRunwayAfterHire) + ' mo. Raise capital or reduce the runway floor assumption.</div>';
+        return;
+      }
+
+      var target   = safeNum(ASSUMP.targetUtilization, 85);
+      var minRwy   = safeNum(ASSUMP.minRunwayAfterHire, 12);
+      var totalGap = plan.fullPlan.totalGap;
+      var covered  = ksResult.totalHires;
+      var deferred = totalGap - covered;
+
+      // Summary chips
+      var html = '<div class="ks-summary-row">' +
+        '<div class="wge-chip ' + (covered >= totalGap ? 'ok' : 'warn') + '"><span class="wge-chip-label">Optimal hires:</span>+' + covered + '</div>' +
+        (deferred > 0 ? '<div class="wge-chip warn"><span class="wge-chip-label">Deferred:</span>+' + deferred + '</div>' : '') +
+        '<div class="wge-chip"><span class="wge-chip-label">Util reduction:</span>−' + fmtSafe(ksResult.totalUtilReduction) + '%pt</div>' +
+        '<div class="wge-chip ' + (ksResult.projectedRunway < minRwy + 3 ? 'warn' : 'ok') + '"><span class="wge-chip-label">Runway after:</span>' + fmtSafe(ksResult.projectedRunway) + ' mo</div>' +
+        '<div class="wge-chip"><span class="wge-chip-label">One-time spend:</span>' + formatCurrency(ksResult.totalOneTime, 0) + '</div>' +
+      '</div>';
+
+      // Function allocation cards
+      html += '<div class="ks-allocation-grid">';
+      plan.funcGaps.forEach(function(fg) {
+        var hired = ksResult.allocation[fg.name] || 0;
+        var isActive = hired === fg.hireGap && fg.hireGap > 0;
+        var isPartial = hired > 0 && hired < fg.hireGap;
+        var cardCls = isActive ? 'ks-active' : isPartial ? 'ks-partial' : '';
+        var newHC = fg.currentHC + hired;
+        var postUtil = hired > 0 && fg.capacityPerHead > 0
+          ? (fg.effectiveDemand / (newHC * fg.capacityPerHead)) * 100
+          : fg.currentUtil;
+        var utilColor = postUtil > target ? '#dc2626' : postUtil > target - 10 ? '#d97706' : '#059669';
+        html += '<div class="ks-fn-card ' + cardCls + '">' +
+          '<div class="ks-fn-name">' + fg.name + (isActive ? ' <span style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;">Fully covered</span>' : isPartial ? ' <span style="font-size:10px;font-weight:700;color:#d97706;text-transform:uppercase;">Partial</span>' : '') + '</div>' +
+          '<div class="ks-fn-hires">+' + hired + '</div>' +
+          '<div style="font-size:11px;color:var(--muted);margin-top:2px;">of +' + fg.hireGap + ' needed</div>' +
+          '<div class="ks-fn-util">' +
+            'Util: <span style="color:' + (fg.currentUtil > target ? '#dc2626' : '#d97706') + ';">' + fmtSafe(fg.currentUtil) + '%</span>' +
+            ' → <span style="color:' + utilColor + ';font-weight:700;">' + fmtSafe(postUtil) + '%</span>' +
+          '</div>' +
+          '<div style="font-size:11px;color:var(--muted);margin-top:4px;">Cost: ' + formatCurrency(hired * fg.oneTimeCostPerHead, 0) + ' one-time &middot; +' + formatCurrency(hired * fg.monthlyRecurringPerHead, 0) + '/mo</div>' +
+        '</div>';
+      });
+      html += '</div>';
+
+      // Proof toggle
+      html += '<div style="margin-top:4px;">' +
+        '<button onclick="toggleKsProof()" style="font-size:11px;font-weight:700;color:var(--muted);background:none;border:none;cursor:pointer;padding:4px 0;">&#9660; Show Proof</button>' +
+      '</div>' +
+      '<div id="ksProofBlock" style="display:none;">' +
+        '<div class="ks-proof">' +
+          '<strong>Method:</strong> Bounded 0/1 knapsack DP over individual hire-units.<br>' +
+          '<strong>Objective:</strong> Maximise total utilisation-reduction (sum of %pt improvements) across all selected hires.<br>' +
+          '<strong>Constraint:</strong> Cash budget = $' + (ksResult.cashBudget/1000).toFixed(0) + 'k (current cash minus ' + minRwy + '-month runway floor &times; monthly burn).<br>' +
+          '<strong>Granularity:</strong> $500/unit &mdash; ' + Math.floor(ksResult.cashBudget/500) + ' capacity units.<br>' +
+          '<strong>Result:</strong> ' + covered + ' hires allocated with ' + fmtSafe(ksResult.totalUtilReduction) + '%pt total improvement, $' + (ksResult.totalOneTime/1000).toFixed(0) + 'k one-time spend, +$' + (ksResult.totalRecurring/1000).toFixed(0) + 'k/mo recurring.<br>' +
+          (deferred > 0 ? '<strong>Deferred ' + deferred + ' hire' + (deferred!==1?'s':'') + ':</strong> Adding them would breach the ' + minRwy + '-month runway floor.' : '<strong>Full coverage achieved</strong> within runway constraint.') +
+        '</div>' +
+      '</div>';
+
+      if (deferred > 0) {
+        var deferredParts = [];
+        plan.funcGaps.forEach(function(fg) {
+          var rem = fg.hireGap - (ksResult.allocation[fg.name] || 0);
+          if (rem > 0) deferredParts.push(fg.name + ' ×' + rem);
+        });
+        html += '<div class="wge-shortfall" style="margin-top:12px;"><strong>' + deferred + ' hire' + (deferred!==1?'s':'') + ' deferred — runway floor of ' + minRwy + ' mo would be breached.</strong> Deferred: ' + deferredParts.join(', ') + '. Revisit after raising capital or reducing the runway floor assumption.</div>';
+      }
+
+      container.innerHTML = html;
+    }
+
+    function toggleKsProof() {
+      var el = document.getElementById('ksProofBlock');
+      if (!el) return;
+      var btn = el.previousElementSibling && el.previousElementSibling.querySelector('button');
+      if (el.style.display === 'none') {
+        el.style.display = 'block';
+        if (btn) btn.innerHTML = '&#9650; Hide Proof';
+      } else {
+        el.style.display = 'none';
+        if (btn) btn.innerHTML = '&#9660; Show Proof';
+      }
+    }
+
+
+    function runOptimizePlan() {
+      if (!activeDataset) return;
+      var plan = runWorkforceGapEngine();
+      if (!plan) return;
+      var ksResult = computeKnapsackOptimizer(plan);
+      renderOptimizeSequence(ksResult, plan);
+      renderSituationStory(plan);
+      renderRecommendedHiringMix(plan);
+      renderSummaryKPIsNew(plan);
+      var runway  = safeNum(activeDataset.runway.cash / activeDataset.runway.burn);
+      var dec     = computeDecisionFromPlan(plan, runway);
+      var avgUtil = plan.funcGaps.reduce(function(s,f){return s+f.currentUtil;},0) / plan.funcGaps.length;
+      renderBoardDecisionCard(dec, avgUtil, runway);
+      var badge = document.getElementById('optimizedBadge');
+      if (badge) badge.classList.add('visible');
+      var card = document.getElementById('wgeOptimizeCard');
+      if (card) { card.style.display='block'; card.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+    }
+
     function renderAll() {
-      renderSummaryKPIs();
+      var plan = runWorkforceGapEngine();
+      if (plan) {
+        var runway  = safeNum(activeDataset.runway.cash / activeDataset.runway.burn);
+        var dec     = computeDecisionFromPlan(plan, runway);
+        var avgUtil = plan.funcGaps.reduce(function(s,f){return s+f.currentUtil;},0) / plan.funcGaps.length;
+        renderBoardDecisionCard(dec, avgUtil, runway);
+        renderSituationStory(plan);
+        renderRecommendedHiringMix(plan);
+        renderSummaryKPIsNew(plan);
+        var badge = document.getElementById('optimizedBadge');
+        if (badge) badge.classList.remove('visible');
+        var optCard = document.getElementById('wgeOptimizeCard');
+        if (optCard) optCard.style.display = 'none';
+      } else {
+        renderSummaryKPIs();
+      }
       renderHeadcountChart();
       renderOpexChart();
       renderFullyLoadedCosts();
+      renderWorkforceEconomics();
+      renderBudgetVsActuals();
+      renderInflCurve();
       renderUtilizationChart();
       renderCapacityTable();
       renderHiringTriggers();
@@ -3678,6 +5108,7 @@ Notes:
       updateTooltips();
       syncCashBalanceInput();
     }
+
 
     // ========== CHART EXPLAINER BOXES ("So What" panels) ==========
     function renderChartExplainers() {
@@ -3865,6 +5296,40 @@ Notes:
       initTooltips();
       readAssumptions();
       onUseSample();
+
+      // ── Target Utilization slider ── rAF-throttled to avoid heavy rerender on drag
+      (function() {
+        var sliderEl = document.getElementById('aTargetUtil');
+        var valEl    = document.getElementById('aTargetUtilVal');
+        if (!sliderEl || !valEl) return;
+        var rafId = null;
+        sliderEl.addEventListener('input', function() {
+          var v = sliderEl.value;
+          valEl.textContent = v + '%';
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(function() {
+            rafId = null;
+            readAssumptions();
+            if (baseDataset) {
+              activeDataset = applyScenario(baseDataset, scenario);
+              runOptimizePlan();
+            }
+          });
+        });
+      })();
+
+      // ── Optimize Coverage button ──
+      (function() {
+        var btn = document.getElementById('optimizeCoverageBtn');
+        if (!btn) return;
+        btn.addEventListener('click', function() {
+          readAssumptions();
+          if (baseDataset) {
+            activeDataset = applyScenario(baseDataset, scenario);
+          }
+          runOptimizePlan();
+        });
+      })();
     });
 
     window.addEventListener('resize', () => {
@@ -3872,6 +5337,7 @@ Notes:
       renderOpexChart();
       renderUtilizationChart();
       renderRunwayChart();
+      renderInflCurve();
     });
   
     /* ── Sidebar accordion: one section open at a time ── */
