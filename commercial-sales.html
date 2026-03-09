@@ -1822,7 +1822,7 @@
         onclick="togglePlaybook()"
         style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
                padding:18px 0;background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;"
-        aria-expanded="true"
+        aria-expanded="false"
         aria-controls="playbookBody">
         <div style="display:flex;align-items:center;gap:12px;">
           <span style="font-size:18px;">🗂️</span>
@@ -1832,13 +1832,13 @@
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-          <span class="playbook-hint" style="font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;">Click to collapse</span>
-          <span id="playbookChevron" style="font-size:14px;color:var(--muted);transition:transform 200ms ease;">▲</span>
+          <span class="playbook-hint" style="font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;">Click to expand</span>
+          <span id="playbookChevron" style="font-size:14px;color:var(--muted);transition:transform 200ms ease;transform:rotate(180deg);">▲</span>
         </div>
       </button>
 
-      <!-- Playbook body — open by default -->
-      <div id="playbookBody" style="padding-bottom:32px;">
+      <!-- Playbook body — collapsed by default -->
+      <div id="playbookBody" style="padding-bottom:32px;display:none;">
         <div style="max-width:960px;margin:0 auto;">
 
         <!-- Intro statement -->
