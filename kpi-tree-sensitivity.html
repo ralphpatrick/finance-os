@@ -1103,8 +1103,8 @@
       <!-- Tornado Chart -->
       <div class="module-section">
         <div class="section-header-with-help">
-          <h2 class="module-section-title">Driver Sensitivity — Runway Impact (±5%)</h2>
-          <span class="help-icon" data-help="Tornado chart: shows how much runway changes when each driver moves +5% or −5%. Wider bar = bigger impact = higher priority."></span>
+          <h2 class="module-section-title" id="tornado-section-title">Driver Sensitivity — Runway Impact (±5%)</h2>
+          <span class="help-icon" id="tornado-section-help" data-help="Tornado chart: shows how much runway changes when each driver moves +5% or −5%. Wider bar = bigger impact = higher priority."></span>
         </div>
         <div class="module-card">
           <div class="chart-wrap"><canvas id="chart-tornado" height="180"></canvas></div>
@@ -1112,7 +1112,7 @@
           <div id="tornado-explainer" style="margin-top:20px; border-top:1px solid var(--border); padding-top:18px; display:none;">
             <div id="tornado-live-callout" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding:12px 16px; border-radius:12px; background:rgba(15,118,110,0.06); border:1.5px solid rgba(15,118,110,0.2);">
               <div>
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:2px;">Top Lever — +5% Runway Gain</div>
+                <div id="tornado-callout-label" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:2px;">Top Lever — +5% Runway Gain</div>
                 <div style="display:flex; align-items:baseline; gap:8px;">
                   <span id="tornado-top-value" style="font-size:26px; font-weight:800; letter-spacing:-0.03em; color:var(--text);">—</span>
                   <span id="tornado-live-badge" style="font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; margin-left:4px;"></span>
@@ -1145,9 +1145,9 @@
               <th>Driver <span class="help-icon" data-help="The business variable being tested — e.g. Price, Volume, COGS%. Each driver is nudged up and down by 5% to see how much runway changes."></span></th>
               <th>Base Value <span class="help-icon" data-help="The current value of this driver from your assumptions — the starting point before any 5% movement is applied."></span></th>
               <th>+5% → EBITDA Change <span class="help-icon" data-help="How much monthly profit (EBITDA) would change if this driver improved by 5%. E.g. a +$20K here means raising price by 5% adds $20K to monthly profit."></span></th>
-              <th>+5% → Runway Change <span class="help-icon" data-help="How many extra months of runway you'd gain if this driver improved by 5%. The bigger the number, the more important this lever is to protect cash."></span></th>
+              <th id="th-runway-up">+5% → Runway Change <span class="help-icon" data-help="How many extra months of runway you'd gain if this driver improved by 5%. The bigger the number, the more important this lever is to protect cash."></span></th>
               <th>−5% → EBITDA Change <span class="help-icon" data-help="How much monthly profit drops if this driver gets 5% worse — e.g. prices fall, costs rise, or more customers leave. Shows the downside risk of each variable."></span></th>
-              <th>−5% → Runway Change <span class="help-icon" data-help="Months of runway lost if this driver deteriorates by 5%. A large negative number here means this variable is a major risk — a small slip costs a lot of runway."></span></th>
+              <th id="th-runway-down">−5% → Runway Change <span class="help-icon" data-help="Months of runway lost if this driver deteriorates by 5%. A large negative number here means this variable is a major risk — a small slip costs a lot of runway."></span></th>
             </tr></thead>
             <tbody id="sens-tbody"></tbody>
           </table>
@@ -1270,6 +1270,23 @@
 
     document.getElementById('kpi-topdriver').textContent = '#1 ' + top3[0].name;
 
+    const profitable = base.runway >= 99;
+
+    // Update dynamic labels based on profitable state
+    if (profitable) {
+      document.getElementById('tornado-section-title').textContent = 'Driver Sensitivity — EBITDA Impact (±5%)';
+      document.getElementById('tornado-section-help').setAttribute('data-help', 'Tornado chart: the business is cash-flow positive, so bars show EBITDA impact when each driver moves ±5%. Wider bar = bigger impact = higher priority.');
+      document.getElementById('tornado-callout-label').textContent = 'Top Lever — +5% EBITDA Gain';
+      document.getElementById('th-runway-up').innerHTML = '+5% → N/A (Profitable) <span class="help-icon" data-help="The business is cash-flow positive so runway is infinite — runway delta is not meaningful. Focus on EBITDA impact instead."></span>';
+      document.getElementById('th-runway-down').innerHTML = '−5% → N/A (Profitable) <span class="help-icon" data-help="The business is cash-flow positive so runway is infinite — runway delta is not meaningful. Focus on EBITDA impact instead."></span>';
+    } else {
+      document.getElementById('tornado-section-title').textContent = 'Driver Sensitivity — Runway Impact (±5%)';
+      document.getElementById('tornado-section-help').setAttribute('data-help', 'Tornado chart: shows how much runway changes when each driver moves +5% or −5%. Wider bar = bigger impact = higher priority.');
+      document.getElementById('tornado-callout-label').textContent = 'Top Lever — +5% Runway Gain';
+      document.getElementById('th-runway-up').innerHTML = '+5% → Runway Change <span class="help-icon" data-help="How many extra months of runway you\'d gain if this driver improved by 5%."></span>';
+      document.getElementById('th-runway-down').innerHTML = '−5% → Runway Change <span class="help-icon" data-help="Months of runway lost if this driver deteriorates by 5%."></span>';
+    }
+
     // Decision logic
     let decision, bullets, driver;
     if (base.runway < 6 && base.runway > 0) {
@@ -1297,9 +1314,12 @@
       `Churn at ${pct(inp.churn*100)}/mo compresses sustainable volume`,
       `LTV/CAC of ${base.ltvcac.toFixed(1)}x — ${base.ltvcac < 3 ? 'below 3x industry minimum' : 'acceptable but track'}`,
     ].map(r=>`<li>${r}</li>`).join('');
-    document.getElementById('levers-list').innerHTML = top3.map((d,i) =>
-      `<li><span class="${rankClasses[i]} rank-badge">#${i+1}</span> ${d.name}: +5% → +${Math.abs(d.upRunway) >= 99 ? 'cash positive' : d.upRunway.toFixed(1) + 'mo runway'}</li>`
-    ).join('');
+    document.getElementById('levers-list').innerHTML = top3.map((d,i) => {
+      const impact = profitable
+        ? `+5% → ${fmtK(d.upEBITDA)}/mo EBITDA`
+        : `+5% → +${d.upRunway >= 999 ? 'cash positive' : d.upRunway.toFixed(1) + 'mo runway'}`;
+      return `<li><span class="${rankClasses[i]} rank-badge">#${i+1}</span> ${d.name}: ${impact}</li>`;
+    }).join('');
 
     // KPI Tree
     const nodeClass = (v) => v > 0 ? 'positive' : v < 0 ? 'negative' : '';
@@ -1330,6 +1350,9 @@
       </div>`;
 
     // Tornado chart
+    const tornadoPosData = sensList.map(d => profitable ? d.upEBITDA   : (d.upRunway   >= 999 ? 0 : d.upRunway));
+    const tornadoNegData = sensList.map(d => profitable ? d.downEBITDA : (d.downRunway <= -999 ? 0 : d.downRunway));
+    const tornadoUnit = profitable ? 'EBITDA ($)' : 'Runway (months)';
     const tornadoCtx = document.getElementById('chart-tornado').getContext('2d');
     if (chartTornado) chartTornado.destroy();
     chartTornado = new Chart(tornadoCtx, {
@@ -1337,14 +1360,14 @@
       data: {
         labels: sensList.map(d => d.name),
         datasets: [
-          { label: '+5% Impact (months)', data: sensList.map(d => d.upRunway >= 999 ? 0 : d.upRunway), backgroundColor: 'rgba(15,118,110,0.75)', borderRadius: 4 },
-          { label: '−5% Impact (months)', data: sensList.map(d => d.downRunway <= -999 ? 0 : d.downRunway), backgroundColor: 'rgba(239,68,68,0.75)', borderRadius: 4 },
+          { label: '+5% Impact (' + tornadoUnit + ')', data: tornadoPosData, backgroundColor: 'rgba(15,118,110,0.75)', borderRadius: 4 },
+          { label: '−5% Impact (' + tornadoUnit + ')', data: tornadoNegData, backgroundColor: 'rgba(239,68,68,0.75)', borderRadius: 4 },
         ]
       },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.x > 0 ? '+' : '') + ctx.parsed.x.toFixed(1) + ' mo' } } },
-        scales: { x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => (v>0?'+':'')+v+'mo' } }, y: { grid: { display: false } } }
+        plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.x > 0 ? '+' : '') + (profitable ? fmtK(ctx.parsed.x) : ctx.parsed.x.toFixed(1) + ' mo') } } },
+        scales: { x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => (v>0?'+':'') + (profitable ? fmtK(v) : v+'mo') } }, y: { grid: { display: false } } }
       }
     });
 
@@ -1355,9 +1378,9 @@
       <td><strong>${d.name}</strong></td>
       <td>${d.fmt}</td>
       <td class="${d.upEBITDA >= 0 ? 'sens-pos' : 'sens-neg'}">${d.upEBITDA >= 0 ? '+' : ''}${fmtK(d.upEBITDA)}</td>
-      <td class="${d.upRunway >= 0 ? 'sens-pos' : 'sens-neg'}">${d.upRunway >= 999 ? '∞' : (d.upRunway >= 0 ? '+' : '') + d.upRunway.toFixed(1) + 'mo'}</td>
+      <td style="color:var(--muted); font-style:italic;">${profitable ? 'N/A' : (d.upRunway >= 999 ? '∞' : (d.upRunway >= 0 ? '+' : '') + d.upRunway.toFixed(1) + 'mo')}</td>
       <td class="${d.downEBITDA >= 0 ? 'sens-pos' : 'sens-neg'}">${d.downEBITDA >= 0 ? '+' : ''}${fmtK(d.downEBITDA)}</td>
-      <td class="${d.downRunway >= 0 ? 'sens-pos' : 'sens-neg'}">${d.downRunway <= -999 ? '-∞' : (d.downRunway >= 0 ? '+' : '') + d.downRunway.toFixed(1) + 'mo'}</td>
+      <td style="color:var(--muted); font-style:italic;">${profitable ? 'N/A' : (d.downRunway <= -999 ? '-∞' : (d.downRunway >= 0 ? '+' : '') + d.downRunway.toFixed(1) + 'mo')}</td>
     </tr>`).join('');
 
     // ── KPI Tree Explainer ──────────────────────────────────
@@ -1386,16 +1409,24 @@
     document.getElementById('tornado-explainer').style.display = '';
     const topDriver = top3[0];
     const worstDriver = sensList.reduce((a, b) => Math.abs(b.downRunway) > Math.abs(a.downRunway) ? b : a);
-    const topGain = topDriver.upRunway >= 999 ? 'cash flow positive' : '+' + topDriver.upRunway.toFixed(1) + ' mo';
-    document.getElementById('tornado-top-value').textContent = `${topDriver.name}: ${topGain}`;
-    const tornadoState = topDriver.upRunway >= 999 ? 'positive' : (topDriver.upRunway >= 2 ? 'warning' : 'neutral');
     const tornadoBadge = document.getElementById('tornado-live-badge');
     tornadoBadge.textContent = '✓ Highest Lever';
     tornadoBadge.style.cssText = 'background:rgba(15,118,110,0.10); color:#0f766e; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; margin-left:4px;';
-    document.getElementById('tornado-risk-label').innerHTML = `${worstDriver.name}: ${worstDriver.downRunway <= -999 ? '-∞' : worstDriver.downRunway.toFixed(1) + ' mo'} if −5%`;
     const tornadoVerdictEl = document.getElementById('tornado-verdict-block');
     tornadoVerdictEl.style.cssText = 'padding:12px 16px; border-radius:10px; background:#f0fdf9; border-left:3px solid #0f766e; font-size:13px; line-height:1.6;';
-    tornadoVerdictEl.innerHTML = `<strong style="color:#0f766e;">#1 lever: ${topDriver.name}.</strong> A 5% improvement extends runway by <strong>${topGain}</strong> — the widest bar in the chart. The biggest downside risk is <strong>${worstDriver.name}</strong>: a 5% deterioration costs ${worstDriver.downRunway <= -999 ? 'infinite' : Math.abs(worstDriver.downRunway).toFixed(1) + ' months'} of runway. Prioritize protecting ${worstDriver.name} while investing in ${topDriver.name} improvement. The 2nd and 3rd ranked levers are ${top3[1] ? top3[1].name : '—'} and ${top3[2] ? top3[2].name : '—'}.`;
+    if (profitable) {
+      // Show EBITDA sensitivity when cash-flow positive
+      const topGain = '+' + fmtK(topDriver.upEBITDA) + '/mo EBITDA';
+      const worstEBITDADriver = sensList.reduce((a, b) => Math.abs(b.downEBITDA) > Math.abs(a.downEBITDA) ? b : a);
+      document.getElementById('tornado-top-value').textContent = `${topDriver.name}: ${topGain}`;
+      document.getElementById('tornado-risk-label').innerHTML = `${worstEBITDADriver.name}: ${fmtK(worstEBITDADriver.downEBITDA)}/mo if −5%`;
+      tornadoVerdictEl.innerHTML = `<strong style="color:#0f766e;">#1 lever: ${topDriver.name}.</strong> The business is cash-flow positive, so bars show <strong>EBITDA impact</strong> instead of runway. A 5% improvement to ${topDriver.name} adds <strong>${topGain}</strong> — the widest bar in the chart. The biggest downside risk is <strong>${worstEBITDADriver.name}</strong>: a 5% deterioration reduces EBITDA by ${fmtK(Math.abs(worstEBITDADriver.downEBITDA))}/mo. The 2nd and 3rd ranked levers are ${top3[1] ? top3[1].name : '—'} and ${top3[2] ? top3[2].name : '—'}.`;
+    } else {
+      const topGain = topDriver.upRunway >= 999 ? 'cash flow positive' : '+' + topDriver.upRunway.toFixed(1) + ' mo';
+      document.getElementById('tornado-top-value').textContent = `${topDriver.name}: ${topGain}`;
+      document.getElementById('tornado-risk-label').innerHTML = `${worstDriver.name}: ${worstDriver.downRunway <= -999 ? '-∞' : worstDriver.downRunway.toFixed(1) + ' mo'} if −5%`;
+      tornadoVerdictEl.innerHTML = `<strong style="color:#0f766e;">#1 lever: ${topDriver.name}.</strong> A 5% improvement extends runway by <strong>${topGain}</strong> — the widest bar in the chart. The biggest downside risk is <strong>${worstDriver.name}</strong>: a 5% deterioration costs ${worstDriver.downRunway <= -999 ? 'infinite' : Math.abs(worstDriver.downRunway).toFixed(1) + ' months'} of runway. Prioritize protecting ${worstDriver.name} while investing in ${topDriver.name} improvement. The 2nd and 3rd ranked levers are ${top3[1] ? top3[1].name : '—'} and ${top3[2] ? top3[2].name : '—'}.`;
+    }
   }
 
   // Enable global tooltip bubble (prevents tooltip clipping in sidebar)
