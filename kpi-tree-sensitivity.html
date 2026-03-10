@@ -1202,9 +1202,11 @@
     document.getElementById('inp-cash').value = v.cash;
   }
 
-  function calcMetrics(p) {
+  function calcMetrics(p, cogsPerUnit) {
     const revenue = p.price * p.volume;
-    const cogsAmt = revenue * p.cogs;
+    // If cogsPerUnit is supplied (price sensitivity), hold unit cost fixed.
+    // Otherwise derive it from revenue * cogs% (COGS% / volume / OpEx sensitivity).
+    const cogsAmt = cogsPerUnit !== undefined ? cogsPerUnit * p.volume : revenue * p.cogs;
     const gp = revenue - cogsAmt;
     const gm = gp / revenue;
     const ebitda = gp - p.opex;
@@ -1234,6 +1236,7 @@
   function compute() {
     const inp = getInputs();
     const base = calcMetrics(inp);
+    const profitable = base.runway >= 99;
 
     // KPIs
     document.getElementById('kpi-runway').textContent = base.runway >= 99 ? '∞' : base.runway.toFixed(1);
@@ -1251,16 +1254,24 @@
       { name: 'Churn %', key: 'churn', fmt: pct(inp.churn * 100) },
     ];
 
+    // Base cost per unit — used to hold COGS fixed when only price changes
+    const baseCogsPerUnit = inp.price * inp.cogs;
+
     const sensList = drivers.map(d => {
-      const upInp = { ...inp, [d.key]: inp[d.key] * 1.05 };
+      const upInp   = { ...inp, [d.key]: inp[d.key] * 1.05 };
       const downInp = { ...inp, [d.key]: inp[d.key] * 0.95 };
-      const upM = calcMetrics(upInp);
-      const downM = calcMetrics(downInp);
-      const upEBITDA = upM.ebitda - base.ebitda;
+      // For price: pass fixed cogsPerUnit so unit cost doesn't inflate with price
+      const cogsOverride = d.key === 'price' ? baseCogsPerUnit : undefined;
+      const upM   = calcMetrics(upInp,   cogsOverride);
+      const downM = calcMetrics(downInp, cogsOverride);
+      const upEBITDA   = upM.ebitda   - base.ebitda;
       const downEBITDA = downM.ebitda - base.ebitda;
-      const upRunway = (upM.runway >= 99 ? 999 : upM.runway) - (base.runway >= 99 ? 999 : base.runway);
-      const downRunway = (downM.runway >= 99 ? 999 : downM.runway) - (base.runway >= 99 ? 999 : base.runway);
-      const impact = Math.abs(upRunway) + Math.abs(downRunway);
+      const upRunway   = (upM.runway   >= 99 ? 999 : upM.runway)   - (base.runway >= 99 ? 999 : base.runway);
+      const downRunway = (downM.runway <= -99 ? -999 : downM.runway >= 99 ? 999 : downM.runway) - (base.runway >= 99 ? 999 : base.runway);
+      // Use EBITDA delta as impact when profitable (runway delta is always 0)
+      const impact = profitable
+        ? Math.abs(upEBITDA) + Math.abs(downEBITDA)
+        : Math.abs(upRunway) + Math.abs(downRunway);
       return { ...d, upEBITDA, downEBITDA, upRunway, downRunway, impact };
     });
 
@@ -1269,8 +1280,6 @@
     const top3 = sensList.slice(0, 3);
 
     document.getElementById('kpi-topdriver').textContent = '#1 ' + top3[0].name;
-
-    const profitable = base.runway >= 99;
 
     // Update dynamic labels based on profitable state
     if (profitable) {
@@ -1332,7 +1341,7 @@
         <div class="tree-row tree-row-2">
           <div class="tree-node ${nodeClass(base.ebitda)}"><div class="tree-node-label" data-help="Monthly operating profit: Revenue minus all costs (COGS + OpEx). Positive = profitable. Negative = burning cash. Runway = Cash ÷ Monthly Burn, so improving EBITDA directly extends runway." style="cursor:help;">EBITDA / Mo</div><div class="tree-node-value">${fmtK(base.ebitda)}</div></div>
           <div class="tree-arrow">÷</div>
-          <div class="tree-node"><div class="tree-node-label" data-help="How much cash the business spends each month beyond what it earns. Only exists when EBITDA is negative. Runway = Cash on Hand ÷ Monthly Burn — so reducing burn directly extends survival time." style="cursor:help;">Monthly Burn</div><div class="tree-node-value">${fmtK(base.burn)}</div></div>
+          <div class="tree-node"><div class="tree-node-label" data-help="How much cash the business spends each month beyond what it earns. Only exists when EBITDA is negative. Runway = Cash on Hand ÷ Monthly Burn — so reducing burn directly extends survival time." style="cursor:help;">Monthly Burn</div><div class="tree-node-value">${base.burn > 0 ? fmtK(base.burn) : '<span style="font-size:12px;color:#0f766e;font-weight:600;">Cash-flow positive</span>'}</div></div>
         </div>
         <div class="tree-connector"><div class="tree-connector-line"></div></div>
         <div class="tree-row tree-row-2">
