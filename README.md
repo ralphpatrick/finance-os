@@ -35,9 +35,15 @@ The landing page (`index.html`) opens with a **"What's the problem you're solvin
 
 ## Modules
 
+| Status | Meaning |
+|---|---|
+| 🟢 Core / flagship | Central to the portfolio's Commercial Finance positioning — kept, featured, and prioritized |
+| 🔵 Upgrade needed | Solid foundation but framing or depth needs improvement before featuring prominently |
+| 🔴 Planned for removal | Off-path for Commercial / GTM Finance direction — will be retired in a future revision |
+
 ---
 
-### 🔵 MDF Governance Tracker
+### 🟢 MDF Governance Tracker
 **File:** `mdf-governance.html`
 
 **What it is:**
@@ -73,7 +79,7 @@ MDF programs at scale — multiple vendors, multiple regions, multiple proof req
 
 ---
 
-### 🔵 Operations Finance & Spend Analytics
+### 🟢 Operations Finance & Spend Analytics
 **File:** `operations-spend.html`
 
 **What it is:**
@@ -105,7 +111,7 @@ Finance teams that only review spend after close are always reacting late. This 
 
 ---
 
-### 🔵 Commercial & Sales Finance
+### 🟢 Commercial & Sales Finance
 **File:** `commercial-sales.html`
 
 **What it is:**
@@ -137,7 +143,7 @@ Commercial decisions made without financial modeling either over-invest in low-r
 
 ---
 
-### 🔵 Revenue Bridge & Cohort Retention
+### 🟢 Revenue Bridge & Cohort Retention
 **File:** `revenue-bridge.html`
 
 **What it is:**
@@ -169,7 +175,7 @@ Revenue growth looks the same on a top-line chart whether it is healthy expansio
 
 ---
 
-### 🔵 SaaS / Fintech Unit Economics
+### 🟢 SaaS / Fintech Unit Economics
 **File:** `unit-economics.html`
 
 **What it is:**
@@ -272,7 +278,7 @@ Leadership teams debate priorities without knowing which drivers actually matter
 
 ---
 
-### 🔵 Working Capital FP&A
+### 🔴 Working Capital FP&A
 **File:** `working-capital.html`
 
 **What it is:**
@@ -304,7 +310,7 @@ The P&L and the bank account tell different stories. Working capital management 
 
 ---
 
-### 🔵 Indirect Cost & Headcount CoE
+### 🔴 Indirect Cost & Headcount CoE
 **File:** `indirect-cost-headcount.html`
 
 **What it is:**
@@ -340,7 +346,7 @@ Headcount is typically the largest cost line. Hiring decisions made without a fi
 
 ---
 
-### 🔵 Capex & Financing Decisions
+### 🔴 Capex & Financing Decisions
 **File:** `capex-financing.html`
 
 **What it is:**
@@ -369,6 +375,92 @@ Capital decisions are often made based on monthly payment alone. This model forc
 | **Strategic Finance / FP&A Senior Manager** | Shows NPV and capital allocation fluency — foundational for long-range planning and investment prioritization |
 | **Director / VP Finance** | Demonstrates ability to govern capital decisions with financial rigor — NPV discipline, cash impact awareness, and financing structure evaluation |
 | **CFO / Head of Finance** | Proof of capital allocation framework — the ability to evaluate and recommend asset financing decisions at a board level |
+
+---
+
+## Planned Modules
+
+> **A note on scope:** These modules will only be added if they make the portfolio story sharper — not broader. Each one below was evaluated against the Commercial / GTM Finance path before being included here. If it doesn't advance that story, it doesn't get built.
+
+| Status | Meaning |
+|---|---|
+| 🔜 Planned | Approved for build — high path alignment, clear scope |
+| 🔍 Under consideration | Strong candidate but scope or credibility needs validation first |
+
+---
+
+### 🔜 Marketing Spend Control Tower
+
+**What it will show:**
+A unified operating view of marketing spend health — combining budget vs. actual vs. forecast, accrual readiness, proof of performance gaps, campaign and partner status, owner accountability, exception aging, forecast risk flags, and a leadership summary view.
+
+**Why it fits:**
+This module sits at the intersection of the current spend governance work, BizOps-style operating control, and the long-term Commercial / GTM Finance destination. It is the bridge between the MDF Governance Tracker and Operations Finance & Spend Analytics — one module that says: *I don't just track spend. I run the operating system behind it.*
+
+**What it signals:**
+Spend governance OS ownership at scale. The clearest single-module proof of a Finance Business Partner who operates at a program level, not just a reporting level.
+
+**Path alignment:** Commercial / GTM Finance Manager → Strategic Finance Lead
+
+---
+
+### 🔜 GTM Budget Allocation & Reallocation Engine
+
+**What it will show:**
+Given a fixed GTM budget, model where to shift spend across channels, regions, campaign types, partner programs, and headcount vs. non-headcount — then show the downstream impact on pipeline, CAC, payback period, revenue contribution, and forecast confidence.
+
+**Why it fits:**
+This is the clearest destination-aligned module in the planned list. It moves the positioning from *"I govern spend"* to *"I decide where growth money should go."* That is the language of a Commercial / GTM Finance Manager partnering with a CMO or VP of Marketing on annual planning and in-quarter reallocation decisions.
+
+**What it signals:**
+GTM investment decision support. Budget-to-outcome thinking. The finance operator who sits at the table when marketing priorities are being set — not the one who reports on them after.
+
+**Path alignment:** Commercial / GTM Finance Manager → Strategic Finance Lead → Director of Finance
+
+---
+
+### 🔜 Forecast Credibility & Close Readiness OS
+
+**What it will show:**
+Actuals close status, accrual completeness by owner and region, missing inputs tracker, forecast revision history, variance drivers, owner response timeliness, and a readiness score by region and function — all in one operating view.
+
+**Why it fits:**
+Close readiness and forecast credibility are the operational foundation of any Finance Business Partner role. This module would demonstrate the less visible but high-value work of building systems that reduce close surprises, surface forecast risk early, and create accountability across a distributed budget owner population.
+
+**What it signals:**
+Finance operator maturity. Manager-track thinking. The person who doesn't just flag variance after close — they build the system that prevents it. This is a stronger proof of real operating discipline than most modeling modules.
+
+**Path alignment:** Commercial / GTM Finance Manager → Strategic Finance / FP&A Senior Manager
+
+---
+
+### 🔍 Pipeline-to-Plan Bridge
+
+**What it will show:**
+Marketing spend → MQL / SQL / pipeline → win rate assumptions → bookings and revenue contribution → forecast confidence → budget-to-outcome bridge.
+
+**Why it fits:**
+This would be one of the cleanest GTM Finance signal modules in the portfolio — connecting marketing investment to revenue outcomes in the language a CRO or VP of Sales uses. It directly addresses the spend-to-outcome framing that bridges spend governance into Commercial Finance.
+
+**Condition for building:**
+Only if the model can be made credible and grounded. If the pipeline and win rate assumptions cannot be tied to a realistic operating scenario, this risks reading as RevOps cosplay rather than finance operator proof. Build it when the GTM Finance language layer is stronger and the inputs can be defended.
+
+**Path alignment:** Commercial / GTM Finance Manager → Strategic Finance Lead
+
+---
+
+### 🔍 Planning Cadence & QBR Decision Pack
+
+**What it will show:**
+How monthly actuals, risks, exceptions, ROI shifts, and budget changes get turned into a QBR or monthly business review decision pack — structured as a live operating cadence tool, not a static template.
+
+**Why it fits:**
+This is a manager-track signal module. It shows that you are not just building dashboards — you are building the operating rhythm around them. The framing: *"How finance turns messy inputs into a decision-ready operating review."* That is a different capability than modeling. It is the capability of someone who runs a finance function, not just contributes to one.
+
+**Condition for building:**
+Best built after the Forecast Credibility & Close Readiness OS exists — the two modules would naturally feed each other and together would form a complete picture of the operating cadence layer.
+
+**Path alignment:** Strategic Finance / FP&A Senior Manager → Director / VP Finance
 
 ---
 
